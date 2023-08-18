@@ -5,7 +5,7 @@ using Task = TimelineManagement.Models.Task;
 
 namespace TimelineManagement.Repositories;
 
-public class TaskRepository : GeneralRepository<Task>, ITaskRepository
+public class    TaskRepository : GeneralRepository<Task>, ITaskRepository
 {
     public TaskRepository(TimelineManagementDbContext context) : base(context) { }
 }

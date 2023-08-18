@@ -1,4 +1,6 @@
 ﻿using System.Net;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using TimelineManagement.DTOs.Employees;
 using TimelineManagement.Services;
@@ -8,6 +10,8 @@ namespace TimelineManagement.Controllers;
 
 [ApiController]
 [Route("api/employees")]
+[Authorize (Roles = "Project Manager")]
+[EnableCors]
 public class EmployeeController : ControllerBase
 {
     private readonly EmployeeService _employeeService;

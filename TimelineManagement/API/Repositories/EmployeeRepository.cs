@@ -18,4 +18,14 @@ public class EmployeeRepository : GeneralRepository<Employee>, IEmployeeReposito
         var data = _context.Set<Employee>().OrderByDescending(e=>e.CreatedDate).FirstOrDefault()?.Nik;
         return data;
     }
+
+    public Employee? GetByEmail(string email)
+    {
+        return _context.Set<Employee>().SingleOrDefault(e => e.Email.Contains(email));
+    }
+
+    public Employee? CheckEmail(string email)
+    {
+        return _context.Set<Employee>().FirstOrDefault(u => u.Email == email);
+    }
 }

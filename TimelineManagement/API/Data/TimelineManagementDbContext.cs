@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using TimelineManagement.DTOs.Roles;
 using TimelineManagement.Models;
 using Task = TimelineManagement.Models.Task;
 
@@ -23,6 +24,18 @@ public class TimelineManagementDbContext : DbContext
     //Fluent API
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Role>().HasData(new NewRoleDefaultDto
+            {
+                Guid = Guid.Parse("c0a7e780-df61-420a-e552-08db9fa3dda3"),
+                Name = "Staff"
+            },
+            new NewRoleDefaultDto
+            {
+                Guid = Guid.Parse("203b4a4b-e9f7-4419-e553-08db9fa3dda3"),
+                Name = "Project Manager"
+            });
+            
+        
         modelBuilder.Entity<Employee>().HasIndex(e => new
         {
             e.Nik,
