@@ -19,9 +19,7 @@ namespace Client.Repositories
                 BaseAddress = new Uri("https://localhost:7230/api/")
             };
         }
-
-
-
+        
         public async Task<ResponseHandler<TokenDto>> Login(LoginDto entity)
         {
             ResponseHandler<TokenDto> entityVM = null;

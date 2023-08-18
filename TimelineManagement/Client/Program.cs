@@ -13,12 +13,10 @@ namespace Client
             builder.Services.AddControllersWithViews();
             builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+            builder.Services.AddSession();
+            builder.Services.AddHttpContextAccessor();
 
             var app = builder.Build();
-
-            
-
-
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
@@ -31,7 +29,9 @@ namespace Client
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            
+            app.UseSession();
+            
             app.UseAuthorization();
 
             app.MapControllerRoute(

@@ -47,15 +47,10 @@ namespace Client.Controllers
         public async Task<IActionResult> Register(RegisterDto register)
         {
             var result = await _accountRepository.Register(register);
-            if (result.Status == "200")
+            if (result.Code == 200)
             {
                 TempData["Success"] = "Data berhasil masuk";
-                return RedirectToAction("Login", "Account");
-            }
-            else if (result.Status == "409")
-            {
-                ModelState.AddModelError(string.Empty, result.Message);
-                return View();
+                return RedirectToAction("Index", "Home");
             }
             return View();
         }
