@@ -44,7 +44,7 @@ public class TimelineManagementDbContext : DbContext
             new NewSectionDefaultDto
             {
                 Guid = Guid.Parse("1c7324b5-2e88-4d33-811b-08db9fb220e4"),
-                Name = "Doing"
+                Name = "Progress"
             },
             new NewSectionDefaultDto
             {
