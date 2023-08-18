@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using TimelineManagement.DTOs.Roles;
+using TimelineManagement.DTOs.Sections;
 using TimelineManagement.Models;
 using Task = TimelineManagement.Models.Task;
 
@@ -33,6 +34,27 @@ public class TimelineManagementDbContext : DbContext
             {
                 Guid = Guid.Parse("203b4a4b-e9f7-4419-e553-08db9fa3dda3"),
                 Name = "Project Manager"
+            });
+        
+        modelBuilder.Entity<Section>().HasData(new NewSectionDefaultDto
+            {
+                Guid = Guid.Parse("fe4aa61c-329d-447f-811a-08db9fb220e4"),
+                Name = "To Do"
+            },
+            new NewSectionDefaultDto
+            {
+                Guid = Guid.Parse("1c7324b5-2e88-4d33-811b-08db9fb220e4"),
+                Name = "Doing"
+            },
+            new NewSectionDefaultDto
+            {
+                Guid = Guid.Parse("196272df-788f-4894-811c-08db9fb220e4"),
+                Name = "Testing"
+            },
+            new NewSectionDefaultDto
+            {
+                Guid = Guid.Parse("ec87fdea-0a03-4ce2-811d-08db9fb220e4"),
+                Name = "Done"
             });
             
         

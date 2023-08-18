@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TimelineManagement.DTOs.Roles;
 using TimelineManagement.Services;
@@ -8,6 +9,7 @@ namespace TimelineManagement.Controllers;
 
 [ApiController]
 [Route("api/roles")]
+[Authorize(Roles = "Project Manager")]
 public class RoleController : ControllerBase
 {
     private readonly RoleService _roleService;

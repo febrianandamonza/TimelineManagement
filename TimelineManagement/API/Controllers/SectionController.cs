@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TimelineManagement.DTOs.Sections;
 using TimelineManagement.Services;
@@ -9,6 +10,7 @@ namespace TimelineManagement.Controllers;
 
 [ApiController]
 [Route("api/sections")]
+[Authorize(Roles = "Project Manager")]
 public class SectionController : ControllerBase
 {
     private readonly SectionService _sectionService;

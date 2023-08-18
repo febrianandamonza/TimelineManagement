@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TimelineManagement.DTOs.ProjectCollaborators;
 using TimelineManagement.Services;
@@ -8,6 +9,7 @@ namespace TimelineManagement.Controllers;
 
 [ApiController]
 [Route("api/project-collaborators")]
+[Authorize(Roles = "Project Manager")]
 public class ProjectCollaboratorController : ControllerBase
 {
     private readonly ProjectCollaboratorService _projectCollaboratorService;

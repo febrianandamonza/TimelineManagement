@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TimelineManagement.DTOs.TaskComments;
 using TimelineManagement.Services;
@@ -8,6 +9,7 @@ namespace TimelineManagement.Controllers;
 
 [ApiController]
 [Route("api/task-comments")]
+[Authorize(Roles = "Project Manager")]
 public class TaskCommentController : ControllerBase
 {
     private readonly TaskCommentService _taskCommentService;
