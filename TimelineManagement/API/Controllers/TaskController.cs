@@ -19,6 +19,62 @@ public class TaskController : ControllerBase
         _taskService = taskService;
     }
     
+    [Route("create-default")]
+    [HttpPost]
+    public IActionResult CreateDefault(NewDefaultTaskDto newDefaultTaskDto)
+    {
+        var result = _taskService.CreateDefault(newDefaultTaskDto);
+        if(result is null)
+        {
+            return StatusCode(500, new ResponseHandler<NewDefaultTaskDto>
+            {
+                Code = StatusCodes.Status500InternalServerError,
+                Status = HttpStatusCode.InternalServerError.ToString(),
+                Message = "Register failed"
+            });
+        }
+        return Ok(new ResponseHandler<NewDefaultTaskDto>
+        {
+            Code = StatusCodes.Status200OK,
+            Status = HttpStatusCode.OK.ToString(),
+            Message = "Register success",
+            Data = result
+        });
+    }
+    
+    [HttpPut("change-section")]
+    public IActionResult Update(TaskChangeSection taskChangeSection)
+    {
+        var result = _taskService.ChangeSection(taskChangeSection);
+        if (result is -1)
+        {
+            return NotFound(new ResponseHandler<TaskChangeSection>
+            {
+                Code = StatusCodes.Status404NotFound,
+                Status = HttpStatusCode.NotFound.ToString(),
+                Message = "Guid is not found"
+            });
+        }
+
+        if (result is 0)
+        {
+            return StatusCode(500, new ResponseHandler<TaskChangeSection>
+            {
+                Code = StatusCodes.Status500InternalServerError,
+                Status = HttpStatusCode.InternalServerError.ToString(),
+                Message = "Error retrieve from database"
+            });
+        }
+
+        return Ok(new ResponseHandler<TaskChangeSection>
+        {
+            Code = StatusCodes.Status200OK,
+            Status = HttpStatusCode.OK.ToString(),
+            Message = "Update success"
+        });
+
+    }
+    
      [HttpGet]
     public IActionResult GetAll()
     {
