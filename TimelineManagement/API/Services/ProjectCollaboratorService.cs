@@ -13,6 +13,29 @@ public class ProjectCollaboratorService
         _projectCollaboratorRepository = projectCollaboratorRepository;
     }
     
+    public int ChangeStatus(ChangeStatusDto changeStatusDto)
+    {
+        var projectcollab = _projectCollaboratorRepository.GetByGuid(changeStatusDto.Guid);
+        if (projectcollab is null)
+        {
+            return -1;
+        }
+
+        var toUpdate = new ProjectCollaborator
+        {
+            Guid = projectcollab.Guid,
+            Status = changeStatusDto.Status,
+            ProjectGuid = projectcollab.ProjectGuid,
+            EmployeeGuid = projectcollab.EmployeeGuid,
+            CreatedDate = projectcollab.CreatedDate,
+            ModifiedDate = DateTime.Now
+        };
+        
+        var result = _projectCollaboratorRepository.Update(toUpdate);
+        return result ? 1 
+            : 0;
+    }
+    
     public IEnumerable<ProjectCollaboratorDto> GetAll()
     {
         var projectcollabs = _projectCollaboratorRepository.GetAll();

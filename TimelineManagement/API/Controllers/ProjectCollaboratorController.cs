@@ -18,8 +18,40 @@ public class ProjectCollaboratorController : ControllerBase
     {
         _projectCollaboratorService = projectCollaboratorService;
     }
-    
-     [HttpGet]
+
+    [HttpPut("change-status")]
+    public IActionResult ChangeStatus(ChangeStatusDto changeStatusDto)
+    {
+        var result = _projectCollaboratorService.ChangeStatus(changeStatusDto);
+        if (result is -1)
+        {
+            return NotFound(new ResponseHandler<ChangeStatusDto>
+            {
+                Code = StatusCodes.Status404NotFound,
+                Status = HttpStatusCode.NotFound.ToString(),
+                Message = "Guid is not found"
+            });
+        }
+
+        if (result is 0)
+        {
+            return StatusCode(500, new ResponseHandler<ChangeStatusDto>
+            {
+                Code = StatusCodes.Status500InternalServerError,
+                Status = HttpStatusCode.InternalServerError.ToString(),
+                Message = "Error retrieve from database"
+            });
+        }
+        return Ok(new ResponseHandler<ChangeStatusDto>
+        {
+            Code = StatusCodes.Status200OK,
+            Status = HttpStatusCode.OK.ToString(),
+            Message = "Update success"
+        });
+        
+    }
+
+    [HttpGet]
     public IActionResult GetAll()
     {
         var result = _projectCollaboratorService.GetAll();
