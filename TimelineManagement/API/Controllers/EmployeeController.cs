@@ -10,7 +10,7 @@ namespace TimelineManagement.Controllers;
 
 [ApiController]
 [Route("api/employees")]
-//[Authorize (Roles = "Project Manager")]
+[Authorize (Roles = "Project Manager")]
 [EnableCors]
 public class EmployeeController : ControllerBase
 {
