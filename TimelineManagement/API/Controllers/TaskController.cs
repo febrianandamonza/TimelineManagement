@@ -30,20 +30,86 @@ public class TaskController : ControllerBase
             {
                 Code = StatusCodes.Status500InternalServerError,
                 Status = HttpStatusCode.InternalServerError.ToString(),
-                Message = "Register failed"
+                Message = "Create Task failed"
             });
         }
         return Ok(new ResponseHandler<NewDefaultTaskDto>
         {
             Code = StatusCodes.Status200OK,
             Status = HttpStatusCode.OK.ToString(),
-            Message = "Register success",
+            Message = "Create Task success",
             Data = result
         });
     }
     
+    [HttpPut("change-status")]
+    public IActionResult ChangeStatus(TaskChangeStatusDto taskChangeStatusDto)
+    {
+        var result = _taskService.ChangeStatus(taskChangeStatusDto);
+        if (result is -1)
+        {
+            return NotFound(new ResponseHandler<TaskChangeStatusDto>
+            {
+                Code = StatusCodes.Status404NotFound,
+                Status = HttpStatusCode.NotFound.ToString(),
+                Message = "Guid is not found"
+            });
+        }
+
+        if (result is 0)
+        {
+            return StatusCode(500, new ResponseHandler<TaskChangeStatusDto>
+            {
+                Code = StatusCodes.Status500InternalServerError,
+                Status = HttpStatusCode.InternalServerError.ToString(),
+                Message = "Error retrieve from database"
+            });
+        }
+
+        return Ok(new ResponseHandler<TaskChangeStatusDto>
+        {
+            Code = StatusCodes.Status200OK,
+            Status = HttpStatusCode.OK.ToString(),
+            Message = "Change Employee success"
+        });
+
+    }
+    
+    [HttpPut("change-employee")]
+    public IActionResult ChangeEmployee(TaskChangeEmployeeDto taskChangeEmployeeDto)
+    {
+        var result = _taskService.ChangeEmployee(taskChangeEmployeeDto);
+        if (result is -1)
+        {
+            return NotFound(new ResponseHandler<TaskChangeEmployeeDto>
+            {
+                Code = StatusCodes.Status404NotFound,
+                Status = HttpStatusCode.NotFound.ToString(),
+                Message = "Guid is not found"
+            });
+        }
+
+        if (result is 0)
+        {
+            return StatusCode(500, new ResponseHandler<TaskChangeEmployeeDto>
+            {
+                Code = StatusCodes.Status500InternalServerError,
+                Status = HttpStatusCode.InternalServerError.ToString(),
+                Message = "Error retrieve from database"
+            });
+        }
+
+        return Ok(new ResponseHandler<TaskChangeEmployeeDto>
+        {
+            Code = StatusCodes.Status200OK,
+            Status = HttpStatusCode.OK.ToString(),
+            Message = "Change Employee success"
+        });
+
+    }
+    
     [HttpPut("change-section")]
-    public IActionResult Update(TaskChangeSection taskChangeSection)
+    public IActionResult ChangeSection(TaskChangeSection taskChangeSection)
     {
         var result = _taskService.ChangeSection(taskChangeSection);
         if (result is -1)
@@ -70,7 +136,7 @@ public class TaskController : ControllerBase
         {
             Code = StatusCodes.Status200OK,
             Status = HttpStatusCode.OK.ToString(),
-            Message = "Update success"
+            Message = "Change Section success"
         });
 
     }

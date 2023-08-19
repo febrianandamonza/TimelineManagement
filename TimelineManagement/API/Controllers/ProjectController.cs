@@ -19,6 +19,29 @@ public class ProjectController : ControllerBase
         _projectService = projectService;
     }
     
+    [Route("create-default")]
+    [HttpPost]
+    public IActionResult CreateProject(NewDefaultProjectDto newDefaultProjectDto)
+    {
+        var result = _projectService.CreateProject(newDefaultProjectDto);
+        if(result is null)
+        {
+            return StatusCode(500, new ResponseHandler<NewDefaultProjectDto>
+            {
+                Code = StatusCodes.Status500InternalServerError,
+                Status = HttpStatusCode.InternalServerError.ToString(),
+                Message = "Create Project failed"
+            });
+        }
+        return Ok(new ResponseHandler<NewDefaultProjectDto>
+        {
+            Code = StatusCodes.Status200OK,
+            Status = HttpStatusCode.OK.ToString(),
+            Message = "Create Project success",
+            Data = result
+        });
+    }
+    
      [HttpGet]
     public IActionResult GetAll()
     {

@@ -13,13 +13,77 @@ public class TaskService
 {
     private readonly ITaskRepository _taskRepository;
     private readonly ISectionRepository _sectionRepository;
+    private readonly IProjectRepository _projectRepository;
+    private readonly IEmployeeRepository _employeeRepository;
     private readonly TimelineManagementDbContext _dbContext;
 
-    public TaskService(ITaskRepository taskRepository, ISectionRepository sectionRepository, TimelineManagementDbContext dbContext)
+    public TaskService(ITaskRepository taskRepository, ISectionRepository sectionRepository, TimelineManagementDbContext dbContext, IProjectRepository projectRepository, IEmployeeRepository employeeRepository)
     {
         _taskRepository = taskRepository;
         _sectionRepository = sectionRepository;
         _dbContext = dbContext;
+        _projectRepository = projectRepository;
+        _employeeRepository = employeeRepository;
+    }
+    
+    public int ChangeStatus(TaskChangeStatusDto taskChangeStatusDto)
+    {
+        var getTask = _taskRepository.GetByGuid(taskChangeStatusDto.Guid);
+        if (getTask is null)
+        {
+            return -1;
+        }
+
+        var task = new Task
+        {
+            Guid = getTask.Guid,
+            Name = getTask.Name,
+            StartDate = getTask.StartDate,
+            EndDate = getTask.EndDate,
+            Status = taskChangeStatusDto.StatusLevel,
+            Priority = getTask.Priority,
+            ProjectGuid = getTask.ProjectGuid,
+            SectionGuid = getTask.SectionGuid,
+            EmployeeGuid = getTask.EmployeeGuid
+        };
+
+        var isUpdate = _taskRepository.Update(task);
+        if (!isUpdate)
+        {
+            return 0;
+        }
+
+        return 1;
+    }
+    
+    public int ChangeEmployee(TaskChangeEmployeeDto taskChangeEmployeeDto)
+    {
+        var getTask = _taskRepository.GetByGuid(taskChangeEmployeeDto.Guid);
+        if (getTask is null)
+        {
+            return -1;
+        }
+
+        var task = new Task
+        {
+            Guid = getTask.Guid,
+            Name = getTask.Name,
+            StartDate = getTask.StartDate,
+            EndDate = getTask.EndDate,
+            Status = getTask.Status,
+            Priority = getTask.Priority,
+            ProjectGuid = getTask.ProjectGuid,
+            SectionGuid = getTask.SectionGuid,
+            EmployeeGuid = taskChangeEmployeeDto.EmployeeGuid
+        };
+
+        var isUpdate = _taskRepository.Update(task);
+        if (!isUpdate)
+        {
+            return 0;
+        }
+
+        return 1;
     }
     
     public NewDefaultTaskDto CreateDefault(NewDefaultTaskDto newDefaultTaskDto)
@@ -27,17 +91,29 @@ public class TaskService
         using var transaction = _dbContext.Database.BeginTransaction();
         try
         {
+            var getProject = _projectRepository.GetByName(newDefaultTaskDto.ProjectName);
+            if (getProject is null)
+            {
+                return null;
+            }
+            
+            var getEmployee = _employeeRepository.GetByEmail(newDefaultTaskDto.EmployeeEmail);
+            if (getEmployee is null)
+            {
+                return null;
+            }
+            
             var task = _taskRepository.Create( new Task
             {
                 Guid = new Guid(),
                 Name = newDefaultTaskDto.Name,
                 StartDate = newDefaultTaskDto.StartDate,
                 EndDate = newDefaultTaskDto.EndDate,
-                Status = newDefaultTaskDto.Status,
+                Status = false,
                 Priority = newDefaultTaskDto.Priority,
-                ProjectGuid = newDefaultTaskDto.ProjectGuid,
+                ProjectGuid = getProject.Guid,
                 SectionGuid = Guid.Parse("fe4aa61c-329d-447f-811a-08db9fb220e4"),
-                EmployeeGuid = newDefaultTaskDto.EmployeeGuid,
+                EmployeeGuid = getEmployee.Guid,
                 CreatedDate = DateTime.Now,
                 ModifiedDate = DateTime.Now
             });
@@ -47,10 +123,9 @@ public class TaskService
                 Name = task.Name,
                 StartDate = task.StartDate,
                 EndDate = task.EndDate,
-                Status = task.Status,
                 Priority = task.Priority,
-                ProjectGuid = task.ProjectGuid,
-                EmployeeGuid = newDefaultTaskDto.EmployeeGuid
+                ProjectName = getProject.Name,
+                EmployeeEmail = getEmployee.Email
             };
             
             transaction.Commit();

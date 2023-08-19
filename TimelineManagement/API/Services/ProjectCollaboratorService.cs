@@ -1,5 +1,7 @@
 ﻿using TimelineManagement.Contracts;
+using TimelineManagement.Data;
 using TimelineManagement.DTOs.ProjectCollaborators;
+using TimelineManagement.DTOs.Tasks;
 using TimelineManagement.Models;
 
 namespace TimelineManagement.Services;
@@ -12,6 +14,7 @@ public class ProjectCollaboratorService
     {
         _projectCollaboratorRepository = projectCollaboratorRepository;
     }
+    
     
     public int ChangeStatus(ChangeStatusDto changeStatusDto)
     {

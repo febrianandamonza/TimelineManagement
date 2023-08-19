@@ -1,16 +1,79 @@
 ﻿using TimelineManagement.Contracts;
+using TimelineManagement.Data;
 using TimelineManagement.DTOs.Projects;
+using TimelineManagement.DTOs.Tasks;
 using TimelineManagement.Models;
+using Task = TimelineManagement.Models.Task;
 
 namespace TimelineManagement.Services;
 
 public class ProjectService
 {
     private readonly IProjectRepository _projectRepository;
+    private readonly ITaskRepository _taskRepository;
+    
+    private readonly TimelineManagementDbContext _dbContext;
 
-    public ProjectService(IProjectRepository projectRepository)
+    public ProjectService(IProjectRepository projectRepository, ITaskRepository taskRepository, TimelineManagementDbContext dbContext)
     {
         _projectRepository = projectRepository;
+        _taskRepository = taskRepository;
+        _dbContext = dbContext;
+    }
+    
+    public NewDefaultProjectDto? CreateProject(NewDefaultProjectDto newDefaultProjectDto)
+    {
+        using var transaction = _dbContext.Database.BeginTransaction();
+        try
+        {
+            var project = _projectRepository.Create(new Project
+            {
+                Guid = new Guid(),
+                Name = newDefaultProjectDto.Name,
+                StartDate = newDefaultProjectDto.StartDate,
+                EndDate = newDefaultProjectDto.EndDate,
+                EmployeeGuid = newDefaultProjectDto.EmployeeGuid,
+                CreatedDate = DateTime.Now,
+                ModifiedDate = DateTime.Now
+            });
+            
+            var task = _taskRepository.Create(new Task
+            { 
+                Guid = new Guid(),
+                Name = newDefaultProjectDto.TaskName,
+                StartDate = newDefaultProjectDto.StartDateTask,
+                EndDate = newDefaultProjectDto.EndDateTask,
+                Status = false,
+                Priority = newDefaultProjectDto.Priority,
+                ProjectGuid = project.Guid,
+                SectionGuid = Guid.Parse("fe4aa61c-329d-447f-811a-08db9fb220e4"),
+                EmployeeGuid = project.EmployeeGuid,
+                CreatedDate = DateTime.Now,
+                ModifiedDate = DateTime.Now
+                
+            });
+            
+            var toDto = new NewDefaultProjectDto
+            {
+                Name = project.Name,
+                StartDate = project.StartDate,
+                EndDate = project.EndDate,
+                EmployeeGuid = project.EmployeeGuid,
+                TaskName = task.Name,
+                Priority = task.Priority,
+                StartDateTask = task.StartDate,
+                EndDateTask = task.EndDate
+                
+            };
+            
+            transaction.Commit();
+            return toDto;
+        }
+        catch 
+        {
+            transaction.Rollback();
+            return null;
+        }
     }
     
     public IEnumerable<ProjectDto> GetAll()
