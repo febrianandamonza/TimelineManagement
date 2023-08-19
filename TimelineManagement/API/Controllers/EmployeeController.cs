@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using API.DTOs.Employees;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -149,6 +150,75 @@ public class EmployeeController : ControllerBase
             Code = StatusCodes.Status200OK,
             Status = HttpStatusCode.OK.ToString(),
             Message = "Delete success"
+        });
+    }
+
+    [HttpGet("detail")]
+    public IActionResult GetAllEmployeeDetail()
+    {
+        var result = _employeeService.GetAllEmployeeDetail();
+        if (!result.Any())
+        {
+            return NotFound(new ResponseHandler<EmployeeDetailDto>
+            {
+                Code = StatusCodes.Status404NotFound,
+                Status = HttpStatusCode.NotFound.ToString(),
+                Message = "Data is not found"
+            });
+        }
+
+        return Ok(new ResponseHandler<IEnumerable<EmployeeDetailDto>>
+        {
+            Code = StatusCodes.Status200OK,
+            Status = HttpStatusCode.OK.ToString(),
+            Message = "Success retrieve data",
+            Data = result
+        });
+    }
+
+    [HttpGet("detail/{guid}")]
+    public IActionResult GetEmployeeDetailByGuid(Guid guid)
+    {
+        var result = _employeeService.GetEmployeeDetailByGuid(guid);
+        if (result is null)
+        {
+            return NotFound(new ResponseHandler<EmployeeDetailDto>
+            {
+                Code = StatusCodes.Status404NotFound,
+                Status = HttpStatusCode.NotFound.ToString(),
+                Message = "Data is not found"
+            });
+        }
+
+        return Ok(new ResponseHandler<EmployeeDetailDto>
+        {
+            Code = StatusCodes.Status200OK,
+            Status = HttpStatusCode.OK.ToString(),
+            Message = "Success retrieve data",
+            Data = result
+        });
+    }
+
+    [HttpGet("staff")]
+    public IActionResult GetStaffEmployees()
+    {
+        var result = _employeeService.GetStaffEmployees().ToList();
+        if (!result.Any())
+        {
+            return NotFound(new ResponseHandler<StaffEmployeeDto>
+            {
+                Code = StatusCodes.Status404NotFound,
+                Status = HttpStatusCode.NotFound.ToString(),
+                Message = "Data is not found"
+            });
+        }
+
+        return Ok(new ResponseHandler<IEnumerable<StaffEmployeeDto>>
+        {
+            Code = StatusCodes.Status200OK,
+            Status = HttpStatusCode.OK.ToString(),
+            Message = "Success retrieve data",
+            Data = result
         });
     }
 }
