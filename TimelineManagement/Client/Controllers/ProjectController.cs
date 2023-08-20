@@ -1,5 +1,6 @@
 ﻿using Client.Contracts;
 using Client.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.Differencing;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using TimelineManagement.Models;
 
 namespace Client.Controllers
 {
+    [Authorize(Roles = "Project Manager")]
     public class ProjectController : Controller
     {
         private readonly IProjectRepository _projectRepository;
@@ -37,7 +39,7 @@ namespace Client.Controllers
             return View();
         }
 
-        [HttpGet]
+        /*[HttpGet]
         public async Task<IActionResult> Index()
         {
             var result = await _projectRepository.Get();
@@ -61,8 +63,9 @@ namespace Client.Controllers
                 ListProject = result.Data;
             }
             return View(ListProject);
-        }
+        }*/
 
+        /*
         [HttpPost]
         public async Task<IActionResult> Update(ProjectDto projectDto)
         {
@@ -75,8 +78,9 @@ namespace Client.Controllers
             }
             return RedirectToAction(nameof(Update));
         }
+        */
 
-        [HttpGet]
+        /*[HttpGet]
         public async Task<IActionResult> Delete(Guid id)
         {
             var result = await _projectRepository.Get(id);
@@ -98,6 +102,6 @@ namespace Client.Controllers
                 return RedirectToAction("index", "employee");
             }
             return RedirectToAction(nameof(Index));
-        }
+        }*/
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using TimelineManagement.DTOs.Projects;
 using TimelineManagement.Services;
@@ -10,6 +11,7 @@ namespace TimelineManagement.Controllers;
 [ApiController]
 [Route("api/projects")]
 [Authorize(Roles = "Project Manager")]
+[EnableCors]
 public class ProjectController : ControllerBase
 {
     private readonly ProjectService _projectService;
@@ -19,6 +21,7 @@ public class ProjectController : ControllerBase
         _projectService = projectService;
     }
     
+    [AllowAnonymous]
     [Route("create-default")]
     [HttpPost]
     public IActionResult CreateProject(NewDefaultProjectDto newDefaultProjectDto)
