@@ -7,14 +7,15 @@
 
 function Insert() {
     var obj = new Object();
-    obj.Name = $("#Name").val();
-    obj.StartDate = $("#StartDate").val();
-    obj.EndDate = $("#EndDate").val();
-    obj.EmployeeGuid = $("#EmployeeGuid").val();
-    obj.TaskName = $("#TaskName").val();
-    obj.Priority = $("#Priority").val();
-    obj.StartDateTask = $("#StartDateTask").val();
-    obj.EndDateTask = $("#EndDateTask").val();
+    obj.name = $("#Name").val();
+    obj.startDate = $("#StartDate").val();
+    obj.endDate = $("#EndDate").val();
+    obj.employeeGuid = $("#EmployeeGuid").val();
+    obj.taskName = $("#TaskName").val();
+    obj.priority = parseInt($("#Priority").val());
+    obj.startDateTask = $("#StartDateTask").val();
+    obj.endDateTask = $("#EndDateTask").val();
+    
     $.ajax({
         url: "https://localhost:7230/api/projects/create-default",
         type: "POST",
@@ -37,4 +38,5 @@ function Insert() {
             text: 'Failed to insert data, Please Try Again',
         })
     })
+    console.log(obj);
 }
