@@ -1,4 +1,4 @@
-﻿
+﻿@model TimelineManagement.DTOs.Projects.NewDefaultProjectDto
 <!DOCTYPE html>
 
 <!-- =========================================================
@@ -27,6 +27,7 @@
     <title>Dashboard</title>
 
     <meta name="description" content="" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="~/assets/img/favicon/favicon.ico" />
@@ -63,6 +64,10 @@
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="~/assets/js/config.js"></script>
+
+    <script>
+    const token = '@Context.Session.GetString("JWToken")';
+    </script>
 
 </head>
 
@@ -174,6 +179,9 @@
                                 </a>
                             </li>
                         </ul>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createModal">
+    Create New Project
+</button>
                     </li>
                 </ul>
             </aside>
@@ -327,6 +335,58 @@
     <!-- Overlay -->
     <div class="layout-overlay layout-menu-toggle"></div>
 
+    <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createModalLabel">Create New Project</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Your form code here -->
+                <form action="Create" id="formAuthentication" class="mb-3" action="/Project/Create/" method="post">
+                    <div class="form-group">
+                       <label for="Name">Project Name</label>
+                       <input type="text" id="Name" name="Name" class="form-control" />
+                   </div>
+                   <div class="form-group">
+                       <label for="StartDate">Start Date</label>
+                       <input type="date" id="StartDate" name="StartDate" class="form-control" />
+                   </div>
+                   <div class="form-group">
+                       <label for="EndDate">End Date</label>
+                       <input type="date" id="EndDate" name="EndDate" class="form-control" />
+                   </div>
+                   <div class="form-group">
+                        <input asp-for="EmployeeGuid" type="hidden" value="@User.FindFirst("Guid").Value" />
+                   </div>
+                   <div class="form-group">
+                       <label for="TaskName">Task Name</label>
+                       <input type="" id="TaskName" name="TaskName" class="form-control" />
+                   </div>
+                   <div class="form-group">
+                       <label for="Priority">Priority</label>
+                       <input type="" id="Priority" name="Priority" class="form-control" />
+                   </div>
+                   <div class="form-group">
+                       <label for="StartDateTask">Start Date</label>
+                       <input type="date" id="StartDateTask" name="StartDateTask" class="form-control" />
+                   </div>
+                   <div class="form-group">
+                       <label for="EndDateTask">End Date</label>
+                       <input type="date" id="EndDateTask" name="EndDateTask" class="form-control" />
+                   </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="Insert()" data-bs-dismiss="modal">Create</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
     <!-- Core JS -->
@@ -347,6 +407,7 @@
     <script src="~/js/admin.js" asp-append-version="true"></script>
     <script src="~/js/pokemon.js" asp-append-version="true"></script>
     <script src="~/js/dashboard.js" asp-append-version="true"></script>
+    <script src="~/js/site.js"></script>
 
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -357,6 +418,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- jQuery (required for Bootstrap JavaScript plugins) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+
+<!-- Popper.js (required for Bootstrap JavaScript plugins) -->
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script>
+
+
 
     <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.colVis.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
