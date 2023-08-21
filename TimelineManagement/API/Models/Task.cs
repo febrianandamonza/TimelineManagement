@@ -15,8 +15,8 @@ public class Task : BaseEntity
     [Column("end_date")]
     public DateTime EndDate { get; set; }
     
-    [Column("status")]
-    public bool Status { get; set; }
+    [Column("is_finished")]
+    public bool IsFinished { get; set; }
     
     [Column("priority")]
     public PriorityLevel Priority { get; set; }

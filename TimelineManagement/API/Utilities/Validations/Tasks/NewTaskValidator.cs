@@ -16,7 +16,7 @@ public class NewTaskValidator : AbstractValidator<NewTaskDto>
         RuleFor(t => t.EndDate)
             .NotEmpty().WithMessage("End Date is required");
 
-        RuleFor(t => t.Status)
+        RuleFor(t => t.IsFinished)
             .Must(x => x == false || x == true);
         
         RuleFor(t => t.Priority)

@@ -9,7 +9,7 @@ public class TaskDto
     public string Name { get; set; }
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
-    public bool Status { get; set; }
+    public bool IsFinished { get; set; }
     public PriorityLevel Priority { get; set; }
     public Guid ProjectGuid { get; set; }
     public Guid SectionGuid { get; set; }
@@ -23,7 +23,7 @@ public class TaskDto
             Name = taskDto.Name,
             StartDate = taskDto.StartDate,
             EndDate = taskDto.EndDate,
-            Status = taskDto.Status,
+            IsFinished = taskDto.IsFinished,
             Priority = taskDto.Priority,
             ProjectGuid = taskDto.ProjectGuid,
             SectionGuid = taskDto.SectionGuid,
@@ -40,7 +40,7 @@ public class TaskDto
             Name = task.Name,
             StartDate = task.StartDate,
             EndDate = task.EndDate,
-            Status = task.Status,
+            IsFinished = task.IsFinished,
             Priority = task.Priority,
             ProjectGuid = task.ProjectGuid,
             SectionGuid = task.SectionGuid,

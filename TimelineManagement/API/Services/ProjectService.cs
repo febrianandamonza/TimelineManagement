@@ -55,7 +55,7 @@ public class ProjectService
                 Name = newDefaultProjectDto.TaskName,
                 StartDate = newDefaultProjectDto.StartDateTask,
                 EndDate = newDefaultProjectDto.EndDateTask,
-                Status = false,
+                IsFinished = false,
                 Priority = newDefaultProjectDto.Priority,
                 ProjectGuid = project.Guid,
                 SectionGuid = Guid.Parse("fe4aa61c-329d-447f-811a-08db9fb220e4"),
