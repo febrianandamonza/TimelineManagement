@@ -40,3 +40,24 @@ function Insert() {
     })
     console.log(obj);
 }
+
+const guid = document.getElementById("guidInput").value;
+
+$.ajax({
+    url: `https://localhost:7230/api/projects/project-by-employee/` + guid
+}).done((result) => {
+    let temp = "";
+    $.each(result.data, (key,val) => {
+        temp += `
+                <li class="menu-item">
+                    <a href="" class="menu-link">
+                    <div>${val.projectName}</div>
+                    </a>
+                </li>
+            `;
+        console.log(val.projectName);
+    })
+    $("#project-list").html(temp);
+});
+console.log(guid);
+console.log(url);
