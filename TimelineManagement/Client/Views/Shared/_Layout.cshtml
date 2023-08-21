@@ -162,7 +162,10 @@
                     <li class="menu-header small text-uppercase">
                         <span class="menu-header-text">Project</span>
                     </li>
-                    <li class="menu-item">
+                    <button type="button" class="btn btn-primary ml-4" data-toggle="modal" data-target="#createModal">
+                            Create New Project
+                    </button>
+                    @*<li class="menu-item">
                         <a href="" class="menu-link menu-toggle">
                             <i class="menu-icon tf-icons bx bx-dock-top"></i>
                             <div>Project</div>
@@ -179,10 +182,8 @@
                                 </a>
                             </li>
                         </ul>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createModal">
-    Create New Project
-</button>
-                    </li>
+                        
+                    </li>*@
                 </ul>
             </aside>
 
@@ -367,9 +368,15 @@
                        <input type="" id="TaskName" name="TaskName" class="form-control" />
                    </div>
                    <div class="form-group">
-                       <label for="Priority">Priority</label>
-                       <input type="" id="Priority" name="Priority" class="form-control" />
-                   </div>
+                        <label for="Priority">Priority</label>
+                        <select id="Priority" name="Priority" class="form-select" aria-label="Default select example">
+                            <option selected>Select Priority</option>
+                            <option value="0">Low</option>
+                            <option value="1">Medium</option>
+                            <option value="2">High</option>
+                        </select>
+                        </div>
+                   <div class="form-group">
                    <div class="form-group">
                        <label for="StartDateTask">Start Date</label>
                        <input type="date" id="StartDateTask" name="StartDateTask" class="form-control" />
