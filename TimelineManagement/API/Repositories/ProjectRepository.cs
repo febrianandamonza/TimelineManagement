@@ -11,4 +11,5 @@ public class ProjectRepository : GeneralRepository<Project>, IProjectRepository
     {
         return _context.Set<Project>().FirstOrDefault(p => p.Name.Contains(name));
     }
+    
 }

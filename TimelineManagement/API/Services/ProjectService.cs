@@ -21,6 +21,18 @@ public class ProjectService
         _dbContext = dbContext;
     }
     
+    public IEnumerable<ProjectByEmployeeDto>?  GetAllByEmployeeGuid(Guid guid)
+    {
+        var result = from project in _projectRepository.GetAll()
+            where project.EmployeeGuid == guid
+            select new ProjectByEmployeeDto
+            {
+                ProjectName = project.Name
+            };
+        
+        return result;
+    }
+    
     public NewDefaultProjectDto? CreateProject(NewDefaultProjectDto newDefaultProjectDto)
     {
         using var transaction = _dbContext.Database.BeginTransaction();

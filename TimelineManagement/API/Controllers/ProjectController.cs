@@ -44,8 +44,31 @@ public class ProjectController : ControllerBase
             Data = result
         });
     }
-    
-     [HttpGet]
+
+    [HttpGet("project-by-employee/{guid}")]
+    public IActionResult GetAllByEmployeeGuid(Guid guid)
+    {
+        var result = _projectService.GetAllByEmployeeGuid(guid);
+        if (!result.Any())
+        {
+            return NotFound(new ResponseHandler<ProjectByEmployeeDto>
+            {
+                Code = StatusCodes.Status404NotFound,
+                Status = HttpStatusCode.NotFound.ToString(),
+                Message = "Data is not found"
+            });
+        }
+
+        return Ok(new ResponseHandler<IEnumerable<ProjectByEmployeeDto>>
+        {
+            Code = StatusCodes.Status200OK,
+            Status = HttpStatusCode.OK.ToString(),
+            Message = "Success retrieve data",
+            Data = result
+        });
+    }
+
+    [HttpGet]
     public IActionResult GetAll()
     {
         var result = _projectService.GetAll();
