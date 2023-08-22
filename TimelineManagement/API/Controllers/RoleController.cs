@@ -9,7 +9,7 @@ namespace TimelineManagement.Controllers;
 
 [ApiController]
 [Route("api/roles")]
-[Authorize(Roles = "Project Manager")]
+/*[Authorize(Roles = "Project Manager")]*/
 public class RoleController : ControllerBase
 {
     private readonly RoleService _roleService;

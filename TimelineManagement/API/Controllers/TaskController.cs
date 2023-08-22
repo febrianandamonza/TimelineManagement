@@ -9,7 +9,7 @@ namespace TimelineManagement.Controllers;
 
 [ApiController]
 [Route("api/tasks")]
-[Authorize(Roles = "Project Manager")]
+/*[Authorize(Roles = "Project Manager")]*/
 public class TaskController : ControllerBase
 {
     private readonly TaskService _taskService;

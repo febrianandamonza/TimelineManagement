@@ -9,7 +9,7 @@ namespace TimelineManagement.Controllers;
 
 [ApiController]
 [Route("api/project-collaborators")]
-[Authorize(Roles = "Project Manager")]
+/*[Authorize(Roles = "Project Manager")]*/
 public class ProjectCollaboratorController : ControllerBase
 {
     private readonly ProjectCollaboratorService _projectCollaboratorService;
