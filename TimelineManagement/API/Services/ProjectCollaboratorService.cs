@@ -9,12 +9,54 @@ namespace TimelineManagement.Services;
 public class ProjectCollaboratorService
 {
     private readonly IProjectCollaboratorRepository _projectCollaboratorRepository;
+    private readonly IEmployeeRepository _employeeRepository;
+    
+    private readonly TimelineManagementDbContext _dbContext;
 
-    public ProjectCollaboratorService(IProjectCollaboratorRepository projectCollaboratorRepository)
+    public ProjectCollaboratorService(IProjectCollaboratorRepository projectCollaboratorRepository, TimelineManagementDbContext dbContext, IEmployeeRepository employeeRepository)
     {
         _projectCollaboratorRepository = projectCollaboratorRepository;
+        _dbContext = dbContext;
+        _employeeRepository = employeeRepository;
     }
     
+    public NewProjectByEmployeeDto? CreateByEmail(NewProjectByEmployeeDto newProjectByEmployeeDto)
+    {
+        using var transaction = _dbContext.Database.BeginTransaction();
+        try
+        {
+            var employee = _employeeRepository.GetByEmail(newProjectByEmployeeDto.Email);
+            if (employee is null)
+            {
+                return null;
+            }
+
+            var projectCollab = _projectCollaboratorRepository.Create(new ProjectCollaborator
+            {
+                Guid = new Guid(),
+                ProjectGuid = newProjectByEmployeeDto.ProjectGuid,
+                EmployeeGuid = employee.Guid,
+                CreatedDate = DateTime.Now,
+                ModifiedDate = DateTime.Now,
+                Status = 0
+            });
+
+            
+            var toDto = new NewProjectByEmployeeDto
+            {
+                ProjectGuid = projectCollab.ProjectGuid,
+                Email = employee.Email
+            };
+            
+            transaction.Commit();
+            return toDto;
+        }
+        catch 
+        {
+            transaction.Rollback();
+            return null;
+        }
+    }
     
     public int ChangeStatus(ChangeStatusDto changeStatusDto)
     {

@@ -19,6 +19,29 @@ public class ProjectCollaboratorController : ControllerBase
         _projectCollaboratorService = projectCollaboratorService;
     }
 
+    [HttpPost("create-by-email")]
+    public IActionResult CreateByEmployeeEmail(NewProjectByEmployeeDto newProjectByEmployeeDto)
+    {
+        var result = _projectCollaboratorService.CreateByEmail(newProjectByEmployeeDto);
+        if (result is null)
+        {
+            return StatusCode(500, new ResponseHandler<NewProjectByEmployeeDto>
+            {
+                Code = StatusCodes.Status500InternalServerError,
+                Status = HttpStatusCode.InternalServerError.ToString(),
+                Message = "Error retrieve from database"
+            });
+        }
+
+        return Ok(new ResponseHandler<NewProjectByEmployeeDto>
+        {
+            Code = StatusCodes.Status200OK,
+            Status = HttpStatusCode.OK.ToString(),
+            Message = "Success retrieve data",
+            Data = result
+        });
+    }
+    
     [HttpPut("change-status")]
     public IActionResult ChangeStatus(ChangeStatusDto changeStatusDto)
     {
