@@ -68,6 +68,28 @@ public class ProjectController : ControllerBase
         });
     }
 
+    [HttpGet("detail-project/{guid}")]
+    public IActionResult GetDetailProject(Guid guid)
+    {
+        var result = _projectService.GetALlDetailProjectsByGuid(guid);
+        if (!result.Any())
+        {
+            return NotFound(new ResponseHandler<DetailProject>
+            {
+                Code = StatusCodes.Status404NotFound,
+                Status = HttpStatusCode.NotFound.ToString(),
+                Message = "Data is not found"
+            });
+        }
+        return Ok(new ResponseHandler<IEnumerable<DetailProject>>
+        {
+            Code = StatusCodes.Status200OK,
+            Status = HttpStatusCode.OK.ToString(),
+            Message = "Success retrieve data",
+            Data = result
+        });
+    }
+
     [HttpGet]
     public IActionResult GetAll()
     {

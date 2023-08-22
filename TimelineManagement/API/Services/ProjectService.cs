@@ -11,14 +11,38 @@ public class ProjectService
 {
     private readonly IProjectRepository _projectRepository;
     private readonly ITaskRepository _taskRepository;
+    private readonly IProjectCollaboratorRepository _projectCollaboratorRepository;
     
     private readonly TimelineManagementDbContext _dbContext;
 
-    public ProjectService(IProjectRepository projectRepository, ITaskRepository taskRepository, TimelineManagementDbContext dbContext)
+    public ProjectService(IProjectRepository projectRepository, ITaskRepository taskRepository, TimelineManagementDbContext dbContext, IProjectCollaboratorRepository projectCollaboratorRepository)
     {
         _projectRepository = projectRepository;
         _taskRepository = taskRepository;
         _dbContext = dbContext;
+        _projectCollaboratorRepository = projectCollaboratorRepository;
+    }
+    
+    public IEnumerable<DetailProject>?  GetALlDetailProjectsByGuid(Guid guid)
+    {
+        var result = from p in _projectRepository.GetAll() where p.Guid == guid
+            join t in _taskRepository.GetAll() on p.Guid equals t.ProjectGuid
+            select new DetailProject
+            {
+                Guid = p.Guid,
+                Name = p.Name,
+                StartDate = p.StartDate,
+                EndDate = p.StartDate,
+                EmployeeGuid = p.EmployeeGuid,
+                TaskGuid = t.Guid,
+                TaskName = t.Name,
+                Priority = t.Priority,
+                StartDateTask = t.StartDate,
+                EndDateTask = t.EndDate,
+                TaskSection = t.SectionGuid
+            };
+        
+        return result;
     }
     
     public IEnumerable<ProjectByEmployeeDto>?  GetAllByEmployeeGuid(Guid guid)
