@@ -342,11 +342,11 @@
                     <!-- Your form code here -->
                     <form action="Create" id="formAuthentication" class="mb-3" action="/ProjectCollaborator/Create/" method="post">
                         <div class="form-group">
-                            <label for="Email">Email</label>
-                            <input type="email" id="Email" name="Email" class="form-control" />
+                            <input type="hidden" id="ProjectGuid" name="ProjectGuid" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <input asp-for="ProjectGuid" type="hidden" value="" />
+                            <label for="Email">Email</label>
+                            <input type="email" id="Email" name="Email" class="form-control" />
                         </div>
                     </form>
                 </div>

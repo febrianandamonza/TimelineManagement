@@ -59,3 +59,40 @@ $.ajax({
     })
     $("#project-list").html(temp);
 });
+
+function openAddColabModal() {
+    const currentUrl = window.location.href;
+    const projectGuid = currentUrl.substring(currentUrl.lastIndexOf("/") + 1);
+
+    document.getElementById("ProjectGuid").value = projectGuid;
+}
+
+function Insert() {
+    var obj = new Object();
+    obj.email = $("#Email").val();
+    obj.projectGuid = $("#ProjectGuid").val();
+
+    $.ajax({
+        url: "https://localhost:7230/api/project-collaborators/create-by-email",
+        type: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        data: JSON.stringify(obj)
+    }).done((result) => {
+        Swal.fire
+            (
+                'Data Has Been Successfuly Inserted',
+                'Success'
+            ).then(() => {
+                location.reload();
+            })
+    }).fail((error) => {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops',
+            text: 'Failed to insert data, Please Try Again',
+        })
+    })
+    console.log(obj);
+}
