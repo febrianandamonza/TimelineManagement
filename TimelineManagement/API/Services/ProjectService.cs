@@ -27,6 +27,7 @@ public class ProjectService
             where project.EmployeeGuid == guid
             select new ProjectByEmployeeDto
             {
+                Guid = project.Guid,
                 ProjectName = project.Name
             };
         
