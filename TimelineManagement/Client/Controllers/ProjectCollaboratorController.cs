@@ -7,26 +7,27 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Win32;
 using NuGet.Protocol.Core.Types;
 using TimelineManagement.DTOs.Employees;
+using TimelineManagement.DTOs.ProjectCollaborators;
 using TimelineManagement.DTOs.Projects;
 using TimelineManagement.Models;
 
 namespace Client.Controllers
 {
     [Authorize(Roles = "Project Manager")]
-    public class ProjectController : Controller
+    public class ProjectCollaboratorController : Controller
     {
-        private readonly IProjectRepository _projectRepository;
+        private readonly IProjectCollaboratorRepository _projectCollaboratorRepository;
 
-        public ProjectController(IProjectRepository repository)
+        public ProjectCollaboratorController(IProjectCollaboratorRepository repository)
         {
-            _projectRepository = repository;
+            _projectCollaboratorRepository = repository;
         }
 
-        [HttpGet]
+        /*[HttpGet]
         public IActionResult Index()
         {
             return View();
-        }
+        }*/
 
         [HttpGet]
         public IActionResult Create()
@@ -34,13 +35,13 @@ namespace Client.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Create(NewDefaultProjectDto newDefaultProjectDto)
+        public async Task<IActionResult> Create(NewProjectByEmployeeDto newProjectByEmployeeDto)
         {
-            var result = await _projectRepository.Create(newDefaultProjectDto);
+            var result = await _projectCollaboratorRepository.Create(newProjectByEmployeeDto);
             if (result.Code == 200)
             {
                 TempData["Success"] = "Data berhasil masuk";
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Project");
             }
             return View();
         }

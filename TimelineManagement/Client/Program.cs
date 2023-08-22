@@ -17,6 +17,7 @@ namespace Client
             builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             builder.Services.AddScoped<IAccountRepository, AccountRepository>();
             builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
+            builder.Services.AddScoped<IProjectCollaboratorRepository, ProjectCollaboratorRepository>();
             builder.Services.AddSession();
             builder.Services.AddHttpContextAccessor();
 

@@ -1,4 +1,10 @@
-﻿@model TimelineManagement.DTOs.Projects.NewDefaultProjectDto
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model TimelineManagement.DTOs.ProjectCollaborators.NewProjectCollaboratorDto
 <!DOCTYPE html>
 
 <!-- =========================================================
@@ -66,7 +72,7 @@
     <script src="~/assets/js/config.js"></script>
 
     <script>
-    const token = '@Context.Session.GetString("JWToken")';
+        const token = '@Context.Session.GetString("JWToken")';
     </script>
 
 </head>
@@ -163,7 +169,7 @@
                         <span class="menu-header-text">Project</span>
                     </li>
                     <button type="button" class="btn btn-primary ml-4" data-toggle="modal" data-target="#createModal">
-                            Create New Project
+                        Create New Project
                     </button>
                     <li class="menu-item">
                         <a href="" class="menu-link menu-toggle">
@@ -215,7 +221,7 @@
                                        aria-label="Star themeselection/sneat-html-admin-template-free on GitHub">@User.FindFirst("FullName").Value</a>
                                 </li>
                             }
-                            
+
 
                             <!-- User -->
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
@@ -233,14 +239,11 @@
                                                         <img src="./assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
                                                     </div>
                                                 </div>
-                                                
-                                                    <div class="flex-grow-1">
-                                                        <span class="fw-semibold d-block"></span>
-                                                        <small class="text-muted">Admin</small>
-                                                    </div>
 
-                                                
-                                                
+                                                <div class="flex-grow-1">
+                                                    <span class="fw-semibold d-block"></span>
+                                                    <small class="text-muted">Admin</small>
+                                                </div>
                                             </div>
                                         </a>
                                     </li>
@@ -286,7 +289,7 @@
 
                 <!-- / Navbar -->
                 <!-- Content wrapper -->
-                <!-- Content -->
+                <!-- Content -->               
                 @RenderBody()
                 <!-- / Content -->
                 <!-- Footer -->
@@ -327,63 +330,33 @@
     <div class="layout-overlay layout-menu-toggle"></div>
 
     <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="createModalLabel">Create New Project</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <!-- Your form code here -->
-                <form action="Create" id="formAuthentication" class="mb-3" action="/Project/Create/" method="post">
-                    <div class="form-group">
-                       <label for="Name">Project Name</label>
-                       <input type="text" id="Name" name="Name" class="form-control" />
-                   </div>
-                   <div class="form-group">
-                       <label for="StartDate">Start Date</label>
-                       <input type="date" id="StartDate" name="StartDate" class="form-control" />
-                   </div>
-                   <div class="form-group">
-                       <label for="EndDate">End Date</label>
-                       <input type="date" id="EndDate" name="EndDate" class="form-control" />
-                   </div>
-                   <div class="form-group">
-                        <input asp-for="EmployeeGuid" type="hidden" value="@User.FindFirst("Guid").Value" />
-                   </div>
-                   <div class="form-group">
-                       <label for="TaskName">Task Name</label>
-                       <input type="" id="TaskName" name="TaskName" class="form-control" />
-                   </div>
-                   <div class="form-group">
-                        <label for="Priority">Priority</label>
-                        <select id="Priority" name="Priority" class="form-select" aria-label="Default select example">
-                            <option selected>Select Priority</option>
-                            <option value="0">Low</option>
-                            <option value="1">Medium</option>
-                            <option value="2">High</option>
-                        </select>
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createModalLabel">Add Collaborator</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Your form code here -->
+                    <form action="Create" id="formAuthentication" class="mb-3" action="/ProjectCollaborator/Create/" method="post">
+                        <div class="form-group">
+                            <label for="Email">Email</label>
+                            <input type="email" id="Email" name="Email" class="form-control" />
                         </div>
-                   <div class="form-group">
-                   <div class="form-group">
-                       <label for="StartDateTask">Start Date</label>
-                       <input type="date" id="StartDateTask" name="StartDateTask" class="form-control" />
-                   </div>
-                   <div class="form-group">
-                       <label for="EndDateTask">End Date</label>
-                       <input type="date" id="EndDateTask" name="EndDateTask" class="form-control" />
-                   </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="Insert()" data-dismiss="modal">Create</button>
+                        <div class="form-group">
+                            <input asp-for="ProjectGuid" type="hidden" value="" />
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="Insert()" data-dismiss="modal">Create</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 
     <!-- Core JS -->
@@ -398,15 +371,15 @@
     <!-- Vendors JS -->
     <script src="~/assets/vendor/libs/apex-charts/apexcharts.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 
-<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <!-- Main JS -->
     <script src="~/assets/js/main.js"></script>
-        <script src="~/js/admin.js" asp-append-version="true"></script>
-        <script src="~/js/pokemon.js" asp-append-version="true"></script>
-        <script src="~/js/dashboard.js" asp-append-version="true"></script>
-        <script src="~/js/site.js"></script>
+    <script src="~/js/admin.js" asp-append-version="true"></script>
+    <script src="~/js/pokemon.js" asp-append-version="true"></script>
+    <script src="~/js/dashboard.js" asp-append-version="true"></script>
+    <script src="~/js/site.js"></script>
 
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -418,14 +391,13 @@
     <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- jQuery (required for Bootstrap JavaScript plugins) -->
+    <!-- Popper.js (required for Bootstrap JavaScript plugins) -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 
-<!-- Popper.js (required for Bootstrap JavaScript plugins) -->
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-
-<!-- Bootstrap JavaScript -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script>
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script>
 
 
 

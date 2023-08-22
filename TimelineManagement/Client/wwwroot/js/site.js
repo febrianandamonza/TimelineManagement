@@ -50,7 +50,7 @@ $.ajax({
     $.each(result.data, (key,val) => {
         temp += `
                 <li class="menu-item">
-                    <a href="" class="menu-link">
+                    <a class="menu-link" href="/Project/Index/${val.guid}">
                     <div>${val.projectName}</div>
                     </a>
                 </li>
@@ -59,5 +59,3 @@ $.ajax({
     })
     $("#project-list").html(temp);
 });
-console.log(guid);
-console.log(url);
