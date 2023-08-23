@@ -8,5 +8,7 @@ namespace Client.Contracts
     public interface IProjectRepository : IRepository<Project, Guid>
     {
         Task<ResponseHandler<NewDefaultProjectDto>> Create(NewDefaultProjectDto newDefaultProjectDto);
+        Task<ResponseHandler<DetailProject>> GetDetail(Guid id);
+
     }
 }

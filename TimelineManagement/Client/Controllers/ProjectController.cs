@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.Differencing;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Win32;
 using NuGet.Protocol.Core.Types;
 using TimelineManagement.DTOs.Employees;
@@ -40,9 +41,22 @@ namespace Client.Controllers
             if (result.Code == 200)
             {
                 TempData["Success"] = "Data berhasil masuk";
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Home"); 
             }
             return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetDetail(Guid id)
+        {
+            var result = await _projectRepository.GetDetail(id);
+            var projects = new DetailProject();
+
+            if (result.Data != null)
+            {
+                projects = result.Data;
+            }
+            return View(projects);
         }
 
         /*[HttpGet]

@@ -1,5 +1,6 @@
 ﻿using Client.Contracts;
 using Newtonsoft.Json;
+using System.Security.Cryptography;
 using System.Text;
 using TimelineManagement.DTOs.Account;
 using TimelineManagement.DTOs.Projects;
@@ -31,6 +32,19 @@ namespace Client.Repositories
                 entityVM = JsonConvert.DeserializeObject<ResponseHandler<NewDefaultProjectDto>>(apiResponse);
             }
             return entityVM;
+        }
+
+        public async Task<ResponseHandler<DetailProject>> GetDetail(Guid id)
+        {
+            ResponseHandler<DetailProject> entityVm = null;
+            StringContent content = new StringContent(JsonConvert.SerializeObject(id), Encoding.UTF8, "application/json");
+            using (var response = httpClient.GetAsync(request + id).Result)
+            {
+                string apiResponse = await response.Content.ReadAsStringAsync();
+                entityVm = JsonConvert.DeserializeObject<ResponseHandler<DetailProject>>(apiResponse);
+            }
+
+            return entityVm;
         }
 
     }
