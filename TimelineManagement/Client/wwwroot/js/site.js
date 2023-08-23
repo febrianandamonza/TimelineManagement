@@ -96,3 +96,37 @@ function Insert() {
     })
     console.log(obj);
 }
+
+function Insert() {
+    var obj = new Object();
+    obj.name = $("#Name").val();
+    obj.startDate = $("#StartDate").val();
+    obj.endDate = $("#EndDate").val();
+    obj.priority = parseInt($("#Priority").val());
+    obj.projectName = $("#ProjectName").val();
+    obj.employeeEmail = $("#EmployeeEmail").val();
+
+    $.ajax({
+        url: "https://localhost:7230/api/tasks/create-default",
+        type: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        data: JSON.stringify(obj)
+    }).done((result) => {
+        Swal.fire
+            (
+                'Data Has Been Successfuly Inserted',
+                'Success'
+            ).then(() => {
+                location.reload();
+            })
+    }).fail((error) => {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops',
+            text: 'Failed to insert data, Please Try Again',
+        })
+    })
+    console.log(obj);
+}
