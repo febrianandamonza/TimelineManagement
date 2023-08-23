@@ -7,11 +7,15 @@ namespace TimelineManagement.Services;
 public class SectionService
 {
     private readonly ISectionRepository _sectionRepository;
+    private readonly ITaskRepository _taskRepository;
 
-    public SectionService(ISectionRepository sectionRepository)
+    public SectionService(ISectionRepository sectionRepository, ITaskRepository taskRepository)
     {
         _sectionRepository = sectionRepository;
+        _taskRepository = taskRepository;
     }
+    
+   
     public IEnumerable<SectionDto> GetAll()
     {
         var sections = _sectionRepository.GetAll();

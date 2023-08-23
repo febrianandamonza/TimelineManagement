@@ -38,7 +38,6 @@ function Insert() {
             text: 'Failed to insert data, Please Try Again',
         })
     })
-    console.log(obj);
 }
 
 const guid = document.getElementById("guidInput").value;
@@ -55,7 +54,6 @@ $.ajax({
                     </a>
                 </li>
             `;
-        console.log(val.projectName);
     })
     $("#project-list").html(temp);
 });
@@ -94,7 +92,6 @@ function Insert() {
             text: 'Failed to insert data, Please Try Again',
         })
     })
-    console.log(obj);
 }
 
 function Insert() {
@@ -128,56 +125,50 @@ function Insert() {
             text: 'Failed to insert data, Please Try Again',
         })
     })
-    console.log(obj);
 }
-
-$.ajax({
-    url: "https://localhost:7230/api/sections/"
-}).done((result) => {
-    let temp = "";
-    $.each(result.data, (key, val) => {
-        temp += `
-                    <div id="left" class="card h-100" style="background: white; height: 100px">
-                        <div style="color: white; height: 200; text-align: center;">
-                            <h4 class="card-title">${val.name}</h4>     
-                            <h1>Task</h1>
-                        </div>                        
-                    </div>
-            `;
-    })
-    $("#cardSection").html(temp);
-});
 
 
 // Get the current URL
 const currentUrl = window.location.href;
 const projectGuid = currentUrl.substring(currentUrl.lastIndexOf("/") + 1);
 
-if (projectGuid) {
+$.ajax({
+    url: "https://localhost:7230/api/sections/"
+}).done((result) => {
+    let temp = "";
+    let temp2 = "";
+    $.each(result.data, (key, val) => {
+        temp += `
+                    <div id="left" class="card h-100" style="background: white; height: 100px">
+                        <div style="color: white; height: 50px; text-align: center;">
+                            <h4 class="card-title">${val.name}</h4>  
+                        </div>
+                            <div id="cardTask"></div>                   
+                    </div>
+            `;
+        
+    })
     $.ajax({
-        url: `https://localhost:7230/api/projects/detail-project/${guid}`
-    }).done((result) => {
-        let temp = "";
-        $.each(result.data, (key, val) => {
-            temp += `
-                <div class="card m-2" draggable="true" style="">
+        url: `https://localhost:7230/api/projects/detail-project/${projectGuid}`
+    }).done((result2) =>{
+        $.each(result2.data, (key2, val2) =>{
+            temp2 += `
+                <div class="card m-2" draggable="true" style="color:black">
                     <div class="card-body">
-                        <h5 class="card-title">${val.taskName}</h5>
-                        <p class="card-text">${val.priority}</p>
-                        <p class="card-text">${val.startDateTask}</p>
-                        <p class="card-text">${val.endDateTask}</p>
+                        <h5 class="card-title">${val2.taskName}</h5>
+                        <p class="card-text">${val2.priority}</p>
+                        <p class="card-text">${val2.startDateTask}</p>
+                        <p class="card-text">${val2.endDateTask}</p>
                     </div>
                 </div>
-            `;
+                `;
+
         })
-        $("#cardTask").html(temp);
-        
+
+        $("#cardTask").html(temp2);
     });
-} else {
-    // Handle the case where the guid is not found in the URL
-    console.error("GUID not found in the URL");
-    console.log(projectGuid);
-}
+    $("#cardSection").html(temp);
+});
 
 
 

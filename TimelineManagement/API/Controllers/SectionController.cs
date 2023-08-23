@@ -20,6 +20,7 @@ public class SectionController : ControllerBase
         _sectionService = sectionService;
     }
     
+    
      [HttpGet]
     public IActionResult GetAll()
     {

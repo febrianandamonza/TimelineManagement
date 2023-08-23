@@ -8,7 +8,7 @@ public class NewDefaultTaskDto
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
     public PriorityLevel Priority { get; set; }
-    public string ProjectName { get; set; }
+    public Guid ProjectGuid { get; set; }
     public string EmployeeEmail { get; set; }
 
 }

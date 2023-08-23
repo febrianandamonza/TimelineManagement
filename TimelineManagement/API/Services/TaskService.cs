@@ -26,6 +26,7 @@ public class TaskService
         _employeeRepository = employeeRepository;
     }
     
+    
     public int ChangeStatus(TaskChangeStatusDto taskChangeStatusDto)
     {
         var getTask = _taskRepository.GetByGuid(taskChangeStatusDto.Guid);
@@ -91,12 +92,6 @@ public class TaskService
         using var transaction = _dbContext.Database.BeginTransaction();
         try
         {
-            var getProject = _projectRepository.GetByName(newDefaultTaskDto.ProjectName);
-            if (getProject is null)
-            {
-                return null;
-            }
-            
             var getEmployee = _employeeRepository.GetByEmail(newDefaultTaskDto.EmployeeEmail);
             if (getEmployee is null)
             {
@@ -111,7 +106,7 @@ public class TaskService
                 EndDate = newDefaultTaskDto.EndDate,
                 IsFinished = false,
                 Priority = newDefaultTaskDto.Priority,
-                ProjectGuid = getProject.Guid,
+                ProjectGuid = newDefaultTaskDto.ProjectGuid,
                 SectionGuid = Guid.Parse("fe4aa61c-329d-447f-811a-08db9fb220e4"),
                 EmployeeGuid = getEmployee.Guid,
                 CreatedDate = DateTime.Now,
@@ -124,7 +119,7 @@ public class TaskService
                 StartDate = task.StartDate,
                 EndDate = task.EndDate,
                 Priority = task.Priority,
-                ProjectName = getProject.Name,
+                ProjectGuid = task.ProjectGuid,
                 EmployeeEmail = getEmployee.Email
             };
             
