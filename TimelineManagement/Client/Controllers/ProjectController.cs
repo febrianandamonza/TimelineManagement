@@ -46,18 +46,6 @@ namespace Client.Controllers
             return View();
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetDetail(Guid id)
-        {
-            var result = await _projectRepository.GetDetail(id);
-            var projects = new DetailProject();
-
-            if (result.Data != null)
-            {
-                projects = result.Data;
-            }
-            return View(projects);
-        }
 
         /*[HttpGet]
         public async Task<IActionResult> Index()
