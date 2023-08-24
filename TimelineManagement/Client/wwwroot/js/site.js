@@ -187,15 +187,26 @@ function detailTask(taskGuid){
             let projectName = "";
             let projectManager = "";
             let sectionName = "";
+            let changeSection = "";
+            let changeStatus = "";
             let employeeName = "";
             let employeePhoneNumber = "";
             let employeeMail = "";
             let priorityValue = "";
+            let statusValue = "";
             
             name = ` <input type="text" id="Name" name="Name" class="form-control" value="${result.data.name}" disabled="true"/>`
             startDate = `<input type="text" id="StartDate" name="StartDate" class="form-control" value="${result.data.startDate.split('T')[0]}" disabled="true"/>`
             endDate = `<input type="text" id="EndDate" name="EndDate" class="form-control" value="${result.data.endDate.split('T')[0]}" disabled="true"/>`
-            isFinished = ` <input type="text" id="isFinished" name="isFinished" class="form-control" value="${result.data.isFinished}" disabled="true"/>`
+            
+            if(result.data.isFinished == true){
+                statusValue = "Finished"
+            }
+            else if(result.data.isFinished == false){
+                statusValue = "Unfinished"
+            }
+            isFinished = ` <input type="text" id="isFinished" name="isFinished" class="form-control" value="${statusValue}" disabled="true"/>`
+           
             if (result.data.priority == 0) {
                 priorityValue = "Low"
             }
@@ -208,10 +219,24 @@ function detailTask(taskGuid){
             priority = `<input type="text" id="Priority" name="Priority" class="form-control" value="${priorityValue}" disabled="true"/>`
             projectName = `<input type="text" id="ProjectName" name="ProjectName" class="form-control" value="${result.data.projectName}" disabled="true"/>`
             projectManager = `<input type="text" id="ProjectManager" name="ProjectManager" class="form-control" value="${result.data.projectManager}" disabled="true"/>`
-            sectionName = `<input type="text" id="SectionName" name="SectionName" class="form-control" value="${result.data.sectionName}" disabled="true"/>`
+            sectionName = `
+<input type="text" id="SectionName" name="SectionName" class="form-control" value="${result.data.sectionName}" disabled="true"/>
+<button class="btn btn-danger mt-1" data-bs-toggle="modal" data-bs-target="#changeSection">Change</button>
+                            
+`
             employeeName =`<input type="text" id="EmployeeName" name="EmployeeName" class="form-control" value="${result.data.employeeName}" disabled="true"/>`
             employeePhoneNumber = `<input type="text" id="EmployeePhoneNumber" name="EmployeePhoneNumber" class="form-control" value="${result.data.employeePhoneNumber}" disabled="true"/>`
             employeeMail = `<input type="text" id="EmployeeEmail" name="EmployeeEmail" class="form-control" value="${result.data.employeeEmail}" disabled="true"/>`
+            changeSection = `
+<div class="modal-footer">       
+<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+<button class="btn btn-danger mt-1" onclick="UpdateSection('${result.data.guid}')" data-bs-toggle="modal" data-bs-target="#changeSection">Change</button>
+</div>
+`
+            changeStatus = `<div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="UpdateStatus('${result.data.guid}')" data-bs-dismiss="modal">Change</button>
+                </div>`
             
             $('#name').html(name);
             $('#startDate').html(startDate);
@@ -224,6 +249,8 @@ function detailTask(taskGuid){
             $('#employeeName').html(employeeName);
             $('#employeePhoneNumber').html(employeePhoneNumber);
             $('#employeeMail').html(employeeMail);
+            $('#sectionChange').html(changeSection);
+            $('#statusChange').html(changeStatus);
             
            /* $('#StartDate').val(result.data.startDate);
             $('#EndDate').val(result.data.endDate);
@@ -243,4 +270,61 @@ function detailTask(taskGuid){
     });
 }
 
+function UpdateSection(taskGuid) {
+    let data = {
+        guid : taskGuid,
+        sectionGuid: $("#Section").val()
+    };
+    $.ajax({
+        url: `https://localhost:7230/api/tasks/change-section/`,
+        type: 'PUT',
+        contentType: 'application/json',
+        data: JSON.stringify(data)
+    }).done((result) => {
+        Swal.fire(
+            'Data has been successfully updated!',
+            'success'
+        ).then(() => {
+            location.reload();
+        });
+    }).fail((error) => {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Failed to change data! Please try again.'
+        })
+        console.log(error)
+        console.log(data)
+    })
+}
+
+function UpdateStatus(taskGuid) {
+    let data = {
+        guid : taskGuid,
+        taskStatus: true
+    };
+    $.ajax({
+        url: `https://localhost:7230/api/tasks/change-status/`,
+        type: 'PUT',
+        contentType: 'application/json',
+        data: JSON.stringify(data)
+    }).done((result) => {
+        Swal.fire(
+            'Data has been successfully updated!',
+            'Success'
+        ).then(() => {
+            console.log(data)
+            console.log(result)
+        });
+    }).fail((error) => {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Failed to change data! Please try again.'
+        })
+        console.log(error)
+        console.log(data)
+        
+    })
+}
 

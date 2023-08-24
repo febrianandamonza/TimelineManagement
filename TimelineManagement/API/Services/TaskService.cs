@@ -36,6 +36,7 @@ public class TaskService
             join section in _sectionRepository.GetAll() on task.SectionGuid equals section.Guid
             select new DetailTaskDto
             {
+                Guid = task.Guid,
                 Name = task.Name,
                 StartDate = task.StartDate,
                 EndDate = task.EndDate,

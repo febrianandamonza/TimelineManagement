@@ -521,15 +521,14 @@
                             <div id="employeeMail"></div>
                         </div>
                         <div class="form-group">
-                            <label for="isFinished">IsFinished</label>
+                            <label for="isFinished">Status</label>
                             <div id="isFinished"></div>
                             <button class="btn btn-danger mt-1" data-bs-toggle="modal" data-bs-target="#changeStatus">Change</button>
                         </div>
                             <div class="form-group">
                                 <label for="SectionName">Section Name</label>
                                 <div id="sectionName"></div>
-                                <button class="btn btn-danger mt-1" data-bs-toggle="modal" data-bs-target="#changeSection">Change</button>
-                            </div>
+                                </div>
                     </div>
                 </div>
             </div>
@@ -557,20 +556,21 @@
                             <input type="hidden" id="ProjectGuid" name="ProjectGuid" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <label for="Email">Email</label>
-                            <input type="email" id="Email" name="Email" class="form-control" />
+                            <label for="isFinished">Status</label>
+                            <select id="isFinished" name="isFinished" class="form-select" aria-label="Default select example">
+                                <option selected>Select Status</option>
+                                <option value="1">Finished</option>
+                                <option value="0">Unfinished</option>
+                            </select>
                         </div>
                     </form>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="Insert()" data-dismiss="modal">Create</button>
-                </div>
+                 <div id="statusChange"></div>
             </div>
         </div>
     </div>
 
-    <!-- Add Coolaborator Modal -->
+    <!-- Change Section Modal -->
     <div class="modal fade" id="changeSection" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -587,15 +587,19 @@
                             <input type="hidden" id="ProjectGuid" name="ProjectGuid" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <label for="Email">Email</label>
-                            <input type="email" id="Email" name="Email" class="form-control" />
+                            <label for="Section">Section</label>
+                            <select id="Section" name="Section" class="form-select" aria-label="Default select example">
+                                <option selected>Select Section</option>
+                                <option value="fe4aa61c-329d-447f-811a-08db9fb220e4">To Do</option>
+                                <option value="1c7324b5-2e88-4d33-811b-08db9fb220e4">In Progress</option>
+                                <option value="196272df-788f-4894-811c-08db9fb220e4">Testing</option>
+                                <option value="ec87fdea-0a03-4ce2-811d-08db9fb220e4">Done</option>
+                            </select>
                         </div>
                     </form>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="Insert()" data-dismiss="modal">Create</button>
-                </div>
+                <div id="sectionChange"></div>
+                
             </div>
         </div>
     </div>
