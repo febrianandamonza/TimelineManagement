@@ -4,6 +4,7 @@ using TimelineManagement.DTOs.Account;
 using TimelineManagement.DTOs.AccountRoles;
 using TimelineManagement.DTOs.Tasks;
 using TimelineManagement.Models;
+using TimelineManagement.Utilities.Enums;
 using TimelineManagement.Utilities.Handlers;
 using Task = TimelineManagement.Models.Task;
 
@@ -15,15 +16,17 @@ public class TaskService
     private readonly ISectionRepository _sectionRepository;
     private readonly IProjectRepository _projectRepository;
     private readonly IEmployeeRepository _employeeRepository;
+    private readonly IProjectCollaboratorRepository _projectCollaboratorRepository;
     private readonly TimelineManagementDbContext _dbContext;
 
-    public TaskService(ITaskRepository taskRepository, ISectionRepository sectionRepository, TimelineManagementDbContext dbContext, IProjectRepository projectRepository, IEmployeeRepository employeeRepository)
+    public TaskService(ITaskRepository taskRepository, ISectionRepository sectionRepository, TimelineManagementDbContext dbContext, IProjectRepository projectRepository, IEmployeeRepository employeeRepository, IProjectCollaboratorRepository projectCollaboratorRepository)
     {
         _taskRepository = taskRepository;
         _sectionRepository = sectionRepository;
         _dbContext = dbContext;
         _projectRepository = projectRepository;
         _employeeRepository = employeeRepository;
+        _projectCollaboratorRepository = projectCollaboratorRepository;
     }
     
     public DetailTaskDto?  GetDetailTaskByGuid(Guid guid)
@@ -87,6 +90,12 @@ public class TaskService
     
     public int ChangeEmployee(TaskChangeEmployeeDto taskChangeEmployeeDto)
     {
+        var employee = _employeeRepository.GetByEmail(taskChangeEmployeeDto.EmployeeEmail);
+        if (employee is null)
+        {
+            return -1;
+        }
+        
         var getTask = _taskRepository.GetByGuid(taskChangeEmployeeDto.Guid);
         if (getTask is null)
         {
@@ -103,7 +112,7 @@ public class TaskService
             Priority = getTask.Priority,
             ProjectGuid = getTask.ProjectGuid,
             SectionGuid = getTask.SectionGuid,
-            EmployeeGuid = taskChangeEmployeeDto.EmployeeGuid
+            EmployeeGuid = employee.Guid
         };
 
         var isUpdate = _taskRepository.Update(task);
@@ -125,6 +134,16 @@ public class TaskService
             {
                 return null;
             }
+
+            var checkEmployee = (from pc in _projectCollaboratorRepository.GetAll()
+                where pc.Status == StatusLevel.Accepted
+                join e in _employeeRepository.GetAll() on pc.EmployeeGuid equals e.Guid
+                where e.Guid == getEmployee.Guid
+                select e).FirstOrDefault();
+            if (checkEmployee is null)
+            {
+                return null;
+            }
             
             var task = _taskRepository.Create( new Task
             {
@@ -136,7 +155,7 @@ public class TaskService
                 Priority = newDefaultTaskDto.Priority,
                 ProjectGuid = newDefaultTaskDto.ProjectGuid,
                 SectionGuid = Guid.Parse("fe4aa61c-329d-447f-811a-08db9fb220e4"),
-                EmployeeGuid = getEmployee.Guid,
+                EmployeeGuid = checkEmployee.Guid,
                 CreatedDate = DateTime.Now,
                 ModifiedDate = DateTime.Now
             });
@@ -148,7 +167,7 @@ public class TaskService
                 EndDate = task.EndDate,
                 Priority = task.Priority,
                 ProjectGuid = task.ProjectGuid,
-                EmployeeEmail = getEmployee.Email
+                EmployeeEmail = checkEmployee.Email
             };
             
             transaction.Commit();

@@ -3,5 +3,5 @@
 public class TaskChangeEmployeeDto
 {
     public Guid Guid { get; set; }
-    public Guid EmployeeGuid { get; set; }
+    public string EmployeeEmail { get; set; }
 }
