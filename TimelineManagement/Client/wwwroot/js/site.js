@@ -43,13 +43,13 @@ function Insert() {
 const guid = document.getElementById("guidInput").value;
 
 $.ajax({
-    url: `https://localhost:7230/api/projects/project-by-employee/` + guid
+    url: `https://localhost:7230/api/project-collaborators/all-by-employee/` + guid
 }).done((result) => {
     let temp = "";
     $.each(result.data, (key,val) => {
         temp += `
                 <li class="menu-item">
-                    <a class="menu-link" href="/Project/Index/${val.guid}">
+                    <a class="menu-link" href="/Project/Index/${val.projectGuid}">
                     <div>${val.projectName}</div>
                     </a>
                 </li>

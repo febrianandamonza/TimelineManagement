@@ -1,5 +1,6 @@
 ﻿using Client.Contracts;
 using Newtonsoft.Json;
+using System.Security.Cryptography;
 using System.Text;
 using TimelineManagement.DTOs.Account;
 using TimelineManagement.DTOs.ProjectCollaborators;

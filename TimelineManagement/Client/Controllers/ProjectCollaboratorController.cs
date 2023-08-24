@@ -46,31 +46,7 @@ namespace Client.Controllers
             return View();
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Index()
-        {
-            var result = await _projectCollaboratorRepository.Get();
-            var ListInvitation = new List<ProjectCollaborator>();
-
-            if (result.Data != null)
-            {
-                ListInvitation = result.Data.ToList();
-            }
-            return View(ListInvitation);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> Update(Guid id)
-        {
-            var result = await _projectCollaboratorRepository.Get(id);
-            var Invitation = new ProjectCollaborator();
-
-            if (result.Data != null)
-            {
-                Invitation = result.Data;
-            }
-            return RedirectToAction("Index", "ProjectCollaborator");
-        }
+        
 
         /*[HttpGet]
         public async Task<IActionResult> Index()
