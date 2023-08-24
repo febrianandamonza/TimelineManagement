@@ -45,9 +45,11 @@ public class ProjectCollaboratorService
     {
         var result = from pc in _projectCollaboratorRepository.GetAll() where pc.Status is StatusLevel.Accepted
             join employee in _employeeRepository.GetAll() on pc.EmployeeGuid equals employee.Guid where employee.Guid == guid
+            join project in _projectRepository.GetAll() on pc.ProjectGuid equals project.Guid
             select new ProjectCollaboratorByEmployeeDto
             {
                 ProjectGuid = pc.ProjectGuid,
+                ProjectName = project.Name,
                 EmployeeGuid = pc.EmployeeGuid,
                 EmployeeEmail = employee.Email,
                 Status = pc.Status
