@@ -12,16 +12,19 @@ public class ProjectService
     private readonly IProjectRepository _projectRepository;
     private readonly ITaskRepository _taskRepository;
     private readonly IProjectCollaboratorRepository _projectCollaboratorRepository;
+    private readonly ISectionRepository _sectionRepository;
     
     private readonly TimelineManagementDbContext _dbContext;
 
-    public ProjectService(IProjectRepository projectRepository, ITaskRepository taskRepository, TimelineManagementDbContext dbContext, IProjectCollaboratorRepository projectCollaboratorRepository)
+    public ProjectService(IProjectRepository projectRepository, ITaskRepository taskRepository, TimelineManagementDbContext dbContext, IProjectCollaboratorRepository projectCollaboratorRepository, ISectionRepository sectionRepository)
     {
         _projectRepository = projectRepository;
         _taskRepository = taskRepository;
         _dbContext = dbContext;
         _projectCollaboratorRepository = projectCollaboratorRepository;
+        _sectionRepository = sectionRepository;
     }
+    
     
     public IEnumerable<DetailProject>?  GetALlDetailProjectsByGuid(Guid guid)
     {

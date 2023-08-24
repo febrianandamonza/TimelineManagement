@@ -133,61 +133,56 @@ const currentUrl = window.location.href;
 const projectGuid = currentUrl.substring(currentUrl.lastIndexOf("/") + 1);
 
 $.ajax({
-    url: "https://localhost:7230/api/sections/"
+    url: "https://localhost:7230/api/sections/",
+    async: false
 }).done((result) => {
     let temp = "";
     let temp2 = "";
+    let sectionGuid;
+    let sectionGuidInnTask;
     $.each(result.data, (key, val) => {
+        sectionGuid = val.guid;
         temp += `
-                    <div id="left" class="card h-100" style="background: white; height: 100px">
+                    <div id="left" class="card h-100"  height: 100px">
                         <div style="color: white; height: 50px; text-align: center;">
-                            <h4 class="card-title">${val.name}</h4>  
+                            <h4 class="card-title"  style="color : white;">${val.name}</h4>  
                         </div>
-                            <div id="cardTask"></div>                   
-                    </div>
+                            <div id="cardTask${key}"></div>
             `;
-        
+
+        $.ajax({
+            url: `https://localhost:7230/api/projects/detail-project/${projectGuid}`,
+            async : false
+        }).done((result2) =>{
+
+            console.log("block" + val.guid);
+            
+                $.each(result2.data, (key2, val2) => {
+                    
+                    if (val2.taskSection == val.guid) {
+                        
+                        console.log("ini task" + val2.taskSection);
+                        console.log("");
+                        temp += `
+                        <div class="card m-2" draggable="true" style="color:black">
+                            <div class="card-body">
+                                <h5 class="card-title">${val2.taskName}</h5>
+                                <button type="button" class="btn btn-primary" onclick="GetAll(${val2.taskGuid})"  data-bs-toggle="modal" data-bs-target="#detailTask">Detail</button>
+                               
+                            </div>
+                        </div>
+                        
+                     `;
+                    }else{
+                        return;
+                    }
+                    
+                })
+            
+        }); 
+    
+        temp += `</div>`
     })
-    $.ajax({
-        url: `https://localhost:7230/api/projects/detail-project/${projectGuid}`
-    }).done((result2) =>{
-        $.each(result2.data, (key2, val2) =>{
-            temp2 += `
-                <div class="card m-2" draggable="true" style="color:black">
-                    <div class="card-body">
-                        <h5 class="card-title">${val2.taskName}</h5>
-                        <p class="card-text">${val2.priority}</p>
-                        <p class="card-text">${val2.startDateTask}</p>
-                        <p class="card-text">${val2.endDateTask}</p>
-                    </div>
-                </div>
-                `;
-
-        })
-
-        $("#cardTask").html(temp2);
-    });
     $("#cardSection").html(temp);
 });
 
-
-
-
-//$.ajax({
-//    url: "https://localhost:7230/api/projects/detail-project/"
-//}).done((result) => {
-//    let temp = "";
-//    $.each(result.data, (key, val) => {
-//        temp += `
-//                    <div class="card m-2" draggable="true" style="">
-//                        <div class="card-body">
-//                            <h5 class="card-title">${val.taskName}</h5>
-//                            <p class="card-text">${val.priority}</p>
-//                            <p class="card-text">${val.startDateTask}</p>
-//                            <p class="card-text">${val.endDateTask}</p>
-//                        </div>
-//                    </div>
-//            `;
-//    })
-//    $("#cardTask").html(temp);
-//});

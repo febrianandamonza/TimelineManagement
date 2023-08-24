@@ -26,6 +26,33 @@ public class TaskService
         _employeeRepository = employeeRepository;
     }
     
+    public IEnumerable<DetailTaskDto>?  GetDetailTaskByGuid(Guid guid)
+    {
+        var result = from task in _taskRepository.GetAll()
+            where task.Guid == guid
+            join employee in _employeeRepository.GetAll() on task.EmployeeGuid equals employee.Guid
+            join project in _projectRepository.GetAll() on task.ProjectGuid equals project.Guid
+            join employee2 in _employeeRepository.GetAll() on project.EmployeeGuid equals employee2.Guid
+            join section in _sectionRepository.GetAll() on task.SectionGuid equals section.Guid
+            select new DetailTaskDto
+            {
+                Name = task.Name,
+                StartDate = task.StartDate,
+                EndDate = task.EndDate,
+                IsFinished = task.IsFinished,
+                Priority = task.Priority,
+                ProjectGuid = project.Guid,
+                ProjectName = project.Name,
+                ProjectManager = employee2.FirstName + employee2.LastName,
+                SectionGuid = section.Guid,
+                SectionName = section.Name,
+                EmployeeName = employee.FirstName + employee.LastName,
+                EmployeeEmail = employee.Email,
+                EmployeePhoneNumber = employee.PhoneNumber
+            };
+        
+        return result;
+    }
     
     public int ChangeStatus(TaskChangeStatusDto taskChangeStatusDto)
     {

@@ -13,11 +13,19 @@
     justify-content: center;
 }
 
+#cardSection {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+}
+
 #left, #right, #right2, #right3 {
     width: 300px;
     min-height: 400px;
     margin: 20px;
     height: auto;
+    background-color: #696cff;
 }
 
 .list {
@@ -39,4 +47,5 @@
 .card {
     background: paleturquoise;
     display: flex;
+    
 }

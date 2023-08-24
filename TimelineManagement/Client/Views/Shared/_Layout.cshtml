@@ -1,5 +1,4 @@
-﻿@model TimelineManagement.DTOs.Projects.NewDefaultProjectDto
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <!-- =========================================================
 * Sneat - Bootstrap 5 HTML Admin Template - Pro | v1.0.0
@@ -352,7 +351,7 @@
                        <input type="date" id="EndDate" name="EndDate" class="form-control" />
                    </div>
                    <div class="form-group">
-                        <input asp-for="EmployeeGuid" type="hidden" value="@User.FindFirst("Guid").Value" />
+                        <input type="hidden" value="@User.FindFirst("Guid").Value" />
                    </div>
                    <div class="form-group">
                        <label for="TaskName">Task Name</label>
@@ -366,8 +365,7 @@
                             <option value="1">Medium</option>
                             <option value="2">High</option>
                         </select>
-                        </div>
-                   <div class="form-group">
+                        </div>>
                    <div class="form-group">
                        <label for="StartDateTask">Start Date</label>
                        <input type="date" id="StartDateTask" name="StartDateTask" class="form-control" />

@@ -19,6 +19,28 @@ public class TaskController : ControllerBase
         _taskService = taskService;
     }
     
+    [HttpGet("detail-task/{guid}")]
+    public IActionResult GetDetailTaskByGuid(Guid guid)
+    {
+        var result = _taskService.GetDetailTaskByGuid(guid);
+        if (!result.Any())
+        {
+            return NotFound(new ResponseHandler<DetailTaskDto>
+            {
+                Code = StatusCodes.Status404NotFound,
+                Status = HttpStatusCode.NotFound.ToString(),
+                Message = "Data is not found"
+            });
+        }
+
+        return Ok(new ResponseHandler<IEnumerable<DetailTaskDto>>
+        {
+            Code = StatusCodes.Status200OK,
+            Status = HttpStatusCode.OK.ToString(),
+            Message = "Success retrieve data",
+            Data = result
+        });
+    }
     
     [Route("create-default")]
     [HttpPost]

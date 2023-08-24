@@ -44,6 +44,7 @@ public class ProjectController : ControllerBase
             Data = result
         });
     }
+    
 
     [HttpGet("project-by-employee/{guid}")]
     public IActionResult GetAllByEmployeeGuid(Guid guid)
