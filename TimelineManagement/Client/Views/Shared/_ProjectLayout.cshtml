@@ -468,64 +468,70 @@
         </div>
     </div>
     
-    <!-- Modal -->
+    <!-- Detail Task Modal -->
 <div class="modal fade" id="detailTask" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg"> <!-- Added 'modal-lg' for a larger modal -->
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Task</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form>
-                <div class="form-group">
-                    <label for="Name">Name</label>
-                    <div id="name"></div>
+                <div class="row">
+                    <!-- First Column -->
+                    <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="Name">Name</label>
+                                <div id="name"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="StartDate">Start Date</label>
+                                <div id="startDate"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="EndDate">End Date</label>
+                                <div id="endDate"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="Priority">Priority</label>
+                                <div id="priority"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="ProjectName">Project Name</label>
+                                <div id="projectName"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="ProjectManager">Project Manager</label>
+                                <div id="projectManager"></div>
+                            </div>
+                            <!-- Add more form elements as needed -->
+                    </div>
+                    <!-- Second Column -->
+                    <div class="col-md-6">                        
+                        <div class="form-group">
+                            <label for="EmployeeName">Employee Name</label>
+                            <div id="employeeName"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="EmployeePhoneNumber">Employee Phone Number</label>
+                            <div id="employeePhoneNumber"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="EmployeeEmail">Employee Email</label>
+                            <div id="employeeMail"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="isFinished">IsFinished</label>
+                            <div id="isFinished"></div>
+                            <button class="btn btn-danger mt-1" data-bs-toggle="modal" data-bs-target="#changeStatus">Change</button>
+                        </div>
+                            <div class="form-group">
+                                <label for="SectionName">Section Name</label>
+                                <div id="sectionName"></div>
+                                <button class="btn btn-danger mt-1" data-bs-toggle="modal" data-bs-target="#changeSection">Change</button>
+                            </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="StartDate">Start Date</label>
-                    <div id="startDate"></div>
-                </div>
-                <div class="form-group">
-                    <label for="EndDate">End Date</label>
-                    <div id="endDate"></div>
-                </div>
-                <div class="form-group">
-                    <label for="isFinished">IsFinished</label>
-                   <div id="isFinished"></div>
-                    <button class="btn btn-danger">Change</button>
-                </div>
-                    <div class="form-group">
-                        <label for="Priority">Priority</label>
-                        <div id="isFinished"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="ProjectName">Project Name</label>
-                        <div id="projectName"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="ProjectManager">Project Manager</label>
-                        <div id="projectManager"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="SectionName">Section Name</label>
-                        <div id="sectionName"></div>
-                        <button class="btn btn-danger">Change</button>
-                    </div>
-                    <div class="form-group">
-                        <label for="EmployeeName">Employee Name</label>
-                        <div id="employeeName"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="EmployeePhoneNumber">Employee Phone Number</label>
-                        <div id="employeePhoneNumber"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="EmployeeEmail">Employee Email</label>
-                        <div id="employeeMail"></div>
-                    </div>
-                    
-                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -533,6 +539,66 @@
         </div>
     </div>
 </div>
+
+    <!-- Change Status Modal -->
+    <div class="modal fade" id="changeStatus" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createModalLabel">Change Status</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Your form code here -->
+                    <form action="Create" id="formAuthentication" class="mb-3" action="/ProjectCollaborator/Create/" method="post">
+                        <div class="form-group">
+                            <input type="hidden" id="ProjectGuid" name="ProjectGuid" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="Email">Email</label>
+                            <input type="email" id="Email" name="Email" class="form-control" />
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="Insert()" data-dismiss="modal">Create</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Coolaborator Modal -->
+    <div class="modal fade" id="changeSection" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createModalLabel">Change Section</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Your form code here -->
+                    <form action="Create" id="formAuthentication" class="mb-3" action="/ProjectCollaborator/Create/" method="post">
+                        <div class="form-group">
+                            <input type="hidden" id="ProjectGuid" name="ProjectGuid" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="Email">Email</label>
+                            <input type="email" id="Email" name="Email" class="form-control" />
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="Insert()" data-dismiss="modal">Create</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->

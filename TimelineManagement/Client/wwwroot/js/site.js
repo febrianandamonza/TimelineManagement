@@ -190,12 +190,22 @@ function detailTask(taskGuid){
             let employeeName = "";
             let employeePhoneNumber = "";
             let employeeMail = "";
+            let priorityValue = "";
             
             name = ` <input type="text" id="Name" name="Name" class="form-control" value="${result.data.name}" disabled="true"/>`
-            startDate = `<input type="text" id="StartDate" name="StartDate" class="form-control" value="${result.data.startDate}" disabled="true"/>`
-            endDate = `<input type="text" id="EndDate" name="EndDate" class="form-control" value="${result.data.endDate}" disabled="true"/>`
+            startDate = `<input type="text" id="StartDate" name="StartDate" class="form-control" value="${result.data.startDate.split('T')[0]}" disabled="true"/>`
+            endDate = `<input type="text" id="EndDate" name="EndDate" class="form-control" value="${result.data.endDate.split('T')[0]}" disabled="true"/>`
             isFinished = ` <input type="text" id="isFinished" name="isFinished" class="form-control" value="${result.data.isFinished}" disabled="true"/>`
-            priority = `<input type="text" id="Priority" name="Priority" class="form-control" value="${result.data.priority}" disabled="true"/>`
+            if (result.data.priority == 0) {
+                priorityValue = "Low"
+            }
+            else if (result.data.priority == 1) {
+                priorityValue = "Medium"
+            }
+            else if (result.data.priority == 2) {
+                priorityValue = "High"
+            }
+            priority = `<input type="text" id="Priority" name="Priority" class="form-control" value="${priorityValue}" disabled="true"/>`
             projectName = `<input type="text" id="ProjectName" name="ProjectName" class="form-control" value="${result.data.projectName}" disabled="true"/>`
             projectManager = `<input type="text" id="ProjectManager" name="ProjectManager" class="form-control" value="${result.data.projectManager}" disabled="true"/>`
             sectionName = `<input type="text" id="SectionName" name="SectionName" class="form-control" value="${result.data.sectionName}" disabled="true"/>`
