@@ -100,7 +100,7 @@ function Insert() {
     obj.startDate = $("#StartDate").val();
     obj.endDate = $("#EndDate").val();
     obj.priority = parseInt($("#Priority").val());
-    obj.projectName = $("#ProjectName").val();
+    obj.projectGuid = $("#ProjectGuid").val();
     obj.employeeEmail = $("#EmployeeEmail").val();
 
     $.ajax({
