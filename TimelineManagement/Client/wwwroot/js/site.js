@@ -154,35 +154,83 @@ $.ajax({
             url: `https://localhost:7230/api/projects/detail-project/${projectGuid}`,
             async : false
         }).done((result2) =>{
-
-            console.log("block" + val.guid);
-            
                 $.each(result2.data, (key2, val2) => {
-                    
                     if (val2.taskSection == val.guid) {
                         
-                        console.log("ini task" + val2.taskSection);
-                        console.log("");
                         temp += `
                         <div class="card m-2" draggable="true" style="color:black">
                             <div class="card-body">
                                 <h5 class="card-title">${val2.taskName}</h5>
-                                <button type="button" class="btn btn-primary" onclick="GetAll(${val2.taskGuid})"  data-bs-toggle="modal" data-bs-target="#detailTask">Detail</button>
-                               
+                                <button type="button" class="btn btn-primary" onclick="detailTask('${val2.taskGuid}')"  data-bs-toggle="modal" data-bs-target="#detailTask">Detail</button>
                             </div>
                         </div>
-                        
                      `;
                     }else{
                         return;
                     }
-                    
                 })
-            
-        }); 
-    
+        });
         temp += `</div>`
     })
     $("#cardSection").html(temp);
 });
+
+function detailTask(taskGuid){
+    $.ajax({
+        url: `https://localhost:7230/api/tasks/detail-task/` + taskGuid,
+        success: function (result){
+            let name = "";
+            let startDate = "";
+            let endDate = "";
+            let isFinished = "";
+            let priority = "";
+            let projectName = "";
+            let projectManager = "";
+            let sectionName = "";
+            let employeeName = "";
+            let employeePhoneNumber = "";
+            let employeeMail = "";
+            
+            name = ` <input type="text" id="Name" name="Name" class="form-control" value="${result.data.name}" disabled="true"/>`
+            startDate = `<input type="text" id="StartDate" name="StartDate" class="form-control" value="${result.data.startDate}" disabled="true"/>`
+            endDate = `<input type="text" id="EndDate" name="EndDate" class="form-control" value="${result.data.endDate}" disabled="true"/>`
+            isFinished = ` <input type="text" id="isFinished" name="isFinished" class="form-control" value="${result.data.isFinished}" disabled="true"/>`
+            priority = `<input type="text" id="Priority" name="Priority" class="form-control" value="${result.data.priority}" disabled="true"/>`
+            projectName = `<input type="text" id="ProjectName" name="ProjectName" class="form-control" value="${result.data.projectName}" disabled="true"/>`
+            projectManager = `<input type="text" id="ProjectManager" name="ProjectManager" class="form-control" value="${result.data.projectManager}" disabled="true"/>`
+            sectionName = `<input type="text" id="SectionName" name="SectionName" class="form-control" value="${result.data.sectionName}" disabled="true"/>`
+            employeeName =`<input type="text" id="EmployeeName" name="EmployeeName" class="form-control" value="${result.data.employeeName}" disabled="true"/>`
+            employeePhoneNumber = `<input type="text" id="EmployeePhoneNumber" name="EmployeePhoneNumber" class="form-control" value="${result.data.employeePhoneNumber}" disabled="true"/>`
+            employeeMail = `<input type="text" id="EmployeeEmail" name="EmployeeEmail" class="form-control" value="${result.data.employeeEmail}" disabled="true"/>`
+            
+            $('#name').html(name);
+            $('#startDate').html(startDate);
+            $('#endDate').html(endDate);
+            $('#isFinished').html(isFinished);
+            $('#priority').html(priority);
+            $('#projectName').html(projectName);
+            $('#projectManager').html(projectManager);
+            $('#sectionName').html(sectionName);
+            $('#employeeName').html(employeeName);
+            $('#employeePhoneNumber').html(employeePhoneNumber);
+            $('#employeeMail').html(employeeMail);
+            
+           /* $('#StartDate').val(result.data.startDate);
+            $('#EndDate').val(result.data.endDate);
+            $('#IsFinished').val(result.data.isFinished);
+            $('#Priority').val(result.data.priority);
+            $('#ProjectName').val(result.data.projectName);
+            $('#ProjectManager').val(result.data.projectManager);
+            $('#SectionName').val(result.data.sectionName);
+            $('#EmployeeName').val(result.data.employeeName);
+            $('#EmployeePhoneNumber').val(result.data.employeePhoneNumber);
+            $('#EmployeeEmail').val(result.data.employeeEmail);*/
+            
+        },
+        error: function (error){
+            console.error(error);
+        }
+    });
+}
+
 

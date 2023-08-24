@@ -228,7 +228,7 @@
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                                     <div class="avatar avatar-online">
-                                        <img src="./assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                        <img src="~/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
                                     </div>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
@@ -480,29 +480,55 @@
                 <form>
                 <div class="form-group">
                     <label for="Name">Name</label>
-                    <input type="text" id="Name" name="Name" class="form-control"/>
+                    <div id="name"></div>
                 </div>
                 <div class="form-group">
                     <label for="StartDate">Start Date</label>
-                    <input type="date" id="StartDate" name="StartDate" class="form-control"/>
+                    <div id="startDate"></div>
                 </div>
                 <div class="form-group">
                     <label for="EndDate">End Date</label>
-                    <input type="date" id="EndDate" name="EndDate" class="form-control"/>
+                    <div id="endDate"></div>
                 </div>
                 <div class="form-group">
-                    <label for="StartDateTask">IsFinished</label>
-                    <input type="date" id="StartDateTask" name="StartDateTask" class="form-control"/>
+                    <label for="isFinished">IsFinished</label>
+                   <div id="isFinished"></div>
+                    <button class="btn btn-danger">Change</button>
                 </div>
-                <div class="form-group">
-                    <label for="EndDateTask">Employee Name</label>
-                    <input type="date" id="EndDateTask" name="EndDateTask" class="form-control"/>
-                </div>
+                    <div class="form-group">
+                        <label for="Priority">Priority</label>
+                        <div id="isFinished"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="ProjectName">Project Name</label>
+                        <div id="projectName"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="ProjectManager">Project Manager</label>
+                        <div id="projectManager"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="SectionName">Section Name</label>
+                        <div id="sectionName"></div>
+                        <button class="btn btn-danger">Change</button>
+                    </div>
+                    <div class="form-group">
+                        <label for="EmployeeName">Employee Name</label>
+                        <div id="employeeName"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="EmployeePhoneNumber">Employee Phone Number</label>
+                        <div id="employeePhoneNumber"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="EmployeeEmail">Employee Email</label>
+                        <div id="employeeMail"></div>
+                    </div>
+                    
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
             </div>
         </div>
     </div>
@@ -525,9 +551,6 @@
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <!-- Main JS -->
     <script src="~/assets/js/main.js"></script>
-    <script src="~/js/admin.js" asp-append-version="true"></script>
-    <script src="~/js/pokemon.js" asp-append-version="true"></script>
-    <script src="~/js/dashboard.js" asp-append-version="true"></script>
     <script src="~/js/site.js"></script>
     <script src="~/js/section.js"></script>
 

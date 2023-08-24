@@ -26,7 +26,7 @@ public class TaskService
         _employeeRepository = employeeRepository;
     }
     
-    public IEnumerable<DetailTaskDto>?  GetDetailTaskByGuid(Guid guid)
+    public DetailTaskDto?  GetDetailTaskByGuid(Guid guid)
     {
         var result = from task in _taskRepository.GetAll()
             where task.Guid == guid
@@ -51,7 +51,7 @@ public class TaskService
                 EmployeePhoneNumber = employee.PhoneNumber
             };
         
-        return result;
+        return result.FirstOrDefault();
     }
     
     public int ChangeStatus(TaskChangeStatusDto taskChangeStatusDto)

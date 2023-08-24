@@ -23,7 +23,7 @@ public class TaskController : ControllerBase
     public IActionResult GetDetailTaskByGuid(Guid guid)
     {
         var result = _taskService.GetDetailTaskByGuid(guid);
-        if (!result.Any())
+        if (result is null)
         {
             return NotFound(new ResponseHandler<DetailTaskDto>
             {
@@ -33,7 +33,7 @@ public class TaskController : ControllerBase
             });
         }
 
-        return Ok(new ResponseHandler<IEnumerable<DetailTaskDto>>
+        return Ok(new ResponseHandler<DetailTaskDto>
         {
             Code = StatusCodes.Status200OK,
             Status = HttpStatusCode.OK.ToString(),
