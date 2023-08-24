@@ -18,6 +18,52 @@ public class ProjectCollaboratorController : ControllerBase
     {
         _projectCollaboratorService = projectCollaboratorService;
     }
+    
+    [HttpGet("waiting-by-employee/{guid}")]
+    public IActionResult GetAllProjectCollaboratorWaitingByEmployee(Guid guid)
+    {
+        var result = _projectCollaboratorService.GetAllProjectCollaboratorIsWaitingByEmployee(guid);
+        if (!result.Any())
+        {
+            return NotFound(new ResponseHandler<ProjectCollaboratorWaitingDto>
+            {
+                Code = StatusCodes.Status404NotFound,
+                Status = HttpStatusCode.NotFound.ToString(),
+                Message = "Data is not found"
+            });
+        }
+
+        return Ok(new ResponseHandler<IEnumerable<ProjectCollaboratorWaitingDto>>
+        {
+            Code = StatusCodes.Status200OK,
+            Status = HttpStatusCode.OK.ToString(),
+            Message = "Success retrieve data",
+            Data = result
+        });
+    }
+    
+    [HttpGet("all-by-employee/{guid}")]
+    public IActionResult GetAllProjectCollaboratorByEmployee(Guid guid)
+    {
+        var result = _projectCollaboratorService.GetAllProjectCollaboratorByEmployee(guid);
+        if (!result.Any())
+        {
+            return NotFound(new ResponseHandler<ProjectCollaboratorByEmployeeDto>
+            {
+                Code = StatusCodes.Status404NotFound,
+                Status = HttpStatusCode.NotFound.ToString(),
+                Message = "Data is not found"
+            });
+        }
+
+        return Ok(new ResponseHandler<IEnumerable<ProjectCollaboratorByEmployeeDto>>
+        {
+            Code = StatusCodes.Status200OK,
+            Status = HttpStatusCode.OK.ToString(),
+            Message = "Success retrieve data",
+            Data = result
+        });
+    }
 
     [HttpPost("create-by-email")]
     public IActionResult CreateByEmployeeEmail(NewProjectByEmployeeDto newProjectByEmployeeDto)

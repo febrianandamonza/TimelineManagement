@@ -3,6 +3,7 @@ using TimelineManagement.Data;
 using TimelineManagement.DTOs.Projects;
 using TimelineManagement.DTOs.Tasks;
 using TimelineManagement.Models;
+using TimelineManagement.Utilities.Enums;
 using Task = TimelineManagement.Models.Task;
 
 namespace TimelineManagement.Services;
@@ -91,6 +92,16 @@ public class ProjectService
                 CreatedDate = DateTime.Now,
                 ModifiedDate = DateTime.Now
                 
+            });
+
+            var projectCollab = _projectCollaboratorRepository.Create(new ProjectCollaborator
+            {
+                Guid = new Guid(),
+                ProjectGuid = project.Guid,
+                EmployeeGuid = newDefaultProjectDto.EmployeeGuid,
+                CreatedDate = DateTime.Now,
+                ModifiedDate = DateTime.Now,
+                Status = StatusLevel.Accepted
             });
             
             var toDto = new NewDefaultProjectDto

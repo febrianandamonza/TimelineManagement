@@ -3,6 +3,7 @@ using TimelineManagement.Data;
 using TimelineManagement.DTOs.ProjectCollaborators;
 using TimelineManagement.DTOs.Tasks;
 using TimelineManagement.Models;
+using TimelineManagement.Utilities.Enums;
 
 namespace TimelineManagement.Services;
 
@@ -12,12 +13,47 @@ public class ProjectCollaboratorService
     private readonly IEmployeeRepository _employeeRepository;
     
     private readonly TimelineManagementDbContext _dbContext;
+    private readonly IProjectRepository _projectRepository;
 
-    public ProjectCollaboratorService(IProjectCollaboratorRepository projectCollaboratorRepository, TimelineManagementDbContext dbContext, IEmployeeRepository employeeRepository)
+    public ProjectCollaboratorService(IProjectCollaboratorRepository projectCollaboratorRepository, TimelineManagementDbContext dbContext, IEmployeeRepository employeeRepository, IProjectRepository projectRepository)
     {
         _projectCollaboratorRepository = projectCollaboratorRepository;
         _dbContext = dbContext;
         _employeeRepository = employeeRepository;
+        _projectRepository = projectRepository;
+    }
+    
+    public IEnumerable<ProjectCollaboratorWaitingDto> GetAllProjectCollaboratorIsWaitingByEmployee(Guid guid)
+    {
+        var result = from pc in _projectCollaboratorRepository.GetAll() where pc.Status is StatusLevel.Waiting
+            join employee in _employeeRepository.GetAll() on pc.EmployeeGuid equals employee.Guid where employee.Guid == guid
+            join project in _projectRepository.GetAll() on pc.ProjectGuid equals project.Guid
+            select new ProjectCollaboratorWaitingDto
+            {
+                Guid = pc.Guid,
+                Status = pc.Status,
+                ProjectGuid = pc.ProjectGuid,
+                ProjectName = project.Name,
+                EmployeeGuid = pc.EmployeeGuid,
+                EmployeeName = employee.FirstName + employee.LastName
+            };
+        return result;
+
+    }
+    
+    public IEnumerable<ProjectCollaboratorByEmployeeDto> GetAllProjectCollaboratorByEmployee(Guid guid)
+    {
+        var result = from pc in _projectCollaboratorRepository.GetAll() where pc.Status is StatusLevel.Accepted
+            join employee in _employeeRepository.GetAll() on pc.EmployeeGuid equals employee.Guid where employee.Guid == guid
+            select new ProjectCollaboratorByEmployeeDto
+            {
+                ProjectGuid = pc.ProjectGuid,
+                EmployeeGuid = pc.EmployeeGuid,
+                EmployeeEmail = employee.Email,
+                Status = pc.Status
+            };
+        return result;
+
     }
     
     public NewProjectByEmployeeDto? CreateByEmail(NewProjectByEmployeeDto newProjectByEmployeeDto)
