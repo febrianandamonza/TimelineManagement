@@ -57,20 +57,30 @@ $.ajax({
     })
     $("#project-list").html(temp);
 });
-
+const img = ``
 $.ajax({
-    url: `https://localhost:7230/api/projects/project-by-employee/` + guid
+    url: `https://localhost:7230/api/project-collaborators/all-by-employee/` + guid
 }).done((result) => {
     let temp = "";
     $.each(result.data, (key, val) => {
         temp += `
-                <div class="card" style="width: 18rem;">
-  <img class="card-img-top" src="..." alt="Card image cap">
-  <div class="card-body">
-   <div class="card-title">tes</div>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-  </div>
-</div>
+                    <div class="col-3 my-3">
+                    
+                    <a href="/Project/Index/${val.projectGuid}">
+                    <div class="card" style="border: 5px solid #696cff;" >
+                      <img src="https://www.itworks.id/wp-content/uploads/2021/02/metrodata-logo.jpg" class="img-thumbnail" alt="...">
+                      <div class="card-body">
+                        <h5 class="card-title">${val.projectName}</h5>
+                        </div>
+                      <ul class="list-group list-group-flush">
+                        <li class="list-group-item">An item</li>
+                        <li class="list-group-item">A second item</li>
+                        <li class="list-group-item">A third item</li>
+                      </ul>
+                    </div>
+                    </a>
+                    </div>
+                        
             `;
     })
     $("#project-card").html(temp);
@@ -161,7 +171,7 @@ $.ajax({
     $.each(result.data, (key, val) => {
         sectionGuid = val.guid;
         temp += `
-                    <div id="left" class="card h-100"  height: 100px">
+                    <div id="left" class="card">
                         <div style="color: white; height: 50px; text-align: center;">
                             <h4 class="card-title"  style="color : white;">${val.name}</h4>  
                         </div>
@@ -172,14 +182,23 @@ $.ajax({
             url: `https://localhost:7230/api/projects/detail-project/${projectGuid}`,
             async : false
         }).done((result2) =>{
+            let priorityValue = ""
                 $.each(result2.data, (key2, val2) => {
                     if (val2.taskSection == val.guid) {
-                        
+                        if (val2.priority == 0) {
+                            priorityValue = `<h5 class="badge badge-success">Low Priority</h5>`
+                        }
+                        else if (val2.priority == 1) {
+                            priorityValue = `<h5 class="badge badge-warning">Medium Priority</h5>`
+                        }
+                        else if (val2.priority == 2) {
+                            priorityValue = `<h5 class="badge badge-danger">High Priority</h5>`
+                        }
                         temp += `
-                        <div class="card m-2" draggable="true" style="color:black">
+                        <div class="card m-2" draggable="true" style="color:black" onclick="detailTask('${val2.taskGuid}')"  data-bs-toggle="modal" data-bs-target="#detailTask">
                             <div class="card-body">
                                 <h5 class="card-title">${val2.taskName}</h5>
-                                <button type="button" class="btn btn-primary" onclick="detailTask('${val2.taskGuid}')"  data-bs-toggle="modal" data-bs-target="#detailTask">Detail</button>
+                                ${priorityValue}
                             </div>
                         </div>
                      `;

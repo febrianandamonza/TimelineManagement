@@ -28,6 +28,11 @@ namespace Client.Controllers
         {
             return View();
         }
+        [HttpGet]
+        public IActionResult All()
+        {
+            return View();
+        }
 
         [HttpGet]
         public IActionResult Create()

@@ -6,33 +6,35 @@
 }
 
 .content {
-    width: 100%;
+    width: auto;
+    min-height: 100vh;
+    justify-content: center;
+}
+.content2 {
+    width: auto;
     min-height: 100vh;
     display: flex;
-    align-items: center;
     justify-content: center;
-    border: 2px solid black;
 }
 
 #cardSection {
     width: 100%;
-    min-height: 100vh;
-    display: flex;
+    min-height: 200px;
+    display: flex;  
     justify-content: center;
     
 }
+#left {
+    width: 300px;
+    margin: 20px;
+    height: auto;
+    background-color: #696cff;
+}
 
-#project-card {
+#project-card { 
     width: 100%;
     min-height: 200px;
     display: flex;
 }
 
-#left, #right, #right2, #right3 {
-    width: 300px;
-    min-height: 400px;
-    margin: 20px;
-    height: auto;
-    background-color: #696cff;
-    border: 2px solid black;
-}
+

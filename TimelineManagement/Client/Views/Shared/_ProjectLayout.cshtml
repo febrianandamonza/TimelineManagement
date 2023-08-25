@@ -140,48 +140,58 @@
 
                 <div class="menu-inner-shadow"></div>
 
-                <ul class="menu-inner py-1">
-                    <!-- Dashboard -->
-                    <li class="menu-item active">
-                        <a class="menu-link" asp-area="" asp-controller="Home" asp-action="Index">
-                            <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                            <div data-i18n="Analytics">Dashboard</div>
-                        </a>
-                    </li>
-
-                    <!-- Layouts -->
-                    <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons bx bx-layout"></i>
-                            <div>Data</div>
-                        </a>
-
-                        <ul class="menu-sub">
-                            <li class="menu-item">
-                                <a class="menu-link" asp-controller="Employee" asp-action="Index">
-                                    <div data-i18n="Without navbar">Employee</div>
-                                </a>
-                            </li>
-
-                        </ul>
-                    </li>
-
-                    <li class="menu-header small text-uppercase">
-                        <span class="menu-header-text">Project</span>
-                    </li>
-                    <button type="button" class="btn btn-primary ml-4" data-toggle="modal" data-target="#createModal">
-                        Create New Project
-                    </button>
-                    <li class="menu-item">
-                        <a href="" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                            <div>Project List</div>
-                        </a>
-                        <input type="hidden" id="guidInput" value="@User.FindFirst("Guid").Value">
-                        <ul class="menu-sub" id="project-list">
-                        </ul>
-                    </li>
-                </ul>
+                 <ul class="menu-inner py-1">
+                                    <!-- Dashboard -->
+                                    <li class="menu-item active">
+                                        <a class="menu-link" asp-area="" asp-controller="Home" asp-action="Index">
+                                            <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                                            <div>Dashboard</div>
+                                        </a>
+                                    </li>
+                
+                                    <!-- Layouts -->
+                                    <li class="menu-item">
+                                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                                            <i class="menu-icon tf-icons bx bx-layout"></i>
+                                            <div>Data</div>
+                                        </a>
+                
+                                        <ul class="menu-sub">
+                                            <li class="menu-item">
+                                                <a class="menu-link" asp-controller="Employee" asp-action="Index">
+                                                    <div data-i18n="Without navbar">Employee</div>
+                                                </a>
+                                            </li>
+                
+                                        </ul>
+                                    </li>
+                
+                                    <li class="menu-header small text-uppercase">
+                                        <span class="menu-header-text">Layout</span>
+                                    </li>
+                                    
+                                    <li class="menu-item">
+                                        <a class="menu-link" asp-area="" asp-controller="Project" asp-action="All">
+                                            <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                                            <div>Project</div>
+                                        </a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a href="" class="menu-link menu-toggle">
+                                            <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                                            <div>Project List</div>
+                                        </a>
+                                        <input type="hidden" id="guidInput" value="@User.FindFirst("Guid").Value">
+                                        <ul class="menu-sub" id="project-list">
+                                        </ul>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a href="/ProjectCollaborator/Index" class="menu-link menu-toggle">
+                                            <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                                            <div>Inbox</div>
+                                        </a>
+                                    </li>
+                                </ul>
             </aside>
 
             <!-- Layout container -->
@@ -479,31 +489,31 @@
                 <div class="row">
                     <!-- First Column -->
                     <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="Name">Name</label>
-                                <div id="name"></div>
-                            </div>
-                            <div class="form-group">
-                                <label for="StartDate">Start Date</label>
-                                <div id="startDate"></div>
-                            </div>
-                            <div class="form-group">
-                                <label for="EndDate">End Date</label>
-                                <div id="endDate"></div>
-                            </div>
-                            <div class="form-group">
-                                <label for="Priority">Priority</label>
-                                <div id="priority"></div>
-                            </div>
-                            <div class="form-group">
-                                <label for="ProjectName">Project Name</label>
-                                <div id="projectName"></div>
-                            </div>
-                            <div class="form-group">
-                                <label for="ProjectManager">Project Manager</label>
-                                <div id="projectManager"></div>
-                            </div>
-                            <!-- Add more form elements as needed -->
+                        <div class="form-group">
+                            <label for="Name">Name</label>
+                            <div id="name"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="StartDate">Start Date</label>
+                            <div id="startDate"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="EndDate">End Date</label>
+                            <div id="endDate"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="Priority">Priority</label>
+                            <div id="priority"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="ProjectName">Project Name</label>
+                            <div id="projectName"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="ProjectManager">Project Manager</label>
+                            <div id="projectManager"></div>
+                        </div>
+                        <!-- Add more form elements as needed -->
                     </div>
                     <!-- Second Column -->
                     <div class="col-md-6">                        
@@ -524,21 +534,40 @@
                             <div id="isFinished"></div>
                             <button class="btn btn-danger mt-1" data-bs-toggle="modal" data-bs-target="#changeStatus">Change</button>
                         </div>
-                            <div class="form-group">
-                                <label for="SectionName">Section Name</label>
-                                <div id="sectionName"></div>
-                                </div>
+                        <div class="form-group">
+                            <label for="SectionName">Section Name</label>
+                            <div id="sectionName"></div>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button class="btn btn-primary" data-bs-target="#commentModal" data-bs-toggle="modal" data-bs-dismiss="modal">Open Comment</button>
             </div>
         </div>
     </div>
 </div>
 
-    <!-- Change Status Modal -->
+<!-- Comments Modal -->
+<div class="modal fade" id="commentModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalToggleLabel2">Modal 2</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Hide this modal and show the first with the button below.
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" data-bs-target="#detailTask" data-bs-toggle="modal" data-bs-dismiss="modal">Back to detail task</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Change Status Modal -->
     <div class="modal fade" id="changeStatus" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
