@@ -58,6 +58,24 @@ $.ajax({
     $("#project-list").html(temp);
 });
 
+$.ajax({
+    url: `https://localhost:7230/api/projects/project-by-employee/` + guid
+}).done((result) => {
+    let temp = "";
+    $.each(result.data, (key, val) => {
+        temp += `
+                <div class="card" style="width: 18rem;">
+  <img class="card-img-top" src="..." alt="Card image cap">
+  <div class="card-body">
+   <div class="card-title">tes</div>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+  </div>
+</div>
+            `;
+    })
+    $("#project-card").html(temp);
+});
+
 function openAddColabModal() {
     const currentUrl = window.location.href;
     const projectGuid = currentUrl.substring(currentUrl.lastIndexOf("/") + 1);
@@ -324,7 +342,7 @@ function UpdateStatus(taskGuid) {
         })
         console.log(error)
         console.log(data)
-        
+        console.log(taskGuid)
     })
 }
 

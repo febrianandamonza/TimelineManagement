@@ -11,6 +11,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    border: 2px solid black;
 }
 
 #cardSection {
@@ -18,6 +19,13 @@
     min-height: 100vh;
     display: flex;
     justify-content: center;
+    
+}
+
+#project-card {
+    width: 100%;
+    min-height: 200px;
+    display: flex;
 }
 
 #left, #right, #right2, #right3 {
@@ -26,26 +34,5 @@
     margin: 20px;
     height: auto;
     background-color: #696cff;
-}
-
-.list {
-    background: palevioletred;
-    height: 60px;
-    margin: 30px;
-    color: #fff;
-    display: flex;
-    align-items: center;
-    cursor: grab;
-}
-
-    .list img {
-        width: 10px;
-        margin-right: 15px;
-        margin-left: 20px;
-    }
-
-.card {
-    background: paleturquoise;
-    display: flex;
-    
+    border: 2px solid black;
 }
