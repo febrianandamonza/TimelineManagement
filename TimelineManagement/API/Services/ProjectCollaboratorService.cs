@@ -22,6 +22,18 @@ public class ProjectCollaboratorService
         _employeeRepository = employeeRepository;
         _projectRepository = projectRepository;
     }
+
+    public CountProjectByEmployeeDto CountProjectByEmployee(Guid guid)
+    {
+        var getProjectCollab = _projectCollaboratorRepository.GetAll().Count(pc => pc.EmployeeGuid == guid && pc.Status is StatusLevel.Accepted);
+
+        var result = new CountProjectByEmployeeDto{
+            EmployeeGuid = guid,
+            Total = getProjectCollab
+        };
+        return result;
+
+    }
     
     public IEnumerable<ProjectCollaboratorWaitingDto> GetAllProjectCollaboratorIsWaitingByEmployee(Guid guid)
     {

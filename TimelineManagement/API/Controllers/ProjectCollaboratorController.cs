@@ -19,6 +19,29 @@ public class ProjectCollaboratorController : ControllerBase
         _projectCollaboratorService = projectCollaboratorService;
     }
     
+    [HttpGet("count-project-by-employee/{guid}")]
+    public IActionResult GetAllEmployeeDetail(Guid guid)
+    {
+        var result = _projectCollaboratorService.CountProjectByEmployee(guid);
+        if (result is null)
+        {
+            return NotFound(new ResponseHandler<CountProjectByEmployeeDto>
+            {
+                Code = StatusCodes.Status404NotFound,
+                Status = HttpStatusCode.NotFound.ToString(),
+                Message = "Data is not found"
+            });
+        }
+
+        return Ok(new ResponseHandler<CountProjectByEmployeeDto>
+        {
+            Code = StatusCodes.Status200OK,
+            Status = HttpStatusCode.OK.ToString(),
+            Message = "Success retrieve data",
+            Data = result
+        });
+    }
+    
     [HttpGet("waiting-by-employee/{guid}")]
     public IActionResult GetAllProjectCollaboratorWaitingByEmployee(Guid guid)
     {

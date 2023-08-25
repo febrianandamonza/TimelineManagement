@@ -19,6 +19,29 @@ public class TaskController : ControllerBase
         _taskService = taskService;
     }
     
+    [HttpGet("count-task-by-employee/{guid}")]
+    public IActionResult CountTask(Guid guid)
+    {
+        var result = _taskService.CountTaskDto(guid);
+        if (result is null)
+        {
+            return NotFound(new ResponseHandler<CountTaskDto>
+            {
+                Code = StatusCodes.Status404NotFound,
+                Status = HttpStatusCode.NotFound.ToString(),
+                Message = "Data is not found"
+            });
+        }
+
+        return Ok(new ResponseHandler<CountTaskDto>
+        {
+            Code = StatusCodes.Status200OK,
+            Status = HttpStatusCode.OK.ToString(),
+            Message = "Success retrieve data",
+            Data = result
+        });
+    }
+    
     [HttpGet("detail-task/{guid}")]
     public IActionResult GetDetailTaskByGuid(Guid guid)
     {
