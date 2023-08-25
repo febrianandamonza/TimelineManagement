@@ -179,8 +179,9 @@
                         </ul>
                     </li>
                     <li class="menu-item">
-                        <a href="/ProjectCollaborator/Index" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                        <input type="hidden" id="employeeGuidInput" value="@User.FindFirst("Guid").Value">
+                        <a href="/ProjectCollaborator/Inbox" class="menu-link">
+                            <i class="menu-icon bx bx-envelope"></i>
                             <div>Inbox</div>
                         </a>
                     </li>

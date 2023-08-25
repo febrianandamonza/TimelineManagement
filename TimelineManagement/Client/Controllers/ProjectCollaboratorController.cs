@@ -13,7 +13,7 @@ using TimelineManagement.Models;
 
 namespace Client.Controllers
 {
-    [Authorize(Roles = "Project Manager")]
+    //[Authorize(Roles = "Project Manager")]
     public class ProjectCollaboratorController : Controller
     {
         private readonly IProjectCollaboratorRepository _projectCollaboratorRepository;
@@ -23,11 +23,11 @@ namespace Client.Controllers
             _projectCollaboratorRepository = repository;
         }
 
-        /*[HttpGet]
-        public IActionResult Index()
+        [HttpGet]
+        public IActionResult Inbox()
         {
             return View();
-        }*/
+        }
 
         [HttpGet]
         public IActionResult Create()
