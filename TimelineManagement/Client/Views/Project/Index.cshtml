@@ -6,17 +6,21 @@
     ViewData["Title"] = "Index";
     Layout = "_ProjectLayout";
 }
+    <h1 class="textProject">Project</h1>
+    <div class="row" style="margin-left: 10px">
+        <div class="col-2">
+            <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#addColabModal" onclick="openAddColabModal()" style="width:fit-content">
+                Add Collaborator
+            </button>
+        </div>  
+        <div class="col">
+            <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#addTaskModal" onclick="openAddColabModal()" style="width:fit-content">
+                Add Task
+            </button>
+        </div>
+    </div>
+    <div class="content">
+        <div id="cardSection"></div>
+    </div>
 
-<h1>Project</h1>
-<button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#addColabModal" onclick="openAddColabModal()" style="width:fit-content">
-    Add Collaborator
-</button>
-<button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#addTaskModal" onclick="openAddColabModal()" style="width:fit-content">
-    Add Task
-</button>
-
-<div class="content">
-    
-    <div id="cardSection"></div>
-</div>
 

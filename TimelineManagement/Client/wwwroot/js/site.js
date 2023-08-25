@@ -172,8 +172,8 @@ $.ajax({
         sectionGuid = val.guid;
         temp += `
                     <div id="left" class="card">
-                        <div style="color: white; height: 50px; text-align: center;">
-                            <h4 class="card-title"  style="color : white;">${val.name}</h4>  
+                        <div style=" height: 50px; text-align: center; ">
+                            <h4 class="card-title" style="color : white; margin-top: 15px;">${val.name}</h4>  
                         </div>
                             <div id="cardTask${key}"></div>
             `;

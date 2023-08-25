@@ -19,7 +19,11 @@ namespace Client.Controllers
         {
             return View();
         }
-        
+        [AllowAnonymous]
+        public IActionResult First()
+        {
+            return View();
+        }
         
         [AllowAnonymous]
         [HttpGet("/Unauthorized")]

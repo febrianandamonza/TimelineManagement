@@ -93,7 +93,7 @@ namespace Client
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Account}/{action=Login}/{id?}");
+                pattern: "{controller=Home}/{action=First}/{id?}");
 
             app.Run();
         }
