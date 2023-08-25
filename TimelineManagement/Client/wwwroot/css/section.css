@@ -7,7 +7,8 @@
 
 .content {
     width: auto;
-    min-height: 100vh;
+    display: flex;
+    align-items: center;
     justify-content: center;
 }
 .content2 {
@@ -19,7 +20,6 @@
 
 #cardSection {
     width: 100%;
-    min-height: 200px;
     display: flex;  
     justify-content: center;
     
@@ -27,8 +27,8 @@
 #left {
     width: 300px;
     margin: 20px;
-    height: auto;
     background-color: #696cff;
+    min-height: 400px;
 }
 
 #project-card { 
@@ -41,8 +41,11 @@
     align-items: center;
     justify-content: center;
     display: flex;
-    margin-top: 50px;
     margin-bottom: 50px;
+}
+
+.btn1{
+    margin-right: 10px;
 }
 
 

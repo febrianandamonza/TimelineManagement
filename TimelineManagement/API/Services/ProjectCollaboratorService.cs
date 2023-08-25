@@ -50,6 +50,8 @@ public class ProjectCollaboratorService
             {
                 ProjectGuid = pc.ProjectGuid,
                 ProjectName = project.Name,
+                ProjectStartDate = project.StartDate,
+                ProjectEndDate = project.EndDate,
                 EmployeeGuid = pc.EmployeeGuid,
                 EmployeeEmail = employee.Email,
                 Status = pc.Status

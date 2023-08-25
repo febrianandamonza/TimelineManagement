@@ -67,15 +67,14 @@ $.ajax({
                     <div class="col-3 my-3">
                     
                     <a href="/Project/Index/${val.projectGuid}">
-                    <div class="card" style="border: 5px solid #696cff;" >
+                    <div class="card" style="border: 5px solid #696cff; text-align: center" >
                       <img src="https://www.itworks.id/wp-content/uploads/2021/02/metrodata-logo.jpg" class="img-thumbnail" alt="...">
                       <div class="card-body">
                         <h5 class="card-title">${val.projectName}</h5>
                         </div>
                       <ul class="list-group list-group-flush">
-                        <li class="list-group-item">An item</li>
-                        <li class="list-group-item">A second item</li>
-                        <li class="list-group-item">A third item</li>
+                         <div class="list-group-item textP"><span style="color: red">Start Date : </span> ${val.projectStartDate.split('T')[0]}</div>
+                      <div class="list-group-item"><span style="color: red">End Date : </span>${val.projectStartDate.split('T')[0]}</div>
                       </ul>
                     </div>
                     </a>
@@ -171,7 +170,7 @@ $.ajax({
     $.each(result.data, (key, val) => {
         sectionGuid = val.guid;
         temp += `
-                    <div id="left" class="card">
+                    <div id="left" class="card h-100" >
                         <div style=" height: 50px; text-align: center; ">
                             <h4 class="card-title" style="color : white; margin-top: 15px;">${val.name}</h4>  
                         </div>
