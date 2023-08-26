@@ -232,50 +232,7 @@
                                     </div>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
-                                    <li>
-                                        <a class="dropdown-item" href="#">
-                                            <div class="d-flex">
-                                                <div class="flex-shrink-0 me-3">
-                                                    <div class="avatar avatar-online">
-                                                        <img src="./assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
-                                                    </div>
-                                                </div>
-
-                                                <div class="flex-grow-1">
-                                                    <span class="fw-semibold d-block"></span>
-                                                    <small class="text-muted">Admin</small>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <div class="dropdown-divider"></div>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="#">
-                                            <i class="bx bx-user me-2"></i>
-                                            <span class="align-middle">My Profile</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="#">
-                                            <i class="bx bx-cog me-2"></i>
-                                            <span class="align-middle">Settings</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="#">
-                                            <span class="d-flex align-items-center align-middle">
-                                                <i class="flex-shrink-0 bx bx-credit-card me-2"></i>
-                                                <span class="flex-grow-1 align-middle">Billing</span>
-                                                <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">4</span>
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <div class="dropdown-divider"></div>
-                                    </li>
-                                    <li>
+                                   
                                         <a class="dropdown-item" href="auth-login-basic.html">
                                             <i class="bx bx-power-off me-2"></i>
                                             <span class="align-middle">Log Out</span>
@@ -353,7 +310,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="Insert()" data-dismiss="modal">Create</button>
+                    <button type="button" class="btn btn-primary" onclick="InsertCollab()" data-dismiss="modal">Create</button>
                 </div>
             </div>
         </div>
@@ -403,7 +360,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="Insert()" data-dismiss="modal">Create</button>
+                    <button type="button" class="btn btn-primary" onclick="InsertTask()" data-dismiss="modal">Create</button>
                 </div>
             </div>
         </div>
@@ -423,26 +380,26 @@
                     <form action="Create" id="formAuthentication" class="mb-3" action="/Project/Create/" method="post">
                         <div class="form-group">
                             <label for="Name">Project Name</label>
-                            <input type="text" id="Name" name="Name" class="form-control" />
+                            <input type="text" id="NameProject" name="Name" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <label for="StartDate">Start Date</label>
-                            <input type="date" id="StartDate" name="StartDate" class="form-control" />
-                        </div>
+                            <label for="StartDateTask">Start Date</label>
+                            <input type="date" id="StartDateProject" name="StartDateTask" class="form-control" />
+                            </div>
                         <div class="form-group">
-                            <label for="EndDate">End Date</label>
-                            <input type="date" id="EndDate" name="EndDate" class="form-control" />
-                        </div>
+                            <label for="EndDateTask">End Date</label>
+                            <input type="date" id="EndDateProject" name="EndDateTask" class="form-control" />
+                            </div>
                         <div class="form-group">
                             <input asp-for="EmployeeGuid" type="hidden" value="@User.FindFirst("Guid").Value" />
                         </div>
                         <div class="form-group">
                             <label for="TaskName">Task Name</label>
-                            <input type="" id="TaskName" name="TaskName" class="form-control" />
+                            <input type="text" id="TaskName" name="TaskName" class="form-control" />
                         </div>
                         <div class="form-group">
                             <label for="Priority">Priority</label>
-                            <select id="Priority" name="Priority" class="form-select" aria-label="Default select example">
+                            <select id="PriorityProject" name="Priority" class="form-select" aria-label="Default select example">
                                 <option selected>Select Priority</option>
                                 <option value="0">Low</option>
                                 <option value="1">Medium</option>
@@ -461,7 +418,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="Insert()" data-dismiss="modal">Create</button>
+                    <button type="button" class="btn btn-primary" onclick="InsertProject()" data-dismiss="modal">Create</button>
                 </div>
             </div>
         </div>

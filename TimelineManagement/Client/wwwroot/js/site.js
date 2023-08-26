@@ -5,14 +5,14 @@
 
 
 
-function Insert() {
+function InsertProject() {
     var obj = new Object();
-    obj.name = $("#Name").val();
-    obj.startDate = $("#StartDate").val();
-    obj.endDate = $("#EndDate").val();
+    obj.name = $("#NameProject").val();
+    obj.startDate = $("#StartDateProject").val();
+    obj.endDate = $("#EndDateProject").val();
     obj.employeeGuid = $("#EmployeeGuid").val();
     obj.taskName = $("#TaskName").val();
-    obj.priority = parseInt($("#Priority").val());
+    obj.priority = parseInt($("#PriorityProject").val());
     obj.startDateTask = $("#StartDateTask").val();
     obj.endDateTask = $("#EndDateTask").val();
     
@@ -37,6 +37,7 @@ function Insert() {
             title: 'Oops',
             text: 'Failed to insert data, Please Try Again',
         })
+        console.log(obj);
     })
 }
 
@@ -92,7 +93,7 @@ function openAddColabModal() {
     document.getElementById("ProjectGuid").value = projectGuid;
 }
 
-function Insert() {
+function InsertCollab() {
     var obj = new Object();
     obj.email = $("#Email").val();
     obj.projectGuid = $("#ProjectGuid").val();
@@ -121,7 +122,7 @@ function Insert() {
     })
 }
 
-function Insert() {
+function InsertTask() {
     var obj = new Object();
     obj.name = $("#Name").val();
     obj.startDate = $("#StartDate").val();
@@ -151,7 +152,9 @@ function Insert() {
             title: 'Oops',
             text: 'Failed to insert data, Please Try Again',
         })
+        
     })
+    console.log(obj);
 }
 
 

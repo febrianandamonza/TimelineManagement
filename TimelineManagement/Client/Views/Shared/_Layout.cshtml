@@ -227,52 +227,6 @@
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
                                     <li>
-                                        <a class="dropdown-item" href="#">
-                                            <div class="d-flex">
-                                                <div class="flex-shrink-0 me-3">
-                                                    <div class="avatar avatar-online">
-                                                        <img src="./assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
-                                                    </div>
-                                                </div>
-                                                
-                                                    <div class="flex-grow-1">
-                                                        <span class="fw-semibold d-block"></span>
-                                                        <small class="text-muted">Admin</small>
-                                                    </div>
-
-                                                
-                                                
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <div class="dropdown-divider"></div>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="#">
-                                            <i class="bx bx-user me-2"></i>
-                                            <span class="align-middle">My Profile</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="#">
-                                            <i class="bx bx-cog me-2"></i>
-                                            <span class="align-middle">Settings</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="#">
-                                            <span class="d-flex align-items-center align-middle">
-                                                <i class="flex-shrink-0 bx bx-credit-card me-2"></i>
-                                                <span class="flex-grow-1 align-middle">Billing</span>
-                                                <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">4</span>
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <div class="dropdown-divider"></div>
-                                    </li>
-                                    <li>
                                         <a class="dropdown-item" href="auth-login-basic.html">
                                             <i class="bx bx-power-off me-2"></i>
                                             <span class="align-middle">Log Out</span>
@@ -327,63 +281,6 @@
     <!-- Overlay -->
     <div class="layout-overlay layout-menu-toggle"></div>
 
-    <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="createModalLabel">Create New Project</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <!-- Your form code here -->
-                <form action="Create" id="formAuthentication" class="mb-3" action="/Project/Create/" method="post">
-                    <div class="form-group">
-                       <label for="Name">Project Name</label>
-                       <input type="text" id="Name" name="Name" class="form-control" />
-                   </div>
-                   <div class="form-group">
-                       <label for="StartDate">Start Date</label>
-                       <input type="date" id="StartDate" name="StartDate" class="form-control" />
-                   </div>
-                   <div class="form-group">
-                       <label for="EndDate">End Date</label>
-                       <input type="date" id="EndDate" name="EndDate" class="form-control" />
-                   </div>
-                   <div class="form-group">
-                        <input type="hidden" value="@User.FindFirst("Guid").Value" />
-                   </div>
-                   <div class="form-group">
-                       <label for="TaskName">Task Name</label>
-                       <input type="" id="TaskName" name="TaskName" class="form-control" />
-                   </div>
-                   <div class="form-group">
-                        <label for="Priority">Priority</label>
-                        <select id="Priority" name="Priority" class="form-select" aria-label="Default select example">
-                            <option selected>Select Priority</option>
-                            <option value="0">Low</option>
-                            <option value="1">Medium</option>
-                            <option value="2">High</option>
-                        </select>
-                        </div>
-                   <div class="form-group">
-                       <label for="StartDateTask">Start Date</label>
-                       <input type="date" id="StartDateTask" name="StartDateTask" class="form-control" />
-                   </div>
-                   <div class="form-group">
-                       <label for="EndDateTask">End Date</label>
-                       <input type="date" id="EndDateTask" name="EndDateTask" class="form-control" />
-                   </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="Insert()" data-dismiss="modal">Create</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 
     <!-- Core JS -->

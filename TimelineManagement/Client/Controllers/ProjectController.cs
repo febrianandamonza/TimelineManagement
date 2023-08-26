@@ -13,7 +13,6 @@ using TimelineManagement.Models;
 
 namespace Client.Controllers
 {
-    [Authorize(Roles = "Project Manager")]
     public class ProjectController : Controller
     {
         private readonly IProjectRepository _projectRepository;
