@@ -468,3 +468,17 @@ function UpdateStatus(guid, newStatus) {
         console.log(data);
     });
 }
+
+const guidForProjectCount = document.getElementById("guidInput").value;
+$(document).ready(function () {
+    $.ajax({
+        url: `https://localhost:7230/api/project-collaborators/count-project-by-employee/` + guidForProjectCount,
+        type: "GET",
+        dataType: "json"
+    }).done(function (response) {
+        const totalProjects = response.data.total;
+        $("#totalProjects").text(totalProjects);
+    }).fail(function (error) {
+        console.log("Error:", error);
+    });
+});
