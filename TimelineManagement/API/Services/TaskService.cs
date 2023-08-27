@@ -150,10 +150,10 @@ public class TaskService
             }
 
             var checkEmployee = (from pc in _projectCollaboratorRepository.GetAll()
-                where pc.Status == StatusLevel.Accepted
+                where pc.Status == StatusLevel.Accepted && pc.ProjectGuid == newDefaultTaskDto.ProjectGuid
                 join e in _employeeRepository.GetAll() on pc.EmployeeGuid equals e.Guid
                 where e.Guid == getEmployee.Guid
-                select e).FirstOrDefault();
+                select pc).FirstOrDefault();
             if (checkEmployee is null)
             {
                 return null;
@@ -181,7 +181,7 @@ public class TaskService
                 EndDate = task.EndDate,
                 Priority = task.Priority,
                 ProjectGuid = task.ProjectGuid,
-                EmployeeEmail = checkEmployee.Email
+                EmployeeEmail = getEmployee.Email
             };
             
             transaction.Commit();
