@@ -7,6 +7,9 @@ public class TaskCommentDto
     public Guid Guid { get; set; }
     public string? Description { get; set; }
     public Guid TaskGuid { get; set; }
+    
+    public Guid EmployeeGuid { get; set; }
+    public Guid ProjectGuid { get; set; }
 
     public static implicit operator TaskComment(TaskCommentDto taskCommentDto)
     {
@@ -15,6 +18,8 @@ public class TaskCommentDto
             Guid = taskCommentDto.Guid,
             Description = taskCommentDto.Description,
             TaskGuid = taskCommentDto.TaskGuid,
+            EmployeeGuid = taskCommentDto.EmployeeGuid,
+            ProjectGuid = taskCommentDto.ProjectGuid,
             ModifiedDate = DateTime.Now
         };
     }
@@ -25,7 +30,9 @@ public class TaskCommentDto
         {
             Guid = taskComment.Guid,
             Description = taskComment.Description,
-            TaskGuid = taskComment.TaskGuid
+            TaskGuid = taskComment.TaskGuid,
+            EmployeeGuid = taskComment.EmployeeGuid,
+            ProjectGuid = taskComment.ProjectGuid
         };
     }
 }

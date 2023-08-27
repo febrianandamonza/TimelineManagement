@@ -159,7 +159,7 @@ public class TaskService
                 return null;
             }
             
-            var task = _taskRepository.Create( new Task
+            var task = new Task
             {
                 Guid = new Guid(),
                 Name = newDefaultTaskDto.Name,
@@ -169,10 +169,11 @@ public class TaskService
                 Priority = newDefaultTaskDto.Priority,
                 ProjectGuid = newDefaultTaskDto.ProjectGuid,
                 SectionGuid = Guid.Parse("fe4aa61c-329d-447f-811a-08db9fb220e4"),
-                EmployeeGuid = checkEmployee.Guid,
+                EmployeeGuid = getEmployee.Guid,
                 CreatedDate = DateTime.Now,
                 ModifiedDate = DateTime.Now
-            });
+            };
+            _taskRepository.Create(task);
             
             var toDto = new NewDefaultTaskDto
             {
@@ -181,7 +182,7 @@ public class TaskService
                 EndDate = task.EndDate,
                 Priority = task.Priority,
                 ProjectGuid = task.ProjectGuid,
-                EmployeeEmail = getEmployee.Email
+                EmployeeEmail = newDefaultTaskDto.EmployeeEmail
             };
             
             transaction.Commit();

@@ -93,6 +93,13 @@ public class TimelineManagementDbContext : DbContext
             .HasForeignKey(pc => pc.EmployeeGuid)
             .OnDelete(DeleteBehavior.Restrict);
         
+        //One Employee with Many Task Comment
+        modelBuilder.Entity<Employee>()
+            .HasMany(e => e.TaskComment)
+            .WithOne(tc => tc.Employee)
+            .HasForeignKey(tc => tc.EmployeeGuid)
+            .OnDelete(DeleteBehavior.Restrict);
+        
         //One Employee with Many Task
         modelBuilder.Entity<Employee>()
             .HasMany(e => e.Task)
@@ -105,6 +112,13 @@ public class TimelineManagementDbContext : DbContext
             .HasMany(p => p.Task)
             .WithOne(t => t.Project)
             .HasForeignKey(t => t.ProjectGuid)
+            .OnDelete(DeleteBehavior.Restrict);
+        
+        //One Project with Many Task Comment
+        modelBuilder.Entity<Project>()
+            .HasMany(p => p.TaskComment)
+            .WithOne(tc => tc.Project)
+            .HasForeignKey(tc => tc.ProjectGuid)
             .OnDelete(DeleteBehavior.Restrict);
         
         //One Project with Many Project Collaborator
@@ -120,6 +134,8 @@ public class TimelineManagementDbContext : DbContext
             .WithOne(tc => tc.Task)
             .HasForeignKey(tc => tc.TaskGuid)
             .OnDelete(DeleteBehavior.Restrict);
+        
+        
         
         //One Section with Many Task
         modelBuilder.Entity<Section>()

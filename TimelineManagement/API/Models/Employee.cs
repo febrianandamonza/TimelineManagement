@@ -28,6 +28,7 @@ public class Employee : BaseEntity
     public ICollection<Project>? Project { get; set; }
     public ICollection<ProjectCollaborator>? ProjectCollaborator { get; set; }
     public ICollection<Task>? Task { get; set; }
+    public ICollection<TaskComment>? TaskComment { get; set; }
     
     
 }

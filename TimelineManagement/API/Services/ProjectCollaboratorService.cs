@@ -83,20 +83,40 @@ public class ProjectCollaboratorService
                 return null;
             }
 
-            var projectCollab = _projectCollaboratorRepository.Create(new ProjectCollaborator
-            {
-                Guid = new Guid(),
-                ProjectGuid = newProjectByEmployeeDto.ProjectGuid,
-                EmployeeGuid = employee.Guid,
-                CreatedDate = DateTime.Now,
-                ModifiedDate = DateTime.Now,
-                Status = 0
-            });
+            var checkExist = _projectCollaboratorRepository.isExist(employee.Guid, newProjectByEmployeeDto.ProjectGuid);
+            var checkExist2 = _projectCollaboratorRepository.isAccepted(employee.Guid, newProjectByEmployeeDto.ProjectGuid);
 
+            if (checkExist2 != null)
+            {
+                return null;
+            }
+            if (checkExist is null)
+            {
+                var projectCollab = _projectCollaboratorRepository.Create(new ProjectCollaborator
+                {
+                    Guid = new Guid(),
+                    ProjectGuid = newProjectByEmployeeDto.ProjectGuid,
+                    EmployeeGuid = employee.Guid,
+                    CreatedDate = DateTime.Now,
+                    ModifiedDate = DateTime.Now,
+                    Status = 0
+                });
+                
+                if (projectCollab is null)
+                {
+                    return null;
+                }
+
+                checkExist = projectCollab;
+            }
+            else
+            {
+                return null;
+            }
             
             var toDto = new NewProjectByEmployeeDto
             {
-                ProjectGuid = projectCollab.ProjectGuid,
+                ProjectGuid = checkExist.ProjectGuid,
                 Email = employee.Email
             };
             

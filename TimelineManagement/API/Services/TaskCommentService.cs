@@ -1,16 +1,47 @@
 ﻿using TimelineManagement.Contracts;
+using TimelineManagement.Data;
 using TimelineManagement.Models;
 using TimelineManagement.DTOs.TaskComments;
+using TimelineManagement.DTOs.Tasks;
+using TimelineManagement.Utilities.Enums;
 
 namespace TimelineManagement.Services;
 
 public class TaskCommentService
 {
     private readonly ITaskCommentRepository _taskCommentRepository;
+    private readonly ITaskRepository _taskRepository;
+    private readonly IEmployeeRepository _employeeRepository;
+    private readonly IProjectRepository _projectRepository;
+    private readonly TimelineManagementDbContext _dbContext;
 
-    public TaskCommentService(ITaskCommentRepository taskCommentRepository)
+    public TaskCommentService(ITaskCommentRepository taskCommentRepository, ITaskRepository taskRepository, IEmployeeRepository employeeRepository, TimelineManagementDbContext dbContext, IProjectRepository projectRepository)
     {
         _taskCommentRepository = taskCommentRepository;
+        _taskRepository = taskRepository;
+        _employeeRepository = employeeRepository;
+        _dbContext = dbContext;
+        _projectRepository = projectRepository;
+    }
+    
+    public IEnumerable<DetailTaskCommentDto>?  DetailTaskComment(Guid taskGuid, Guid projectGuid)
+    {
+        var result = from tc in _taskCommentRepository.GetAll() orderby tc.CreatedDate descending 
+            join project in _projectRepository.GetAll() on tc.ProjectGuid equals project.Guid
+            where project.Guid == projectGuid
+            join task in _taskRepository.GetAll() on tc.TaskGuid equals task.Guid where task.Guid == taskGuid
+            join employee in _employeeRepository.GetAll() on tc.EmployeeGuid equals employee.Guid
+            select new DetailTaskCommentDto
+            {
+                TaskGuid = task.Guid,
+                EmployeeGuid = employee.Guid,
+                ProjectGuid = project.Guid,
+                Description = tc.Description,
+                EmployeeName = employee.FirstName + " " + employee.LastName,
+                CreatedDateComment = tc.CreatedDate
+            };
+        
+        return result;
     }
     
     public IEnumerable<TaskCommentDto> GetAll()

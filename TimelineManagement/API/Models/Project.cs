@@ -21,5 +21,6 @@ public class Project : BaseEntity
     public Employee? Employee { get; set; }
     public ICollection<ProjectCollaborator>? ProjectCollaborator { get; set; }
     public ICollection<Task>? Task { get; set; }
+    public ICollection<TaskComment>? TaskComment { get; set; }
     
 }

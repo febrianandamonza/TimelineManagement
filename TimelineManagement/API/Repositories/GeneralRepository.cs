@@ -73,4 +73,5 @@ public class GeneralRepository<TEntity> : IGeneralRepository<TEntity> where TEnt
     {
         _context.ChangeTracker.Clear();
     }
+
 }
