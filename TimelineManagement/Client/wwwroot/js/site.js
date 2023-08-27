@@ -289,19 +289,7 @@ function detailTask(taskGuid){
             $('#employeePhoneNumber').html(employeePhoneNumber);
             $('#employeeMail').html(employeeMail);
             $('#sectionChange').html(changeSection);
-            $('#statusChange').html(changeStatus);
-            
-           /* $('#StartDate').val(result.data.startDate);
-            $('#EndDate').val(result.data.endDate);
-            $('#IsFinished').val(result.data.isFinished);
-            $('#Priority').val(result.data.priority);
-            $('#ProjectName').val(result.data.projectName);
-            $('#ProjectManager').val(result.data.projectManager);
-            $('#SectionName').val(result.data.sectionName);
-            $('#EmployeeName').val(result.data.employeeName);
-            $('#EmployeePhoneNumber').val(result.data.employeePhoneNumber);
-            $('#EmployeeEmail').val(result.data.employeeEmail);*/
-            
+            $('#statusChange').html(changeStatus);   
         },
         error: function (error){
             console.error(error);
@@ -482,3 +470,64 @@ $(document).ready(function () {
         console.log("Error:", error);
     });
 });
+
+
+//google.charts.load('current', { 'packages': ['corechart'] });
+//google.charts.setOnLoadCallback(drawChart);
+
+//function drawChart() {
+//    const data = google.visualization.arrayToDataTable([
+//        ['Contry', 'Mhl'],
+//        ['Italy', 54.8],
+//        ['France', 48.6],
+//        ['Spain', 44.4],
+//        ['USA', 23.9],
+//        ['Argentina', 14.5]
+//    ]);
+
+//    const options = {
+//        title: 'World Wide Wine Production',
+//        is3D: true
+//    };
+
+//    const chart = new google.visualization.PieChart(document.getElementById('taskChart'));
+//    chart.draw(data, options);
+//}
+
+
+const employeeProjectGuid = document.getElementById("guidInput").value;
+
+$.ajax({
+    url: `https://localhost:7230/api/task/count-task-by-employee/` + employeeProjectGuid
+}).done((result) => {
+    var xValues = ["Finished", "Unfinished"];
+    var yValues = [result.data.taskFinished, result.data.taskUnfinished];
+    new Chart($('#taskChard'), {
+        type: 'pie',
+        data: {
+            labels: xValues,
+            datasets: [{
+                label: 'Total',
+                data: yValues,
+                backgroundColor: getRandomColor(xValues),
+                hoverOffset: 4
+            }]
+        }
+    });
+    console.log(data);
+    console.log(result.data.taskFinished);
+});
+
+function getRandomColor(count) { //generates random colours and puts them in string
+    var colors = [];
+    for (var i = 0; i < count.length; i++) {
+        var letters = '0123456789ABCDEF'.split('');
+        var color = '#';
+        for (var x = 0; x < 6; x++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        colors.push(color);
+    }
+    return colors;
+}
+

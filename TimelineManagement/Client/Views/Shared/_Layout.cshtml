@@ -64,6 +64,8 @@
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="~/assets/js/config.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
 
     <script>
     const token = '@Context.Session.GetString("JWToken")';
@@ -136,6 +138,7 @@
                 <ul class="menu-inner py-1">
                     <!-- Dashboard -->
                     <li class="menu-item active">
+                        <input type="hidden" id="employeeGuidProject" value="@User.FindFirst("Guid").Value">
                         <a class="menu-link" asp-area="" asp-controller="Home" asp-action="Index">
                             <i class="menu-icon tf-icons bx bx-home-circle"></i>
                             <div>Dashboard</div>
