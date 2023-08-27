@@ -73,6 +73,8 @@ function detailTask(taskGuid){
             let employeeMail = "";
             let priorityValue = "";
             let statusValue = "";
+            let listComment ="";
+            let insertComment = "";
 
             name = ` <input type="text" id="Name" name="Name" class="form-control" value="${result.data.name}" disabled="true"/>`
             startDate = `<input type="text" id="StartDate" name="StartDate" class="form-control" value="${result.data.startDate.split('T')[0]}" disabled="true"/>`
@@ -116,6 +118,18 @@ function detailTask(taskGuid){
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary" onclick="UpdateStatus('${result.data.guid}')" data-bs-dismiss="modal">Change</button>
                 </div>`
+            
+            listComment = `<div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button class="btn btn-primary" data-bs-target="#commentModal" onclick="listComment('${result.data.projectGuid}', '${result.data.guid}')" data-bs-toggle="modal" data-bs-dismiss="modal">Open Comment</button>
+            </div>`
+            
+            insertComment = `
+            <div class="modal-footer">
+          <button class="btn btn-primary" data-bs-target="#commentModal" data-bs-toggle="modal" data-bs-dismiss="modal">Back to comment</button>
+          <button class="btn btn-primary" onclick="InsertComment('${result.data.projectGuid}', '${result.data.guid}', '${result.data.employeeGuid}')" data-bs-toggle="modal" data-bs-dismiss="modal">Save</button>
+      </div>
+            `
 
             $('#name').html(name);
             $('#startDate').html(startDate);
@@ -130,6 +144,8 @@ function detailTask(taskGuid){
             $('#employeeMail').html(employeeMail);
             $('#sectionChange').html(changeSection);
             $('#statusChange').html(changeStatus);
+            $('#listComment').html(listComment);
+            $('#insertComment').html(insertComment);
         },
         error: function (error){
             console.error(error);
@@ -241,6 +257,61 @@ function InsertTask() {
 
     $.ajax({
         url: "https://localhost:7230/api/tasks/create-default",
+        type: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        data: JSON.stringify(obj)
+    }).done((result) => {
+        Swal.fire
+        (
+            'Data Has Been Successfuly Inserted',
+            'Success'
+        ).then(() => {
+            location.reload();
+        })
+    }).fail((error) => {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops',
+            text: 'Failed to insert data, Please Try Again',
+        })
+
+    })
+    console.log(obj);
+}
+
+function listComment(projectGuid, taskGuid) {
+    $.ajax({
+        url: `https://localhost:7230/api/task-comments/detail-task-comments-by-task/` + projectGuid + `/` + taskGuid,
+        success: function (result) {
+            let temp = ``;
+            $.each(result.data, (key, val) => {
+                temp += `
+          </div>
+          <div class="d-flex justify-content-between">
+                    <label class="control-label form-label">${val.employeeName}</label>
+                        <small >${val.createdDateComment.split('T')[0]}</small>
+                </div>
+                <textarea class="form-control" id="Comment" rows="3" disabled="true" >${val.description}</textarea>
+                <br>
+            `;
+            })
+            $('#commentBody').html(temp);
+        }
+
+    });
+}
+
+function InsertComment(projectGuid, taskGuid, employeeGuid) {
+    var obj = new Object();
+    obj.description = $("#CommentInsert").val();
+    obj.taskGuid = taskGuid;
+    obj.employeeGuid = employeeGuid;
+    obj.projectGuid = projectGuid;
+
+    $.ajax({
+        url: "https://localhost:7230/api/task-comments/",
         type: "POST",
         headers: {
             'Content-Type': 'application/json'

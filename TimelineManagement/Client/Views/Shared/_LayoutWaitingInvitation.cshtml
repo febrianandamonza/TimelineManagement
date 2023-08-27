@@ -144,6 +144,14 @@
                             <div>Dashboard</div>
                         </a>
                     </li>
+                    <li class="menu-item">
+                        <input type="hidden" id="employeeGuidInput" value="@User.FindFirst("Guid").Value">
+                        <a href="/ProjectCollaborator/Inbox" class="menu-link">
+                            <i class="menu-icon bx bx-envelope"></i>
+                            <div>Inbox</div>
+                        </a>
+                    </li>
+                    
 
                     <!-- Layouts -->
                     <li class="menu-item">
@@ -181,13 +189,7 @@
                         <ul class="menu-sub" id="project-list">
                         </ul>
                     </li>
-                    <li class="menu-item">
-                        <input type="hidden" id="employeeGuidInput" value="@User.FindFirst("Guid").Value">
-                        <a href="/ProjectCollaborator/Inbox" class="menu-link">
-                            <i class="menu-icon bx bx-envelope"></i>
-                            <div>Inbox</div>
-                        </a>
-                    </li>
+                    
                 </ul>
             </aside>
 

@@ -14,26 +14,39 @@ $(document).ready(function () {
     });
 });
 
-const employeeProjectGuid = document.getElementById("guidInput").value;
-
-$.ajax({
-    url: `https://localhost:7230/api/tasks/count-task-by-employee/` + employeeProjectGuid
-}).done((result) => {
-    var xValues = ["Finished", "Unfinished"];
-    var yValues = [result.data.totalTaskFinished, result.data.totalTaskUnFinished];
-    new Chart($('#taskChart'), {
-        type: 'pie',
-        data: {
-            labels: xValues,
-            datasets: [{
-                label: 'Total',
-                data: yValues,
-                backgroundColor: getRandomColor(xValues),
-                hoverOffset: 4
-            }]
-        }
+$(document).ready(function () {
+    $.ajax({
+        url: `https://localhost:7230/api/tasks/count-task-by-employee/` + guidForProjectCount,
+        type: "GET",
+        dataType: "json"
+    }).done(function (response) {
+        const taskFinished = response.data.totalTaskFinished;
+        const taskUnFinished = response.data.totalTaskUnFinished;
+        $("#taskFinished").text(taskFinished);
+        $("#taskUnFinished").text(taskUnFinished);
+    }).fail(function (error) {
+        console.log("Error:", error);
     });
 });
+//
+// $.ajax({
+//     url: `https://localhost:7230/api/tasks/count-task-by-employee/` + employeeProjectGuid
+// }).done((result) => {
+//     var xValues = ["Finished", "Unfinished"];
+//     var yValues = [result.data.totalTaskFinished, result.data.totalTaskUnFinished];
+//     new Chart($('#taskChart'), {
+//         type: 'pie',
+//         data: {
+//             labels: xValues,
+//             datasets: [{
+//                 label: 'Total',
+//                 data: yValues,
+//                 backgroundColor: getRandomColor(xValues),
+//                 hoverOffset: 4
+//             }]
+//         }
+//     });
+// });
 
 function getRandomColor(count) { //generates random colours and puts them in string
     var colors = [];

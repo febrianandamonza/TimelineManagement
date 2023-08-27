@@ -64,6 +64,7 @@ public class TaskService
                 ProjectManager = employee2.FirstName + employee2.LastName,
                 SectionGuid = section.Guid,
                 SectionName = section.Name,
+                EmployeeGuid = employee.Guid,
                 EmployeeName = employee.FirstName + employee.LastName,
                 EmployeeEmail = employee.Email,
                 EmployeePhoneNumber = employee.PhoneNumber

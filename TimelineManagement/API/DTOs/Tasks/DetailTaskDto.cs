@@ -15,6 +15,8 @@ public class DetailTaskDto
     public string ProjectManager { get; set; }
     public Guid SectionGuid { get; set; }
     public string SectionName { get; set; }
+    
+    public Guid EmployeeGuid { get; set; }
     public string EmployeeName { get; set; }
     public string EmployeePhoneNumber { get; set; }
     public string EmployeeEmail { get; set; }
