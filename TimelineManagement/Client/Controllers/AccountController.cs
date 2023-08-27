@@ -36,6 +36,13 @@ namespace Client.Controllers
             }
             return View();
         }
+        
+        [HttpGet]
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Login", "Account");
+        }
 
         [HttpGet]
         public IActionResult Register()

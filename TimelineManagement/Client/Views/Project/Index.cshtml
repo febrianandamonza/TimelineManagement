@@ -4,7 +4,7 @@
 @model TimelineManagement.DTOs.Projects.DetailProject
 @{
     ViewData["Title"] = "Index";
-    Layout = "_ProjectLayout";
+    Layout = "_Layout";
 }
     <h1 class="textProject">Project</h1>
     <div class="row" style="margin-left: 10px">
@@ -17,8 +17,302 @@
             </button>
         </div>
     </div>
-    <div class="content">
-        <div id="cardSection"></div>
+<div class="content">
+    <div id="cardSection"></div>
+</div>
+
+<!-- Add Coolaborator Modal -->
+    <div class="modal fade" id="addColabModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createModalLabel">Add Collaborator</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Your form code here -->
+                    <form action="Create" id="formAuthentication" class="mb-3" action="/ProjectCollaborator/Create/" method="post">
+                        <div class="form-group">
+                            <input type="hidden" id="ProjectGuid" name="ProjectGuid" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="Email">Email</label>
+                            <input type="email" id="Email" name="Email" class="form-control" />
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="InsertCollab()" data-dismiss="modal">Create</button>
+                </div>
+            </div>
+        </div>
     </div>
+    <!-- Add Task Modal -->
+    <div class="modal fade" id="addTaskModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createModalLabel">Add Task</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Your form code here -->
+                    <form action="Create" id="formAuthentication" class="mb-3" action="/Task/Create/" method="post">
+                        <div class="form-group">
+                            <label for="Name">Task Name</label>
+                            <input type="text" id="Name" name="Name" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="StartDate">Start Date</label>
+                            <input type="date" id="StartDate" name="StartDate" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="EndDate">End Date</label>
+                            <input type="date" id="EndDate" name="EndDate" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="Priority">Priority</label>
+                            <select id="Priority" name="Priority" class="form-select" aria-label="Default select example">
+                                <option selected>Select Priority</option>
+                                <option value="0">Low</option>
+                                <option value="1">Medium</option>
+                                <option value="2">High</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" id="ProjectGuid" name="ProjectGuid" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="Email">Email</label>
+                            <input type="email" id="EmployeeEmail" name="Email" class="form-control" />
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="InsertTask()" data-dismiss="modal">Create</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Add Project Modal -->
+    <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createModalLabel">Create New Project</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Your form code here -->
+                    <form action="Create" id="formAuthentication" class="mb-3" action="/Project/Create/" method="post">
+                        <div class="form-group">
+                            <label for="Name">Project Name</label>
+                            <input type="text" id="NameProject" name="Name" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="StartDateTask">Start Date</label>
+                            <input type="date" id="StartDateProject" name="StartDateTask" class="form-control" />
+                            </div>
+                        <div class="form-group">
+                            <label for="EndDateTask">End Date</label>
+                            <input type="date" id="EndDateProject" name="EndDateTask" class="form-control" />
+                            </div>
+                        <div class="form-group">
+                            <input asp-for="EmployeeGuid" type="hidden" value="@User.FindFirst("Guid").Value" />
+                        </div>
+                        <div class="form-group">
+                            <label for="TaskName">Task Name</label>
+                            <input type="text" id="TaskName" name="TaskName" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="Priority">Priority</label>
+                            <select id="PriorityProject" name="Priority" class="form-select" aria-label="Default select example">
+                                <option selected>Select Priority</option>
+                                <option value="0">Low</option>
+                                <option value="1">Medium</option>
+                                <option value="2">High</option>
+                            </select>
+                        </div>
+                            <div class="form-group">
+                                <label for="StartDateTask">Start Date</label>
+                                <input type="date" id="StartDateTask" name="StartDateTask" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label for="EndDateTask">End Date</label>
+                                <input type="date" id="EndDateTask" name="EndDateTask" class="form-control" />
+                            </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="InsertProject()" data-dismiss="modal">Create</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Detail Task Modal -->
+<div class="modal fade" id="detailTask" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg"> <!-- Added 'modal-lg' for a larger modal -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Task</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <!-- First Column -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="Name">Name</label>
+                            <div id="name"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="StartDate">Start Date</label>
+                            <div id="startDate"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="EndDate">End Date</label>
+                            <div id="endDate"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="Priority">Priority</label>
+                            <div id="priority"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="ProjectName">Project Name</label>
+                            <div id="projectName"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="ProjectManager">Project Manager</label>
+                            <div id="projectManager"></div>
+                        </div>
+                        <!-- Add more form elements as needed -->
+                    </div>
+                    <!-- Second Column -->
+                    <div class="col-md-6">                        
+                        <div class="form-group">
+                            <label for="EmployeeName">Employee Name</label>
+                            <div id="employeeName"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="EmployeePhoneNumber">Employee Phone Number</label>
+                            <div id="employeePhoneNumber"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="EmployeeEmail">Employee Email</label>
+                            <div id="employeeMail"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="isFinished">Status</label>
+                            <div id="isFinished"></div>
+                            <button class="btn btn-danger mt-1" data-bs-toggle="modal" data-bs-target="#changeStatus">Change</button>
+                        </div>
+                        <div class="form-group">
+                            <label for="SectionName">Section Name</label>
+                            <div id="sectionName"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button class="btn btn-primary" data-bs-target="#commentModal" data-bs-toggle="modal" data-bs-dismiss="modal">Open Comment</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Comments Modal -->
+<div class="modal fade" id="commentModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalToggleLabel2">Modal 2</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Hide this modal and show the first with the button below.
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" data-bs-target="#detailTask" data-bs-toggle="modal" data-bs-dismiss="modal">Back to detail task</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Change Status Modal -->
+<div class="modal fade" id="changeStatus" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createModalLabel">Change Status</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Your form code here -->
+                    <form action="Create" id="formAuthentication" class="mb-3" action="/ProjectCollaborator/Create/" method="post">
+                        <div class="form-group">
+                            <input type="hidden" id="ProjectGuid" name="ProjectGuid" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="isFinished">Status</label>
+                            <select id="isFinished" name="isFinished" class="form-select" aria-label="Default select example">
+                                <option selected>Select Status</option>
+                                <option value="1">Finished</option>
+                                <option value="0">Unfinished</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                 <div id="statusChange"></div>
+            </div>
+        </div>
+    </div>
+
+<!-- Change Section Modal -->
+<div class="modal fade" id="changeSection" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createModalLabel">Change Section</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Your form code here -->
+                    <form action="Create" id="formAuthentication" class="mb-3" action="/ProjectCollaborator/Create/" method="post">
+                        <div class="form-group">
+                            <input type="hidden" id="ProjectGuid" name="ProjectGuid" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="Section">Section</label>
+                            <select id="Section" name="Section" class="form-select" aria-label="Default select example">
+                                <option selected>Select Section</option>
+                                <option value="fe4aa61c-329d-447f-811a-08db9fb220e4">To Do</option>
+                                <option value="1c7324b5-2e88-4d33-811b-08db9fb220e4">In Progress</option>
+                                <option value="196272df-788f-4894-811c-08db9fb220e4">Testing</option>
+                                <option value="ec87fdea-0a03-4ce2-811d-08db9fb220e4">Done</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div id="sectionChange"></div>
+                
+            </div>
+        </div>
+    </div>
+
 
 
