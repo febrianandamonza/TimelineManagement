@@ -23,9 +23,11 @@ namespace Client.Controllers
             }
             return View(ListEmployee);
         }
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
+
+        [HttpGet]
+        public IActionResult MyProfile()
+        {
+            return View();
+        }
     }
 }

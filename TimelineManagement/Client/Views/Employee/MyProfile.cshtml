@@ -1,0 +1,74 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "MyProfile";
+    Layout = "_LayoutMyProfile";
+}
+
+<!-- Content -->
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="fw-bold py-3 mb-4">My Profile</h4>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card mb-4">
+                <h5 class="card-header">Profile Details</h5>
+                <!-- Account -->
+                <div class="card-body">
+                    <div class="d-flex align-items-start align-items-sm-center gap-4">
+                        <img src="../assets/img/avatars/0.png"
+                             alt="user-avatar"
+                             class="d-block rounded"
+                             height="100"
+                             width="100"
+                             id="uploadedAvatar" />
+                    </div>
+                </div>
+                <hr class="my-0" />
+                <div class="card-body">
+                    <form id="formAccountSettings">
+                        <div class="row">
+                            <div class="mb-3 col-md-6">
+                                <strong for="nik">NIK:</strong><br>
+                                <span id="nik"></span>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <strong for="fullName">Full Name:</strong><br>
+                                <span id="fullName"></span>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <strong for="role">Role:</strong><br>
+                                <span id="role"></span>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <strong for="gender">Gender:</strong><br>
+                                <span id="gender"></span>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <strong for="birthDate">Birth Date:</strong><br>
+                                <span id="birthDate"></span>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <strong for="hiringDate">Hiring Date:</strong><br>
+                                <span id="hiringDate"></span>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <strong for="email">Email:</strong><br>
+                                <span id="email"></span>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <strong for="phoneNumber">Phone Number:</strong><br>
+                                <span id="phoneNumber"></span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- /Account -->
+        </div>
+    </div>
+</div>
+<!-- / Content -->
+
+

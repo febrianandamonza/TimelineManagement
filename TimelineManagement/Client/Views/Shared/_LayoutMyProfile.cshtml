@@ -68,7 +68,7 @@
     <script src="https://www.gstatic.com/charts/loader.js"></script>
 
     <script>
-    const token = '@Context.Session.GetString("JWToken")';
+        const token = '@Context.Session.GetString("JWToken")';
     </script>
 
 </head>
@@ -172,7 +172,7 @@
                     <li class="menu-header small text-uppercase">
                         <span class="menu-header-text">Layout</span>
                     </li>
-                    
+
                     <li class="menu-item">
                         <a class="menu-link" asp-area="" asp-controller="Project" asp-action="All">
                             <i class="menu-icon tf-icons bx bx-home-circle"></i>
@@ -188,7 +188,7 @@
                         <ul class="menu-sub" id="project-list">
                         </ul>
                     </li>
-                    
+
                 </ul>
             </aside>
 
@@ -205,7 +205,7 @@
                     </div>
 
                     <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-                        
+
 
                         <ul class="navbar-nav flex-row align-items-center ms-auto">
                             <!-- Place this tag where you want the button to render. -->
@@ -220,7 +220,7 @@
                                        aria-label="Star themeselection/sneat-html-admin-template-free on GitHub">@User.FindFirst("FullName").Value</a>
                                 </li>
                             }
-                            
+
 
                             <!-- User -->
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
@@ -238,7 +238,6 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="auth-login-basic.html">
                                         <a class="dropdown-item" href="/Account/Logout">
                                             <i class="bx bx-power-off me-2"></i>
                                             <span class="align-middle">Log Out</span>
@@ -281,12 +280,11 @@
     <!-- Vendors JS -->
     <script src="~/assets/vendor/libs/apex-charts/apexcharts.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 
     <!-- Main JS -->
     <script src="~/assets/js/main.js"></script>
-        <script src="~/js/dashboard.js" asp-append-version="true"></script>
-        <script src="~/js/site.js"></script>
+    <script src="~/js/detail-project.js"></script>
 
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -298,14 +296,13 @@
     <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- jQuery (required for Bootstrap JavaScript plugins) -->
+    <!-- Popper.js (required for Bootstrap JavaScript plugins) -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 
-<!-- Popper.js (required for Bootstrap JavaScript plugins) -->
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-
-<!-- Bootstrap JavaScript -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script>
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script>
 
 
 
