@@ -41,7 +41,7 @@ namespace Client.Controllers
         public IActionResult Logout()
         {
             HttpContext.Session.Clear();
-            return RedirectToAction("Login", "Account");
+            return Redirect("/Account/Login");
         }
 
         [HttpGet]
@@ -57,7 +57,7 @@ namespace Client.Controllers
             if (result.Code == 200)
             {
                 TempData["Success"] = "Data berhasil masuk";
-                return RedirectToAction("Index", "Home");
+                return Redirect("/Account/Login");
             }
             return View();
         }
@@ -75,7 +75,7 @@ namespace Client.Controllers
             if (result.Code == 200)
             {
                 TempData["Success"] = "OTP berhasil dikirim";
-                return RedirectToAction("Index", "Account");
+                return RedirectToAction("ChangePassword", "Account");
             }
             return View();
         }
@@ -93,7 +93,7 @@ namespace Client.Controllers
             if (result.Code == 200)
             {
                 TempData["Success"] = "Password change succesfull";
-                return RedirectToAction("Index", "Home");
+                return Redirect("/Account/Login");
             }
             return View();
         }
