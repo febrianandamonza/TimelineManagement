@@ -7,21 +7,32 @@
     Layout = "_LayoutDetailProject";
 }
 <div class="container-xxl flex-grow-1 container-p-y">
-    <h1 class="textProject">Project</h1>
-    <div class="row" style="margin-left: 10px">
-        <div class="col">
-            <button type="button" class="btn1 btn btn-primary mb-2" data-toggle="modal" data-target="#addColabModal" onclick="openAddColabModal()" style="width:fit-content">
-                Add Collaborator
-            </button>
-            <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#addTaskModal" onclick="openAddColabModal()" style="width:fit-content">
-                            Add Task
-            </button>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card mb-4">
+                <h2 class="card-header textProject" id="nameHeader">Project</h2>
+                @if (User.IsInRole("Project Manager"))
+                {
+                    <div class="row" style="margin-left: 10px">
+                        <div class="col">
+                            <button type="button" class="btn1 btn btn-primary mb-2" data-toggle="modal" data-target="#addColabModal" onclick="openAddColabModal()" style="width:fit-content">
+                                Add Collaborator
+                            </button>
+                            <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#addTaskModal" onclick="openAddColabModal()" style="width:fit-content">
+                                Add Task
+                            </button>
+                        </div>
+                    </div>
+                }
+                <div class="content">
+                    <div id="cardSection"></div>
+                </div>
+            </div>
         </div>
     </div>
-<div class="content">
-    <div id="cardSection"></div>
 </div>
-</div>
+
+    
 
 <!-- Add Coolaborator Modal -->
     <div class="modal fade" id="addColabModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
@@ -194,31 +205,49 @@
 
 <!--Add Comments Modal -->
 <div class="modal fade" id="addComment" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header d-flex flex-column">
-        <h5 class="modal-title mx-auto" id="exampleModalToggleLabel2" >Add Comment</h5>
-        <button type="button" class="btn-close mr-3" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-        <div class="modal-body">
-            <div class="form-group">
-                <label for="">Comment</label>
-                <textarea class="form-control" id="CommentInsert" rows="3" placeholder="Enter your comment here..."></textarea>
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header d-flex flex-column">
+                <h5 class="modal-title mx-auto" id="exampleModalToggleLabel2" >Add Comment</h5>
+                <button type="button" class="btn-close mr-3" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="form-group">
-                <input type="hidden" id="TaskGuid" name="TaskGuid" class="form-control" />
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="">Comment</label>
+                    <textarea class="form-control" id="CommentInsert" rows="3" placeholder="Enter your comment here..."></textarea>
+                </div>
+                <div class="form-group">
+                    <input type="hidden" id="TaskGuid" name="TaskGuid" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <input type="hidden" id="EmployeeGuid" name="EmployeeGuid" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <input type="hidden" id="ProjectGuid" name="ProjectGuid" class="form-control" />
+                </div>
             </div>
-            <div class="form-group">
-                <input type="hidden" id="EmployeeGuid" name="EmployeeGuid" class="form-control" />
+            <div id="insertComment"></div>
+      
+        </div>
+    </div>
+</div>
+
+<!-- History Modal -->
+<div class="modal fade" id="historyModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header d-flex flex-column">
+                <h5 class="modal-title mx-auto" id="exampleModalToggleLabel2">History Task</h5>
+                <button type="button" class="btn-close mr-3" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="form-group">
-                <input type="hidden" id="ProjectGuid" name="ProjectGuid" class="form-control" />
+            <div class="modal-body">
+                <div id="historyBody"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-bs-target="#detailTask" data-bs-toggle="modal" data-bs-dismiss="modal">Back to detail task</button>
             </div>
         </div>
-        <div id="insertComment"></div>
-      
     </div>
-  </div>
 </div>
 
 <!-- Change Status Modal -->
@@ -236,14 +265,14 @@
                         <div class="form-group">
                             <input type="hidden" id="ProjectGuid" name="ProjectGuid" class="form-control" />
                         </div>
-                        <div class="form-group">
-                            <label for="isFinished">Status</label>
-                            <select id="isFinished" name="isFinished" class="form-select" aria-label="Default select example">
-                                <option selected>Select Status</option>
-                                <option value="1">Finished</option>
-                                <option value="0">Unfinished</option>
-                            </select>
-                        </div>
+                            <div class="form-group">
+                                <label for="isFinished">Status</label>
+                                <select id="isFinishedStatus" name="isFinished" class="form-select" aria-label="Default select example">
+                                    <option selected>Select Status</option>
+                                    <option value="1">Finished</option>
+                                    <option value="0">Unfinished</option>
+                                </select>
+                            </div>
                     </form>
                 </div>
                  <div id="statusChange"></div>
@@ -266,16 +295,34 @@
                         <div class="form-group">
                             <input type="hidden" id="ProjectGuid" name="ProjectGuid" class="form-control" />
                         </div>
-                        <div class="form-group">
-                            <label for="Section">Section</label>
-                            <select id="Section" name="Section" class="form-select" aria-label="Default select example">
-                                <option selected>Select Section</option>
-                                <option value="fe4aa61c-329d-447f-811a-08db9fb220e4">To Do</option>
-                                <option value="1c7324b5-2e88-4d33-811b-08db9fb220e4">In Progress</option>
-                                <option value="196272df-788f-4894-811c-08db9fb220e4">Testing</option>
-                                <option value="ec87fdea-0a03-4ce2-811d-08db9fb220e4">Done</option>
-                            </select>
-                        </div>
+                        @if (User.IsInRole("Project Manager"))
+                        {
+                            <div class="form-group">
+                                <label for="Section">Section</label>
+                                <select id="Section" name="Section" class="form-select" aria-label="Default select example">
+                                    <option selected>Select Section</option>
+                                    <option value="fe4aa61c-329d-447f-811a-08db9fb220e4,To Do">To Do</option>
+                                    <option value="1c7324b5-2e88-4d33-811b-08db9fb220e4,In Progress">In Progress</option>
+                                    <option value="196272df-788f-4894-811c-08db9fb220e4,Testing">Testing</option>
+                                    <option value="ec87fdea-0a03-4ce2-811d-08db9fb220e4,Done">Done</option>
+                                </select>
+                            </div>
+                        }
+                        
+                        @if (User.IsInRole("Staff"))
+                        {
+                            <div class="form-group">
+                                <label for="Section">Section</label>
+                                <select id="Section" name="Section" class="form-select" aria-label="Default select example">
+                                    <option selected>Select Section</option>
+                                    <option value="fe4aa61c-329d-447f-811a-08db9fb220e4,To Do">To Do</option>
+                                    <option value="1c7324b5-2e88-4d33-811b-08db9fb220e4,In Progress">In Progress</option>
+                                    <option value="196272df-788f-4894-811c-08db9fb220e4,Testing">Testing</option>
+                                </select>
+                            </div>
+                        }
+                        
+                        
                     </form>
                 </div>
                 <div id="sectionChange"></div>

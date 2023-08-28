@@ -18,6 +18,7 @@ $.ajax({
             `;
     })
     $("#project-list").html(temp);
+    
 });
 
 $.ajax({
@@ -66,10 +67,13 @@ $.ajax({
                     return;
                 }
             })
+            $("#nameHeader").text(`${result2.data[0].name}`);
         });
         temp += `</div>`
+        
     })
     $("#cardSection").html(temp);
+    
 });
 
 function detailTask(taskGuid){
@@ -129,17 +133,18 @@ function detailTask(taskGuid){
             changeSection = `
 <div class="modal-footer">       
 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-<button class="btn btn-danger mt-1" onclick="UpdateSection('${result.data.guid}')" data-bs-toggle="modal" data-bs-target="#changeSection">Change</button>
+<button class="btn btn-danger mt-1" onclick="UpdateSection('${result.data.projectGuid}','${result.data.guid}','${result.data.employeeGuid}')" data-bs-toggle="modal" data-bs-target="#changeSection">Change</button>
 </div>
 `
             changeStatus = `<div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="UpdateStatus('${result.data.guid}')" data-bs-dismiss="modal">Change</button>
+                    <button type="button" class="btn btn-primary" onclick="UpdateStatus('${result.data.projectGuid}','${result.data.guid}','${result.data.employeeGuid}')" data-bs-dismiss="modal">Change</button>
                 </div>`
             
             listComment = `<div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button class="btn btn-primary" data-bs-target="#commentModal" onclick="listComment('${result.data.projectGuid}', '${result.data.guid}')" data-bs-toggle="modal" data-bs-dismiss="modal">Open Comment</button>
+                <button class="btn btn-primary" data-bs-target="#historyModal" onclick="listHistory('${result.data.projectGuid}', '${result.data.guid}')" data-bs-toggle="modal" data-bs-dismiss="modal">Open History</button>
+            <button class="btn btn-primary" data-bs-target="#commentModal" onclick="listComment('${result.data.projectGuid}', '${result.data.guid}')" data-bs-toggle="modal" data-bs-dismiss="modal">Open Comment</button>
             </div>`
             
             insertComment = `
@@ -171,10 +176,13 @@ function detailTask(taskGuid){
     });
 }
 
-function UpdateSection(taskGuid) {
+function UpdateSection(projectGuid,taskGuid,employeeGuid) {
+    var valueOne =  $("#Section").val().split(',')[0]
+    var valueTwo =  $("#Section").val().split(',')[1]
     let data = {
         guid : taskGuid,
-        sectionGuid: $("#Section").val()
+        sectionGuid: valueOne
+        
     };
     $.ajax({
         url: `https://localhost:7230/api/tasks/change-section/`,
@@ -182,12 +190,8 @@ function UpdateSection(taskGuid) {
         contentType: 'application/json',
         data: JSON.stringify(data)
     }).done((result) => {
-        Swal.fire(
-            'Data has been successfully updated!',
-            'success'
-        ).then(() => {
-            location.reload();
-        });
+        InsertHistorySection(projectGuid,taskGuid,employeeGuid,valueTwo)
+        
     }).fail((error) => {
         Swal.fire({
             icon: 'error',
@@ -199,33 +203,28 @@ function UpdateSection(taskGuid) {
     })
 }
 
-function UpdateStatus(taskGuid) {
+function UpdateStatus(projectGuid,taskGuid,employeeGuid) {
+    var valueOne =  $("#isFinishedStatus").val() == 1 ? true.toString() : false.toString()
+    var valueTwo =  $("#isFinishedStatus").val() == 1 ? "Finished" : "Unfinished"
     let data = {
         guid : taskGuid,
-        taskStatus: true
+        taskStatus: valueOne
     };
     $.ajax({
         url: `https://localhost:7230/api/tasks/change-status/`,
+        async: false,
         type: 'PUT',
         contentType: 'application/json',
         data: JSON.stringify(data)
     }).done((result) => {
-        Swal.fire(
-            'Data has been successfully updated!',
-            'Success'
-        ).then(() => {
-            console.log(data)
-            console.log(result)
-        });
+        InsertHistoryStatus(projectGuid,taskGuid,employeeGuid,valueTwo)
     }).fail((error) => {
         Swal.fire({
             icon: 'error',
             title: 'Oops...',
             text: 'Failed to change data! Please try again.'
         })
-        console.log(error)
-        console.log(data)
-        console.log(taskGuid)
+        
     })
 }
 function openAddColabModal() {
@@ -321,6 +320,28 @@ function listComment(projectGuid, taskGuid) {
     });
 }
 
+function listHistory(projectGuid, taskGuid) {
+    $.ajax({
+        url: `https://localhost:7230/api/task-histories/detail-task-histories-by-task/` + projectGuid + `/` + taskGuid,
+        success: function (result) {
+            let temp = ``;
+            $.each(result.data, (key, val) => {
+                temp += `
+          </div>
+          <div class="d-flex justify-content-between">
+                    <label class="control-label form-label">${val.employeeName}</label>
+                        <small >${val.createdDateHistory.split('T')[0]}</small>
+                </div>
+                <textarea class="form-control" id="History" rows="3" disabled="true" >${val.description}</textarea>
+                <br>
+            `;
+            })
+            $('#historyBody').html(temp);
+        }
+
+    });
+}
+
 function InsertComment(projectGuid, taskGuid, employeeGuid) {
     var obj = new Object();
     obj.description = $("#CommentInsert").val();
@@ -336,13 +357,7 @@ function InsertComment(projectGuid, taskGuid, employeeGuid) {
         },
         data: JSON.stringify(obj)
     }).done((result) => {
-        Swal.fire
-        (
-            'Data Has Been Successfuly Inserted',
-            'Success'
-        ).then(() => {
-            location.reload();
-        })
+        InsertHistoryComment(projectGuid, taskGuid, employeeGuid)
     }).fail((error) => {
         Swal.fire({
             icon: 'error',
@@ -369,19 +384,67 @@ function InsertHistoryComment(projectGuid, taskGuid, employeeGuid) {
         },
         data: JSON.stringify(obj)
     }).done((result) => {
-        Swal.fire
-        (
-            'Data Has Been Successfuly Inserted',
-            'Success'
+        Swal.fire(
+            'Data has been successfully updated!',
+            'success'
         ).then(() => {
             location.reload();
-        })
+        });
     }).fail((error) => {
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops',
-            text: 'Failed to insert data, Please Try Again',
-        })
+
+    })
+    console.log(obj);
+}
+
+function InsertHistorySection(projectGuid, taskGuid, employeeGuid, sectionName) {
+    var obj = new Object();
+    obj.description = "Change Section to " + sectionName;
+    obj.taskGuid = taskGuid;
+    obj.employeeGuid = employeeGuid;
+    obj.projectGuid = projectGuid;
+
+    $.ajax({
+        url: "https://localhost:7230/api/task-histories/",
+        type: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        data: JSON.stringify(obj)
+    }).done((result) => {
+        Swal.fire(
+            'Data has been successfully updated!',
+            'success'
+        ).then(() => {
+            location.reload();
+        });
+    }).fail((error) => {
+
+    })
+    console.log(obj);
+}
+
+function InsertHistoryStatus(projectGuid, taskGuid, employeeGuid, statusName) {
+    var obj = new Object();
+    obj.description = "Change finished status to " + statusName;
+    obj.taskGuid = taskGuid;
+    obj.employeeGuid = employeeGuid;
+    obj.projectGuid = projectGuid;
+
+    $.ajax({
+        url: "https://localhost:7230/api/task-histories/",
+        type: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        data: JSON.stringify(obj)
+    }).done((result) => {
+        Swal.fire(
+            'Data has been successfully updated!',
+            'success'
+        ).then(() => {
+            location.reload();
+        });
+    }).fail((error) => {
 
     })
     console.log(obj);
