@@ -1,7 +1,24 @@
-const guidForMyProfile = document.getElementById("guidForMyProfile").value;
+const guidLogin = document.getElementById("guidInput").value;
+
+$.ajax({
+    url: `https://localhost:7230/api/project-collaborators/all-by-employee/` + guidLogin
+}).done((result) => {
+    let temp = "";
+    $.each(result.data, (key,val) => {
+        temp += `
+                <li class="menu-item">
+                    <a class="menu-link" href="/Project/Index/${val.projectGuid}">
+                    <div>${val.projectName}</div>
+                    </a>
+                </li>
+            `;
+    })
+    $("#project-list").html(temp);
+});
+
 $(document).ready(function () {
     $.ajax({
-        url: `https://localhost:7230/api/employees/detail/` + guidForMyProfile,
+        url: `https://localhost:7230/api/employees/detail/` + guidLogin,
         type: "GET",
         dataType: "json"
     }).done(function (response) {
@@ -14,6 +31,8 @@ $(document).ready(function () {
         const userEmail = response.data.email;
         const userPhoneNumber = response.data.phoneNumber;
         const userRole = response.data.role;
+        let userImages = ""
+        let userImagesTopBar = ""
 
         $("#nik").text(userNik);
         $("#fullName").text(userFullName);
@@ -23,13 +42,42 @@ $(document).ready(function () {
         $("#email").text(userEmail);
         $("#phoneNumber").text(userPhoneNumber);
         $("#role").text(userRole);
-
-        const profileImage = document.getElementById("profileImage");
+        
         if (userGender === 0) {
-            profileImage.src = "~/assets/img/avatars/0.png";
+            userImages = ` <img src="https://img.freepik.com/premium-vector/female-user-profile-avatar-is-woman-character-screen-saver-with-emotions_505620-617.jpg"
+                         alt="user-avatar"
+                         class="d-block rounded"
+                         height="200px"
+                         width="200px"
+                         id="uploadedAvatar" />
+            `;
+            userImagesTopBar = ` <img src="https://img.freepik.com/premium-vector/female-user-profile-avatar-is-woman-character-screen-saver-with-emotions_505620-617.jpg"
+                         alt="user-avatar"
+                         class="w-px-40 h-auto rounded-circle"
+                         height="200px"
+                         width="200px"
+                         id="uploadedAvatar" />
+            `;
         } else if (userGender === 1) {
-            profileImage.src = "~/assets/img/avatars/1.png";
+            userImages = ` <img src="https://img.freepik.com/premium-vector/vector-illustration-winter-boy-concept-hello-winter-avataka-social-networks_469123-525.jpg"
+                         alt="user-avatar"
+                         class="d-block rounded"
+                         height="200px"
+                         width="200px"
+                         id="uploadedAvatar">
+            `;
+            userImagesTopBar = ` <img src="https://img.freepik.com/premium-vector/vector-illustration-winter-boy-concept-hello-winter-avataka-social-networks_469123-525.jpg"
+                         alt="user-avatar"
+                         class="w-px-40 h-auto rounded-circle"
+                         height="200px"
+                         width="200px"
+                         id="uploadedAvatar">
+            `;
         }
+        
+        
+        $("#userImages").html(userImages);
+        $("#userImagesTopBar").html(userImagesTopBar);
     }).fail(function (error) {
         console.log("Error:", error);
         console.log(url);
