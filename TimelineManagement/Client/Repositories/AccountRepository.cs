@@ -43,5 +43,29 @@ namespace Client.Repositories
             }
             return entityVM;
         }
+
+        public async Task<ResponseHandler<ForgotPasswordDto>> ForgotPassword(ForgotPasswordDto forgot)
+        {
+            ResponseHandler<ForgotPasswordDto> entityVM = null;
+            StringContent content = new StringContent(JsonConvert.SerializeObject(forgot), Encoding.UTF8, "application/json");
+            using (var response = httpClient.PostAsync(request + "forgotPassword", content).Result)
+            {
+                string apiResponse = await response.Content.ReadAsStringAsync();
+                entityVM = JsonConvert.DeserializeObject<ResponseHandler<ForgotPasswordDto>>(apiResponse);
+            }
+            return entityVM;
+        }
+
+        public async Task<ResponseHandler<ChangePasswordDto>> ChangePassword(ChangePasswordDto change)
+        {
+            ResponseHandler<ChangePasswordDto> entityVM = null;
+            StringContent content = new StringContent(JsonConvert.SerializeObject(change), Encoding.UTF8, "application/json");
+            using (var response = httpClient.PostAsync(request + "changePassword", content).Result)
+            {
+                string apiResponse = await response.Content.ReadAsStringAsync();
+                entityVM = JsonConvert.DeserializeObject<ResponseHandler<ChangePasswordDto>>(apiResponse);
+            }
+            return entityVM;
+        }
     }
 }

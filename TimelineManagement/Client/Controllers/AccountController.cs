@@ -61,5 +61,41 @@ namespace Client.Controllers
             }
             return View();
         }
+
+        [HttpGet]
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordDto forgot)
+        {
+            var result = await _accountRepository.ForgotPassword(forgot);
+            if (result.Code == 200)
+            {
+                TempData["Success"] = "OTP berhasil dikirim";
+                return RedirectToAction("Index", "Account");
+            }
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(ChangePasswordDto change)
+        {
+            var result = await _accountRepository.ChangePassword(change);
+            if (result.Code == 200)
+            {
+                TempData["Success"] = "Password change succesfull";
+                return RedirectToAction("Index", "Home");
+            }
+            return View();
+        }
     }
 }

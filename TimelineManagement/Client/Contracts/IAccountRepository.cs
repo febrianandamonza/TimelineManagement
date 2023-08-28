@@ -8,6 +8,8 @@ namespace Client.Contracts
     {
         Task<ResponseHandler<TokenDto>> Login(LoginDto login);
         Task<ResponseHandler<RegisterDto>> Register(RegisterDto register);
+        Task<ResponseHandler<ForgotPasswordDto>> ForgotPassword(ForgotPasswordDto forgot);
+        Task<ResponseHandler<ChangePasswordDto>> ChangePassword(ChangePasswordDto change);
 
     }
 }
