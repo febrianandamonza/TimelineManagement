@@ -21,6 +21,7 @@ public class TimelineManagementDbContext : DbContext
     public DbSet<Section> Sections { get; set; }
     public DbSet<Task> Tasks { get; set; }
     public DbSet<TaskComment> TaskComments { get; set; }
+    public DbSet<TaskHistory> TaskHistories { get; set; }
     
     //Fluent API
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -100,6 +101,13 @@ public class TimelineManagementDbContext : DbContext
             .HasForeignKey(tc => tc.EmployeeGuid)
             .OnDelete(DeleteBehavior.Restrict);
         
+        //One Employee with Many Task Comment
+        modelBuilder.Entity<Employee>()
+            .HasMany(e => e.TaskHistory)
+            .WithOne(th => th.Employee)
+            .HasForeignKey(th => th.EmployeeGuid)
+            .OnDelete(DeleteBehavior.Restrict);
+        
         //One Employee with Many Task
         modelBuilder.Entity<Employee>()
             .HasMany(e => e.Task)
@@ -121,6 +129,13 @@ public class TimelineManagementDbContext : DbContext
             .HasForeignKey(tc => tc.ProjectGuid)
             .OnDelete(DeleteBehavior.Restrict);
         
+        //One Project with Many Task Comment
+        modelBuilder.Entity<Project>()
+            .HasMany(p => p.TaskHistory)
+            .WithOne(th => th.Project)
+            .HasForeignKey(th => th.ProjectGuid)
+            .OnDelete(DeleteBehavior.Restrict);
+        
         //One Project with Many Project Collaborator
         modelBuilder.Entity<Project>()
             .HasMany(p => p.ProjectCollaborator)
@@ -135,7 +150,12 @@ public class TimelineManagementDbContext : DbContext
             .HasForeignKey(tc => tc.TaskGuid)
             .OnDelete(DeleteBehavior.Restrict);
         
-        
+        //One Task with Many Task Histories
+        modelBuilder.Entity<Task>()
+            .HasMany(t => t.TaskHistory)
+            .WithOne(th => th.Task)
+            .HasForeignKey(th => th.TaskGuid)
+            .OnDelete(DeleteBehavior.Restrict);
         
         //One Section with Many Task
         modelBuilder.Entity<Section>()

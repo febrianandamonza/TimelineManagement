@@ -35,4 +35,5 @@ public class Task : BaseEntity
     public Project? Project { get; set; }
     public Employee? Employee { get; set; }
     public ICollection<TaskComment>? TaskComment { get; set; }
+    public ICollection<TaskHistory>? TaskHistory { get; set; }
 }

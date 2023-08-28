@@ -353,3 +353,36 @@ function InsertComment(projectGuid, taskGuid, employeeGuid) {
     })
     console.log(obj);
 }
+
+function InsertHistoryComment(projectGuid, taskGuid, employeeGuid) {
+    var obj = new Object();
+    obj.description = "Add Comment";
+    obj.taskGuid = taskGuid;
+    obj.employeeGuid = employeeGuid;
+    obj.projectGuid = projectGuid;
+
+    $.ajax({
+        url: "https://localhost:7230/api/task-histories/",
+        type: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        data: JSON.stringify(obj)
+    }).done((result) => {
+        Swal.fire
+        (
+            'Data Has Been Successfuly Inserted',
+            'Success'
+        ).then(() => {
+            location.reload();
+        })
+    }).fail((error) => {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops',
+            text: 'Failed to insert data, Please Try Again',
+        })
+
+    })
+    console.log(obj);
+}

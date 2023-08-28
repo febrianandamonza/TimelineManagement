@@ -23,4 +23,6 @@ public class Project : BaseEntity
     public ICollection<Task>? Task { get; set; }
     public ICollection<TaskComment>? TaskComment { get; set; }
     
+    public ICollection<TaskHistory>? TaskHistory { get; set; }
+    
 }

@@ -51,6 +51,7 @@ builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 builder.Services.AddScoped<ISectionRepository, SectionRepository>();
 builder.Services.AddScoped<ITaskRepository, TaskRepository>();
 builder.Services.AddScoped<ITaskCommentRepository, TaskCommentRepository>();
+builder.Services.AddScoped<ITaskHistoryRepository, TaskHistoryRepository>();
 
 //Add Services to the container
 builder.Services.AddScoped<AccountService>();
@@ -61,6 +62,7 @@ builder.Services.AddScoped<ProjectCollaboratorService>();
 builder.Services.AddScoped<RoleService>();
 builder.Services.AddScoped<SectionService>();
 builder.Services.AddScoped<TaskCommentService>();
+builder.Services.AddScoped<TaskHistoryService>();
 builder.Services.AddScoped<TaskService>();
 
 //Add SmtpClient to container

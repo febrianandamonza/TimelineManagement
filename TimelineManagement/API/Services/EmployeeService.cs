@@ -91,7 +91,13 @@ public class EmployeeService
                              select new StaffEmployeeDto
                              {
                                  FullName = employee.FirstName + " " + employee.LastName,
-                                 EmployeeGuid = employee.Guid
+                                 EmployeeGuid = employee.Guid,
+                                 BirthDate = employee.BirthDate,
+                                 Gender = employee.Gender,
+                                 HiringDate = employee.HiringDate,
+                                 Email = employee.Email,
+                                 PhoneNumber = employee.PhoneNumber
+                                 
                              };
 
         return result;
