@@ -29,25 +29,24 @@ $.ajax({
     let temp = "";
     $.each(result.data, (key, val) => {
         temp += `
-                    <div class="col-3 my-3">
-                    
-                    <a href="/Project/Index/${val.projectGuid}">
-                    <div class="card" style="border: 5px solid #696cff; text-align: center" >
-                      <img src="https://www.itworks.id/wp-content/uploads/2021/02/metrodata-logo.jpg" class="img-thumbnail" alt="...">
-                      <div class="card-body">
-                        <h5 class="card-title">${val.projectName}</h5>
-                        </div>
-                      <ul class="list-group list-group-flush">
-                         <div class="list-group-item textP"><span style="color: red">Start Date : </span> ${val.projectStartDate.split('T')[0]}</div>
-                      <div class="list-group-item"><span style="color: red">End Date : </span>${val.projectStartDate.split('T')[0]}</div>
-                      </ul>
-                    </div>
-                    </a>
-                    </div>
-                        
-            `;
+        
+        <div class="col-3 my-3">
+        <a href="/Project/Index/${val.projectGuid}">
+      <div class="card h-100" style="text-align: center">
+        <img class="card-img-top" src="https://www.itworks.id/wp-content/uploads/2021/02/metrodata-logo.jpg" alt="Card image cap"/>
+        <div class="card-body">
+          <h5 class="card-title">${val.projectName}</h5>
+          <ul class="list-group list-group-flush">
+              <div class="list-group-item textP"><span style="color: red">Start Date : </span> ${val.projectStartDate.split('T')[0]}</div>
+              <div class="list-group-item"><span style="color: red">End Date : </span>${val.projectStartDate.split('T')[0]}</div>
+          </ul>     
+        </div>
+      </div>
+      </a>
+    </div>
+        `;
     })
-    $("#project-card").html(temp);
+    $("#projectCard2").html(temp);
 });
 
 function InsertProject() {
