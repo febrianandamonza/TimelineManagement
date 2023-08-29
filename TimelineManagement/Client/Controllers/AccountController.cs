@@ -22,6 +22,7 @@ namespace Client.Controllers
             var result = await _accountRepository.Login(login);
             if (result is null)
             {
+                TempData["Failed"] = $"Email or Password is incorrect! - {result.Message}!";
                 return RedirectToAction("Error", "Home");
             }
             else if (result.Code == 409)
@@ -31,7 +32,8 @@ namespace Client.Controllers
             }
             else if (result.Code == 200)
             {
-                HttpContext.Session.SetString("JWToken", result.Data.Token);
+				TempData["Success"] = $"Login has been successfully! - {result.Message}!";
+				HttpContext.Session.SetString("JWToken", result.Data.Token);
                 return RedirectToAction("Index", "Home");
             }
             return View();
@@ -56,8 +58,8 @@ namespace Client.Controllers
             var result = await _accountRepository.Register(register);
             if (result.Code == 200)
             {
-                TempData["Success"] = "Data berhasil masuk";
-                return Redirect("/Account/Login");
+				TempData["Success"] = $"Register has been successfully! - {result.Message}!";
+				return Redirect("/Account/Login");
             }
             return View();
         }
@@ -74,8 +76,8 @@ namespace Client.Controllers
             var result = await _accountRepository.ForgotPassword(forgot);
             if (result.Code == 200)
             {
-                TempData["Success"] = "OTP berhasil dikirim";
-                return RedirectToAction("ChangePassword", "Account");
+				TempData["Success"] = $"OTP has been send! - {result.Message}!";
+				return RedirectToAction("ChangePassword", "Account");
             }
             return View();
         }
@@ -92,8 +94,8 @@ namespace Client.Controllers
             var result = await _accountRepository.ChangePassword(change);
             if (result.Code == 200)
             {
-                TempData["Success"] = "Password change succesfull";
-                return Redirect("/Account/Login");
+				TempData["Success"] = $"Password has changed successfully! - {result.Message}!";
+				return Redirect("/Account/Login");
             }
             return View();
         }

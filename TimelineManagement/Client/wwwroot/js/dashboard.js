@@ -12,7 +12,9 @@ $(document).ready(function () {
         dataType: "json"
     }).done(function (response) {
         const totalProjects = response.data.total;
+        const totalProjects2 = response.data.total;
         $("#totalProjects").text(totalProjects);
+        $("#totalProjects2").text(totalProjects2);
     }).fail(function (error) {
         console.log("Error:", error);
     });
@@ -35,25 +37,6 @@ $(document).ready(function () {
         console.log("Error:", error);
     });
 });
-//
-// $.ajax({
-//     url: `https://localhost:7230/api/tasks/count-task-by-employee/` + employeeProjectGuid
-// }).done((result) => {
-//     var xValues = ["Finished", "Unfinished"];
-//     var yValues = [result.data.totalTaskFinished, result.data.totalTaskUnFinished];
-//     new Chart($('#taskChart'), {
-//         type: 'pie',
-//         data: {
-//             labels: xValues,
-//             datasets: [{
-//                 label: 'Total',
-//                 data: yValues,
-//                 backgroundColor: getRandomColor(xValues),
-//                 hoverOffset: 4
-//             }]
-//         }
-//     });
-// });
 
 function getRandomColor(count) { //generates random colours and puts them in string
     var colors = [];
