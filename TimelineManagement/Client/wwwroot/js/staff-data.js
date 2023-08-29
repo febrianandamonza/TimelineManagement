@@ -1,7 +1,11 @@
+const tokenJWT = document.getElementById("jwtToken").value;
 $(document).ready(function () {
     let table = new DataTable('#staffTable', {
         ajax: {
             url: "https://localhost:7230/api/employees/staff",
+            headers: {
+                'Authorization': 'Bearer ' + tokenJWT
+            },
             dataSrc: "data",
             dataType: "json" // dataType is lowercase
         },

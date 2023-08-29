@@ -3,10 +3,15 @@ const employeeGuid = document.getElementById("employeeGuidInput").value;
 
 const guid = document.getElementById("guidInput").value;
 
+const tokenJWT = document.getElementById("jwtToken").value;
+
 $.ajax({
-    url: `https://localhost:7230/api/project-collaborators/all-by-employee/` + guid
+    url: `https://localhost:7230/api/project-collaborators/all-by-employee/` + guid,
+    headers: {
+        'Authorization': 'Bearer ' + tokenJWT
+    },
 }).done((result) => {
-    let temp = "";
+    let temp = "";  
     $.each(result.data, (key,val) => {
         temp += `
                 <li class="menu-item">
@@ -16,11 +21,15 @@ $.ajax({
                 </li>
             `;
     })
+    
     $("#project-list").html(temp);
 });
 
 $.ajax({
     url: `https://localhost:7230/api/project-collaborators/waiting-by-employee/` + employeeGuid,
+    headers: {
+        'Authorization': 'Bearer ' + tokenJWT
+    },
     async: false
 }).done((result) => {
     const tableBody = $("#tbodyInbox");
@@ -43,7 +52,9 @@ $.ajax({
             </tr>
         `;
         tableBody.append(newRow);
+        console.log("token");
     });
+    
 });
 
 function getStatusText(status) {
@@ -98,6 +109,9 @@ function UpdateStatus(guid, newStatus) {
 
     $.ajax({
         url: `https://localhost:7230/api/project-collaborators/change-status/`,
+        headers: {
+            'Authorization': 'Bearer ' + tokenJWT
+        },
         type: 'PUT',
         contentType: 'application/json',
         data: JSON.stringify(data)

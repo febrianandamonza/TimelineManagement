@@ -1,7 +1,11 @@
 const guidLogin = document.getElementById("guidInput").value;
+const tokenJWTProfile = document.getElementById("jwtToken").value;
 
 $.ajax({
-    url: `https://localhost:7230/api/project-collaborators/all-by-employee/` + guidLogin
+    url: `https://localhost:7230/api/project-collaborators/all-by-employee/` + guidLogin,
+    headers: {
+        'Authorization': 'Bearer ' + tokenJWTProfile
+    },
 }).done((result) => {
     let temp = "";
     $.each(result.data, (key,val) => {
@@ -19,6 +23,9 @@ $.ajax({
 $(document).ready(function () {
     $.ajax({
         url: `https://localhost:7230/api/employees/detail/` + guidLogin,
+        headers: {
+            'Authorization': 'Bearer ' + tokenJWTProfile
+        },
         type: "GET",
         dataType: "json"
     }).done(function (response) {
@@ -80,6 +87,5 @@ $(document).ready(function () {
         $("#userImagesTopBar").html(userImagesTopBar);
     }).fail(function (error) {
         console.log("Error:", error);
-        console.log(url);
     });
 });

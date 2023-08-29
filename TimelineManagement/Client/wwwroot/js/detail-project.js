@@ -1,11 +1,14 @@
 // Get the current URL
 const currentUrl = window.location.href;
 const projectGuid = currentUrl.substring(currentUrl.lastIndexOf("/") + 1);
-
 const guid = document.getElementById("guidInput").value;
+const tokenJWT = document.getElementById("jwtToken").value;
 
 $.ajax({
-    url: `https://localhost:7230/api/project-collaborators/all-by-employee/` + guid
+    url: `https://localhost:7230/api/project-collaborators/all-by-employee/` + guid,
+    headers: {
+        'Authorization': 'Bearer ' + tokenJWT
+    },
 }).done((result) => {
     let temp = "";
     $.each(result.data, (key,val) => {
@@ -23,6 +26,9 @@ $.ajax({
 
 $.ajax({
     url: "https://localhost:7230/api/sections/",
+    headers: {
+        'Authorization': 'Bearer ' + tokenJWT
+    },
     async: false
 }).done((result) => {
     let temp = "";
@@ -41,6 +47,9 @@ $.ajax({
 
         $.ajax({
             url: `https://localhost:7230/api/projects/detail-project/${projectGuid}`,
+            headers: {
+                'Authorization': 'Bearer ' + tokenJWT
+            },
             async : false
         }).done((result2) =>{
             let priorityValue = ""
@@ -79,6 +88,9 @@ $.ajax({
 function detailTask(taskGuid){
     $.ajax({
         url: `https://localhost:7230/api/tasks/detail-task/` + taskGuid,
+        headers: {
+            'Authorization': 'Bearer ' + tokenJWT
+        },
         success: function (result){
             let name = "";
             let startDate = "";
@@ -123,35 +135,36 @@ function detailTask(taskGuid){
             projectName = `<input type="text" id="ProjectName" name="ProjectName" class="form-control" value="${result.data.projectName}" disabled="true"/>`
             projectManager = `<input type="text" id="ProjectManager" name="ProjectManager" class="form-control" value="${result.data.projectManager}" disabled="true"/>`
             sectionName = `
-<input type="text" id="SectionName" name="SectionName" class="form-control" value="${result.data.sectionName}" disabled="true"/>
-<button class="btn btn-danger mt-1" data-bs-toggle="modal" data-bs-target="#changeSection">Change</button>
-                            
-`
+            <input type="text" id="SectionName" name="SectionName" class="form-control" value="${result.data.sectionName}" disabled="true"/>
+            <button class="btn btn-danger mt-1" data-bs-toggle="modal" data-bs-target="#changeSection">Change</button>                             
+                            `
             employeeName =`<input type="text" id="EmployeeName" name="EmployeeName" class="form-control" value="${result.data.employeeName}" disabled="true"/>`
             employeePhoneNumber = `<input type="text" id="EmployeePhoneNumber" name="EmployeePhoneNumber" class="form-control" value="${result.data.employeePhoneNumber}" disabled="true"/>`
             employeeMail = `<input type="text" id="EmployeeEmail" name="EmployeeEmail" class="form-control" value="${result.data.employeeEmail}" disabled="true"/>`
             changeSection = `
-<div class="modal-footer">       
-<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-<button class="btn btn-danger mt-1" onclick="UpdateSection('${result.data.projectGuid}','${result.data.guid}','${result.data.employeeGuid}')" data-bs-toggle="modal" data-bs-target="#changeSection">Change</button>
-</div>
-`
-            changeStatus = `<div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="UpdateStatus('${result.data.projectGuid}','${result.data.guid}','${result.data.employeeGuid}')" data-bs-dismiss="modal">Change</button>
-                </div>`
+            <div class="modal-footer">       
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button class="btn btn-danger mt-1" onclick="UpdateSection('${result.data.projectGuid}','${result.data.guid}','${result.data.employeeGuid}')" data-bs-toggle="modal" data-bs-target="#changeSection">Change</button>
+            </div>
+                            `
+            changeStatus = `
+            <div class="modal-footer">
+                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                 <button type="button" class="btn btn-primary" onclick="UpdateStatus('${result.data.projectGuid}','${result.data.guid}','${result.data.employeeGuid}')" data-bs-dismiss="modal">Change</button>
+            </div>`
             
-            listComment = `<div class="modal-footer">
+            listComment = `
+            <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button class="btn btn-primary" data-bs-target="#historyModal" onclick="listHistory('${result.data.projectGuid}', '${result.data.guid}')" data-bs-toggle="modal" data-bs-dismiss="modal">Open History</button>
-            <button class="btn btn-primary" data-bs-target="#commentModal" onclick="listComment('${result.data.projectGuid}', '${result.data.guid}')" data-bs-toggle="modal" data-bs-dismiss="modal">Open Comment</button>
+                <button class="btn btn-primary" data-bs-target="#commentModal" onclick="listComment('${result.data.projectGuid}', '${result.data.guid}')" data-bs-toggle="modal" data-bs-dismiss="modal">Open Comment</button>
             </div>`
             
             insertComment = `
             <div class="modal-footer">
-          <button class="btn btn-primary" data-bs-target="#commentModal" data-bs-toggle="modal" data-bs-dismiss="modal">Back to comment</button>
-          <button class="btn btn-primary" onclick="InsertComment('${result.data.projectGuid}', '${result.data.guid}', '${result.data.employeeGuid}')" data-bs-toggle="modal" data-bs-dismiss="modal">Save</button>
-      </div>
+                  <button class="btn btn-primary" data-bs-target="#commentModal" data-bs-toggle="modal" data-bs-dismiss="modal">Back to comment</button>
+                  <button class="btn btn-primary" onclick="InsertComment('${result.data.projectGuid}', '${result.data.guid}', '${result.data.employeeGuid}')" data-bs-toggle="modal" data-bs-dismiss="modal">Save</button>
+            </div>
             `
 
             $('#name').html(name);
@@ -186,6 +199,9 @@ function UpdateSection(projectGuid,taskGuid,employeeGuid) {
     };
     $.ajax({
         url: `https://localhost:7230/api/tasks/change-section/`,
+        headers: {
+            'Authorization': 'Bearer ' + tokenJWT
+        },
         type: 'PUT',
         contentType: 'application/json',
         data: JSON.stringify(data)
@@ -204,7 +220,7 @@ function UpdateSection(projectGuid,taskGuid,employeeGuid) {
 }
 
 function UpdateStatus(projectGuid,taskGuid,employeeGuid) {
-    var valueOne =  $("#isFinishedStatus").val() == 1 ? true.toString() : false.toString()
+    var valueOne =  $("#isFinishedStatus").val() == 1 ? true : false
     var valueTwo =  $("#isFinishedStatus").val() == 1 ? "Finished" : "Unfinished"
     let data = {
         guid : taskGuid,
@@ -212,11 +228,14 @@ function UpdateStatus(projectGuid,taskGuid,employeeGuid) {
     };
     $.ajax({
         url: `https://localhost:7230/api/tasks/change-status/`,
-        async: false,
+        headers: {
+            'Authorization': 'Bearer ' + tokenJWT
+        },
         type: 'PUT',
         contentType: 'application/json',
         data: JSON.stringify(data)
     }).done((result) => {
+        console.log(data)
         InsertHistoryStatus(projectGuid,taskGuid,employeeGuid,valueTwo)
     }).fail((error) => {
         Swal.fire({
@@ -243,7 +262,8 @@ function InsertCollab() {
         url: "https://localhost:7230/api/project-collaborators/create-by-email",
         type: "POST",
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + tokenJWT
         },
         data: JSON.stringify(obj)
     }).done((result) => {
@@ -276,7 +296,8 @@ function InsertTask() {
         url: "https://localhost:7230/api/tasks/create-default",
         type: "POST",
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + tokenJWT
         },
         data: JSON.stringify(obj)
     }).done((result) => {
@@ -301,6 +322,9 @@ function InsertTask() {
 function listComment(projectGuid, taskGuid) {
     $.ajax({
         url: `https://localhost:7230/api/task-comments/detail-task-comments-by-task/` + projectGuid + `/` + taskGuid,
+        headers: {
+            'Authorization': 'Bearer ' + tokenJWT
+        },
         success: function (result) {
             let temp = ``;
             $.each(result.data, (key, val) => {
@@ -323,6 +347,9 @@ function listComment(projectGuid, taskGuid) {
 function listHistory(projectGuid, taskGuid) {
     $.ajax({
         url: `https://localhost:7230/api/task-histories/detail-task-histories-by-task/` + projectGuid + `/` + taskGuid,
+        headers: {
+            'Authorization': 'Bearer ' + tokenJWT
+        },
         success: function (result) {
             let temp = ``;
             $.each(result.data, (key, val) => {
@@ -353,7 +380,8 @@ function InsertComment(projectGuid, taskGuid, employeeGuid) {
         url: "https://localhost:7230/api/task-comments/",
         type: "POST",
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + tokenJWT
         },
         data: JSON.stringify(obj)
     }).done((result) => {
@@ -380,7 +408,8 @@ function InsertHistoryComment(projectGuid, taskGuid, employeeGuid) {
         url: "https://localhost:7230/api/task-histories/",
         type: "POST",
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + tokenJWT
         },
         data: JSON.stringify(obj)
     }).done((result) => {
@@ -407,7 +436,8 @@ function InsertHistorySection(projectGuid, taskGuid, employeeGuid, sectionName) 
         url: "https://localhost:7230/api/task-histories/",
         type: "POST",
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + tokenJWT
         },
         data: JSON.stringify(obj)
     }).done((result) => {
@@ -425,7 +455,7 @@ function InsertHistorySection(projectGuid, taskGuid, employeeGuid, sectionName) 
 
 function InsertHistoryStatus(projectGuid, taskGuid, employeeGuid, statusName) {
     var obj = new Object();
-    obj.description = "Change finished status to " + statusName;
+    obj.description = "Change task status to " + statusName;
     obj.taskGuid = taskGuid;
     obj.employeeGuid = employeeGuid;
     obj.projectGuid = projectGuid;
@@ -434,7 +464,8 @@ function InsertHistoryStatus(projectGuid, taskGuid, employeeGuid, statusName) {
         url: "https://localhost:7230/api/task-histories/",
         type: "POST",
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + tokenJWT
         },
         data: JSON.stringify(obj)
     }).done((result) => {

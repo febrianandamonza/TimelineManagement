@@ -1,9 +1,13 @@
 
-
 const guidForProjectCount = document.getElementById("guidInput").value;
+const tokenJWT3 = document.getElementById("jwtToken").value;
+
 $(document).ready(function () {
     $.ajax({
         url: `https://localhost:7230/api/project-collaborators/count-project-by-employee/` + guidForProjectCount,
+        headers: {
+            'Authorization': 'Bearer ' + tokenJWT3
+        },
         type: "GET",
         dataType: "json"
     }).done(function (response) {
@@ -17,6 +21,9 @@ $(document).ready(function () {
 $(document).ready(function () {
     $.ajax({
         url: `https://localhost:7230/api/tasks/count-task-by-employee/` + guidForProjectCount,
+        headers: {
+            'Authorization': 'Bearer ' + tokenJWT3
+        },
         type: "GET",
         dataType: "json"
     }).done(function (response) {

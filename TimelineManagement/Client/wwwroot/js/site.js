@@ -3,9 +3,13 @@
 
 // Write your JavaScript code.
 const guid = document.getElementById("guidInput").value;
+const tokenJWT2 = document.getElementById("jwtToken").value;
 
 $.ajax({
-    url: `https://localhost:7230/api/project-collaborators/all-by-employee/` + guid
+    url: `https://localhost:7230/api/project-collaborators/all-by-employee/` + guid,
+    headers: {
+        'Authorization': 'Bearer ' + tokenJWT2
+    },
 }).done((result) => {
     let temp = "";
     $.each(result.data, (key,val) => {

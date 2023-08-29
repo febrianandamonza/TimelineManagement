@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TimelineManagement.DTOs.TaskComments;
 using TimelineManagement.DTOs.TaskHistories;
@@ -9,6 +10,7 @@ namespace TimelineManagement.Controllers;
 
 [ApiController]
 [Route("api/task-histories")]
+[Authorize]
 public class TaskHistoryController : ControllerBase
 {
     private readonly TaskHistoryService _taskHistoryService;

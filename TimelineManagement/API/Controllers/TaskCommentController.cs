@@ -9,7 +9,7 @@ namespace TimelineManagement.Controllers;
 
 [ApiController]
 [Route("api/task-comments")]
-/*[Authorize(Roles = "Project Manager")]*/
+[Authorize]
 public class TaskCommentController : ControllerBase
 {
     private readonly TaskCommentService _taskCommentService;

@@ -10,7 +10,7 @@ namespace TimelineManagement.Controllers;
 
 [ApiController]
 [Route("api/sections")]
-/*[Authorize(Roles = "Project Manager")]*/
+[Authorize]
 public class SectionController : ControllerBase
 {
     private readonly SectionService _sectionService;

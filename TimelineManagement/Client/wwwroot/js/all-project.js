@@ -1,7 +1,11 @@
 const guid = document.getElementById("guidInput").value;
+const tokenJWT = document.getElementById("jwtToken").value;
 
 $.ajax({
-    url: `https://localhost:7230/api/project-collaborators/all-by-employee/` + guid
+    url: `https://localhost:7230/api/project-collaborators/all-by-employee/` + guid,
+    headers: {
+        'Authorization': 'Bearer ' + tokenJWT
+    },
 }).done((result) => {
     let temp = "";
     $.each(result.data, (key,val) => {
@@ -17,7 +21,10 @@ $.ajax({
 });
 const img = ``
 $.ajax({
-    url: `https://localhost:7230/api/project-collaborators/all-by-employee/` + guid
+    url: `https://localhost:7230/api/project-collaborators/all-by-employee/` + guid,
+    headers: {
+        'Authorization': 'Bearer ' + tokenJWT
+    },
 }).done((result) => {
     let temp = "";
     $.each(result.data, (key, val) => {
@@ -58,7 +65,8 @@ function InsertProject() {
         url: "https://localhost:7230/api/projects/create-default",
         type: "POST",
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + tokenJWT
         },
         data: JSON.stringify(obj)
     }).done((result) => {

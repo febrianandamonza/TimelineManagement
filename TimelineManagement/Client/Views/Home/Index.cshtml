@@ -9,15 +9,17 @@
             <div class="col-4">
                 <div class="card text-white bg-primary" style="width: 300px;">
                     <div class="card-body">
+                        <input type="hidden" id="jwtToken" value='@Context.Session.GetString("JWToken")'>
                         <div class="card-header text-center">Task Status</div>
                         <div class="card-body text-center">
                             <div class="card-title text-center">Finished</div>
                             <h1 id="taskFinished" style="font-size:50px; font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; color:white;">Loading...</h1>
-                        </div><div class="card-body text-center">
+                        </div>
+                        <div class="card-body text-center">
                             <div class="card-title text-center">Unfinished</div>
                             <h1 id="taskUnFinished" style="font-size:50px; font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; color:white;">Loading...</h1>
                         </div>
-                    
+
                     </div>
                 </div>
             </div>

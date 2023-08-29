@@ -10,6 +10,7 @@
         <div class="col-md-12">
             <div class="card mb-4">
                 <h2 class="card-header textProject">Project</h2>
+                <input type="hidden" id="jwtToken" value='@Context.Session.GetString("JWToken")'>
                 @if (User.IsInRole("Project Manager"))
                 {
                     <button type="button" class="btn btn-primary ml-3 mt-3 mb-3" data-toggle="modal" data-target="#createModal" style="width:fit-content">Create New Project</button>
