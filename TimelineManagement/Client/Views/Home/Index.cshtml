@@ -3,6 +3,7 @@
 }
 
 <div class="container-xxl flex-grow-1 container-p-y">
+	<input type="hidden" id="jwtToken" value='@Context.Session.GetString("JWToken")'>
 	<div class="d-flex flex-wrap">
 		<div class="col-sm-6 col-lg-4 mb-4">
 			<div class="card card-border-shadow-primary h-100">
@@ -15,7 +16,7 @@
 						<p class="mb-0">Total Project</p>
 					</div>
 				</div>
-			</div>
+			</div>	
 		</div>
 		<div class="col-sm-6 col-lg-4 mb-4">
 			<div class="card card-border-shadow-warning h-100">
