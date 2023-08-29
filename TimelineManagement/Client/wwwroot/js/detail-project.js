@@ -220,12 +220,13 @@ function UpdateSection(projectGuid,taskGuid,employeeGuid) {
 }
 
 function UpdateStatus(projectGuid,taskGuid,employeeGuid) {
-    var valueOne =  $("#isFinishedStatus").val() == 1 ? true : false
-    var valueTwo =  $("#isFinishedStatus").val() == 1 ? "Finished" : "Unfinished"
+    var valueOne =  $("#isFinishedStatus").val() == "1" ? true : false;
+    var valueTwo =  $("#isFinishedStatus").val() == 1 ? "Finished" : "Unfinished";
     let data = {
         guid : taskGuid,
-        taskStatus: valueOne
+        isFinished: valueOne
     };
+    console.log(valueOne);
     $.ajax({
         url: `https://localhost:7230/api/tasks/change-status/`,
         headers: {
