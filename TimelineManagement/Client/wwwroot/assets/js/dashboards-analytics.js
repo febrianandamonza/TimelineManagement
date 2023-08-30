@@ -489,8 +489,16 @@
                                         color: axisColor,
                                         label: 'Progress',
                                         formatter: function (w) {
-                                            let progres = (taskFinished2 / taskUnFinished2) * 100;
-                                            return progres.toFixed(1)+'%';
+                                            let progress = (taskFinished2 / taskUnFinished2) * 100;
+                                            if(progress == 0){
+                                                return progress.toFixed(1)+'%'
+                                            }else if (progress > 100){
+                                                return 100 + '%';
+                                            }
+                                            else if (Number.isNaN(progress)){
+                                                return 0 + '%'
+                                            }
+                                            return progress.toFixed(1)+'%'
                                         }
                                     }
                                 }
