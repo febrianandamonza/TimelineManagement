@@ -57,5 +57,8 @@
     color: white;
    
 }
+.taskPointer {
+    cursor: pointer;
+}
 
 

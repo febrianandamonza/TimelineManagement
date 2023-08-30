@@ -66,7 +66,7 @@ $.ajax({
                     }
                     temp += `
                         <div class="card m-2" draggable="true" style="color: black" onclick="detailTask('${val2.taskGuid}')" data-bs-toggle="modal" data-bs-target="#detailTask">
-                            <div class="card-body" onmouseover="this.style.boxShadow='0 0 10px rgba(0,0,0,0.5)';" onmouseout="this.style.boxShadow='none';">
+                            <div class="card-body taskPointer" onmouseover="this.style.boxShadow='0 0 10px rgba(0,0,0,0.5)';" onmouseout="this.style.boxShadow='none';">
                                 <h5 class="card-title">${val2.taskName}</h5>
                                 ${priorityValue}
                             </div>
@@ -163,7 +163,7 @@ function detailTask(taskGuid){
             insertComment = `
             <div class="modal-footer">
                   <button class="btn btn-primary" data-bs-target="#commentModal" data-bs-toggle="modal" data-bs-dismiss="modal">Back to comment</button>
-                  <button class="btn btn-primary" onclick="InsertComment('${result.data.projectGuid}', '${result.data.guid}', '${result.data.employeeGuid}')" data-bs-toggle="modal" data-bs-dismiss="modal">Save</button>
+                  <button class="btn btn-primary" onclick="InsertComment('${result.data.projectGuid}', '${result.data.guid}', '${guid}')" data-bs-toggle="modal" data-bs-dismiss="modal">Save</button>
             </div>
             `
 
@@ -212,7 +212,7 @@ function UpdateSection(projectGuid,taskGuid,employeeGuid) {
         Swal.fire({
             icon: 'error',
             title: 'Oops...',
-            text: 'Failed to change data! Please try again.'
+            text: 'Failed to change section! Please try again.'
         })
         console.log(error)
         console.log(data)
@@ -242,7 +242,7 @@ function UpdateStatus(projectGuid,taskGuid,employeeGuid) {
         Swal.fire({
             icon: 'error',
             title: 'Oops...',
-            text: 'Failed to change data! Please try again.'
+            text: 'Failed to change status! Please try again.'
         })
         
     })
@@ -270,7 +270,7 @@ function InsertCollab() {
     }).done((result) => {
         Swal.fire
         (
-            'Data Has Been Successfuly Inserted',
+            'Invitation Collaborator has been send',
             'Success'
         ).then(() => {
             location.reload();
@@ -279,7 +279,7 @@ function InsertCollab() {
         Swal.fire({
             icon: 'error',
             title: 'Oops',
-            text: 'Failed to insert data, Please Try Again',
+            text: 'Failed send invite collaborator, Please Try Again',
         })
     })
 }
@@ -304,7 +304,7 @@ function InsertTask() {
     }).done((result) => {
         Swal.fire
         (
-            'Data Has Been Successfuly Inserted',
+            'Data Has Been Successfully Inserted',
             'Success'
         ).then(() => {
             location.reload();
@@ -415,7 +415,7 @@ function InsertHistoryComment(projectGuid, taskGuid, employeeGuid) {
         data: JSON.stringify(obj)
     }).done((result) => {
         Swal.fire(
-            'Data has been successfully updated!',
+            'Comment has been successfully inserted!',
             'success'
         ).then(() => {
             location.reload();
@@ -443,7 +443,7 @@ function InsertHistorySection(projectGuid, taskGuid, employeeGuid, sectionName) 
         data: JSON.stringify(obj)
     }).done((result) => {
         Swal.fire(
-            'Data has been successfully updated!',
+            'Section has been successfully updated!',
             'success'
         ).then(() => {
             location.reload();
@@ -471,7 +471,7 @@ function InsertHistoryStatus(projectGuid, taskGuid, employeeGuid, statusName) {
         data: JSON.stringify(obj)
     }).done((result) => {
         Swal.fire(
-            'Data has been successfully updated!',
+            'Status has been successfully updated!',
             'success'
         ).then(() => {
             location.reload();

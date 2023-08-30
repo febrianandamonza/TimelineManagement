@@ -61,11 +61,11 @@ public class TaskService
                 Priority = task.Priority,
                 ProjectGuid = project.Guid,
                 ProjectName = project.Name,
-                ProjectManager = employee2.FirstName + employee2.LastName,
+                ProjectManager = employee2.FirstName + " " + employee2.LastName,
                 SectionGuid = section.Guid,
                 SectionName = section.Name,
                 EmployeeGuid = employee.Guid,
-                EmployeeName = employee.FirstName + employee.LastName,
+                EmployeeName = employee.FirstName + " " + employee.LastName,
                 EmployeeEmail = employee.Email,
                 EmployeePhoneNumber = employee.PhoneNumber
             };

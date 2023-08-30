@@ -30,9 +30,9 @@ $.ajax({
     $.each(result.data, (key, val) => {
         temp += `
         
-        <div class="col-3 my-3">
+        <div class="col-3 my-3" style="max-height: 400px;">
         <a href="/Project/Index/${val.projectGuid}">
-      <div class="card h-100" style="text-align: center">
+      <div class="card h-100" style="text-align: center; cursor: pointer" onmouseover="this.style.boxShadow='0 0 10px rgba(0,0,0,0.5)';" onmouseout="this.style.boxShadow='none';" >
         <img class="card-img-top" src="https://www.itworks.id/wp-content/uploads/2021/02/metrodata-logo.jpg" alt="Card image cap"/>
         <div class="card-body">
           <h5 class="card-title">${val.projectName}</h5>
