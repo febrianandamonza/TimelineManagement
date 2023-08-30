@@ -24,6 +24,19 @@ public class TaskCommentService
         _projectRepository = projectRepository;
     }
     
+    public CountComment? CountComment(Guid taskGuid, Guid projectGuid)
+    {
+        var getTaskComment = _taskCommentRepository.GetAll().Count(tc => tc.TaskGuid == taskGuid && tc.ProjectGuid == projectGuid);
+
+        var result = new CountComment{
+            TaskGuid = taskGuid,
+            ProjectGuid = projectGuid,
+            Total = getTaskComment
+        };
+        return result;
+
+    }
+    
     public IEnumerable<DetailTaskCommentDto>?  DetailTaskComment(Guid taskGuid, Guid projectGuid)
     {
         var result = from tc in _taskCommentRepository.GetAll() orderby tc.CreatedDate descending 

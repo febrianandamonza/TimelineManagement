@@ -19,6 +19,29 @@ public class TaskCommentController : ControllerBase
         _taskCommentService = taskCommentService;
     }
     
+    [HttpGet("count-comment/{taskGuid}/{projectGuid}")]
+    public IActionResult GetAllEmployeeDetail(Guid taskGuid, Guid projectGuid)
+    {
+        var result = _taskCommentService.CountComment(taskGuid, projectGuid);
+        if (result is null)
+        {
+            return NotFound(new ResponseHandler<CountComment>
+            {
+                Code = StatusCodes.Status404NotFound,
+                Status = HttpStatusCode.NotFound.ToString(),
+                Message = "Data is not found"
+            });
+        }
+
+        return Ok(new ResponseHandler<CountComment>
+        {
+            Code = StatusCodes.Status200OK,
+            Status = HttpStatusCode.OK.ToString(),
+            Message = "Success retrieve data",
+            Data = result
+        });
+    }
+    
     [HttpGet("detail-task-comments-by-task/{projectGuid}/{taskGuid}")]
     public IActionResult GetDetailTaskByGuid(Guid projectGuid, Guid taskGuid)
     {

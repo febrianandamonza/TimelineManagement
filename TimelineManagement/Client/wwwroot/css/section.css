@@ -23,11 +23,12 @@
     display: flex;  
     justify-content: center;
     
+    
 }
 #left {
     width: 300px;
     margin: 20px;
-    background-color: #696cff;
+    background-color: #001865;
     min-height: 400px;
 }
 

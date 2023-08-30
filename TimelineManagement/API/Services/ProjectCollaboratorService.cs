@@ -55,9 +55,9 @@ public class ProjectCollaboratorService
     
     public IEnumerable<ProjectCollaboratorByEmployeeDto> GetAllProjectCollaboratorByEmployee(Guid guid)
     {
-        var result = from pc in _projectCollaboratorRepository.GetAll() where pc.Status is StatusLevel.Accepted
+        var result = from pc in _projectCollaboratorRepository.GetAll() where pc.Status is StatusLevel.Accepted 
             join employee in _employeeRepository.GetAll() on pc.EmployeeGuid equals employee.Guid where employee.Guid == guid
-            join project in _projectRepository.GetAll() on pc.ProjectGuid equals project.Guid
+            join project in _projectRepository.GetAll() on pc.ProjectGuid equals project.Guid orderby project.CreatedDate descending 
             select new ProjectCollaboratorByEmployeeDto
             {
                 ProjectGuid = pc.ProjectGuid,

@@ -57,33 +57,45 @@ $.ajax({
                 if (val2.taskSection == val.guid) {
                     if (val2.priority == 0) {
                         priorityValue = `<h5 class="badge badge-success">Low Priority</h5>`
-                    }
-                    else if (val2.priority == 1) {
+                    } else if (val2.priority == 1) {
                         priorityValue = `<h5 class="badge badge-warning">Medium Priority</h5>`
-                    }
-                    else if (val2.priority == 2) {
+                    } else if (val2.priority == 2) {
                         priorityValue = `<h5 class="badge badge-danger">High Priority</h5>`
                     }
                     temp += `
                         <div class="card m-2" draggable="true" style="color: black" onclick="detailTask('${val2.taskGuid}')" data-bs-toggle="modal" data-bs-target="#detailTask">
                             <div class="card-body taskPointer" onmouseover="this.style.boxShadow='0 0 10px rgba(0,0,0,0.5)';" onmouseout="this.style.boxShadow='none';">
-                                <h5 class="card-title">${val2.taskName}</h5>
+                                
+                     `;
+
+                    let taskid = val2.taskGuid;
+                    $.ajax({
+                        url: `https://localhost:7230/api/task-comments/count-comment/` + taskid + `/` + projectGuid,
+                        headers: {
+                            'Authorization': 'Bearer ' + tokenJWT
+                        },
+                        async : false
+                    }).done((result3) => {
+                        let temp2 = "";
+                        temp += `<h5 class="card-title" >${val2.taskName} <span class="badge badge-danger">${result3.data.total}</span></h5>
                                 ${priorityValue}
                             </div>
-                        </div>
-                     `;
-                }else{
-                    return;
+                        </div>`;
+                        temp2 += `<span class="badge badge-danger">${result3.data.total}</span> `;
+                        $("#totalCommentTask").html(temp2);
+                    });
                 }
             })
             $("#nameHeader").text(`${result2.data[0].name}`);
         });
         temp += `</div>`
-        
+
     })
     $("#cardSection").html(temp);
-    
+
 });
+
+
 
 function detailTask(taskGuid){
     $.ajax({
@@ -152,14 +164,14 @@ function detailTask(taskGuid){
                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                  <button type="button" class="btn btn-primary" onclick="UpdateStatus('${result.data.projectGuid}','${result.data.guid}','${result.data.employeeGuid}')" data-bs-dismiss="modal">Change</button>
             </div>`
-            
+
             listComment = `
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button class="btn btn-primary" data-bs-target="#historyModal" onclick="listHistory('${result.data.projectGuid}', '${result.data.guid}')" data-bs-toggle="modal" data-bs-dismiss="modal">Open History</button>
-                <button class="btn btn-primary" data-bs-target="#commentModal" onclick="listComment('${result.data.projectGuid}', '${result.data.guid}')" data-bs-toggle="modal" data-bs-dismiss="modal">Open Comment</button>
+                <button class="btn btn-primary" data-bs-target="#commentModal" onclick="listComment('${result.data.projectGuid}', '${result.data.guid}')" data-bs-toggle="modal" data-bs-dismiss="modal">Open Comment <span data-taskid="${result.data.guid}" id="totalCommentTask"></span></button>
             </div>`
-            
+
             insertComment = `
             <div class="modal-footer">
                   <button class="btn btn-primary" data-bs-target="#commentModal" data-bs-toggle="modal" data-bs-dismiss="modal">Back to comment</button>
@@ -182,12 +194,32 @@ function detailTask(taskGuid){
             $('#statusChange').html(changeStatus);
             $('#listComment').html(listComment);
             $('#insertComment').html(insertComment);
+
+            const taskGuid = $("#totalCommentTask").attr("data-taskid");
+            console.log(taskGuid);
+            $.ajax({
+                url: `https://localhost:7230/api/task-comments/count-comment/` + taskGuid + `/` + projectGuid,
+                headers: {
+                    'Authorization': 'Bearer ' + tokenJWT
+                },
+                async : false
+            }).done((result3) => {
+                let temp = "";
+                console.log(result3.data.total)
+                temp += `<span class="badge badge-danger">${result3.data.total}</span> `;
+                $("#totalCommentTask").html(temp);
+            });
+
         },
         error: function (error){
             console.error(error);
         }
     });
 }
+
+
+
+
 
 function UpdateSection(projectGuid,taskGuid,employeeGuid) {
     var valueOne =  $("#Section").val().split(',')[0]
@@ -470,6 +502,7 @@ function InsertHistoryStatus(projectGuid, taskGuid, employeeGuid, statusName) {
         },
         data: JSON.stringify(obj)
     }).done((result) => {
+        
         Swal.fire(
             'Status has been successfully updated!',
             'success'
@@ -481,3 +514,5 @@ function InsertHistoryStatus(projectGuid, taskGuid, employeeGuid, statusName) {
     })
     console.log(obj);
 }
+
+

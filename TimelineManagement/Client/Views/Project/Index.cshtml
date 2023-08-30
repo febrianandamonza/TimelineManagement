@@ -10,16 +10,16 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card mb-4">
-                <h2 class="card-header textProject" id="nameHeader">Project</h2>
+                <h2 class="card-header textProject" id="nameHeader" style="text-shadow: 1px 1px 1px #001865;" >Project</h2>
                 <input type="hidden" id="jwtToken" value='@Context.Session.GetString("JWToken")'>
                 @if (User.IsInRole("Project Manager"))
                 {
                     <div class="row" style="margin-left: 10px">
                         <div class="col">
-                            <button type="button" class="btn1 btn btn-primary mb-2" data-toggle="modal" data-target="#addColabModal" onclick="openAddColabModal()" style="width:fit-content">
+                            <button type="button" class="btn1 btn btn-success mb-2" data-toggle="modal" data-target="#addColabModal" onclick="openAddColabModal()" style="width:fit-content">
                                 Add Collaborator
                             </button>
-                            <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#addTaskModal" onclick="openAddColabModal()" style="width:fit-content">
+                            <button type="button" class="btn btn-success mb-2" data-toggle="modal" data-target="#addTaskModal" onclick="openAddColabModal()" style="width:fit-content">
                                 Add Task
                             </button>
                         </div>
