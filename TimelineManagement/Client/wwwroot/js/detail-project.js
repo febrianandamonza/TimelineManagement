@@ -65,8 +65,8 @@ $.ajax({
                         priorityValue = `<h5 class="badge badge-danger">High Priority</h5>`
                     }
                     temp += `
-                        <div class="card m-2" draggable="true" style="color:black" onclick="detailTask('${val2.taskGuid}')"  data-bs-toggle="modal" data-bs-target="#detailTask">
-                            <div class="card-body">
+                        <div class="card m-2" draggable="true" style="color: black" onclick="detailTask('${val2.taskGuid}')" data-bs-toggle="modal" data-bs-target="#detailTask">
+                            <div class="card-body" onmouseover="this.style.boxShadow='0 0 10px rgba(0,0,0,0.5)';" onmouseout="this.style.boxShadow='none';">
                                 <h5 class="card-title">${val2.taskName}</h5>
                                 ${priorityValue}
                             </div>
