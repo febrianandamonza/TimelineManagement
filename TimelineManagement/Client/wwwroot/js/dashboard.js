@@ -50,3 +50,40 @@ function getRandomColor(count) { //generates random colours and puts them in str
     }
     return colors;
 }
+
+//calendar
+document.addEventListener('DOMContentLoaded', function () {
+    var calendarEl = document.getElementById('calendar');
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        events: [
+            // Event-event lain di sini
+            // ...
+
+            // Panggil API untuk mendapatkan data hari libur
+            // Gantilah URL dengan URL API yang sesuai
+            // Contoh penggunaan fetch
+            fetch('https://api-harilibur.vercel.app/api')
+                .then(response => response.json())
+                .then(data => {
+                    // Proses data dari API dan tambahkan ke events
+                    data.forEach(holiday => {
+                        calendar.addEvent({
+                            title: holiday.holiday_name,
+                            start: holiday.holiday_date,
+                            allDay: true,
+                            backgroundColor: 'red',
+                            borderColor: 'red'
+                        });
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching holidays:', error);
+                }),
+            // ...
+        ]
+    });
+    calendar.render();
+});
+
+
