@@ -1,9 +1,12 @@
 ﻿using Client.Contracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 using TimelineManagement.Models;
 
 namespace Client.Controllers
 {
+    [Authorize(Roles = "Project Manager")]
     public class EmployeeController : Controller
     {
         private readonly IEmployeeRepository _employeeRepository;
