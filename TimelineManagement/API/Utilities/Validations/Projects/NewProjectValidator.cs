@@ -12,7 +12,7 @@ public class NewProjectValidator : AbstractValidator<NewProjectDto>
         RuleFor(p => p.StartDate)
             .NotEmpty().WithMessage("Start Date is required");
         RuleFor(p => p.EndDate)
-            .NotEmpty().WithMessage("End Date is required");
+            .NotEmpty().WithMessage("End Date is required").GreaterThanOrEqualTo(p => p.StartDate).WithMessage("Date To must be after Date From");
         RuleFor(p => p.EmployeeGuid)
             .NotEmpty().WithMessage("Employee Guid is required");
     }
