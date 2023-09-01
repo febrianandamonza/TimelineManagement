@@ -515,4 +515,71 @@ function InsertHistoryStatus(projectGuid, taskGuid, employeeGuid, statusName) {
     console.log(obj);
 }
 
+function ShowUpdate(projectGuid) {
+    $.ajax({
+        url: "https://localhost:7230/api/projects/" + projectGuid,
+        type: "GET",
+        dataType: "json"
+    }).done((result) => {
+        previousData = {
+            guid: result.data.guid,
+            name: result.data.name,
+            isDelete: result.data.isDelete,
+            startDate: moment(result.data.startDate).format("YYYY-MM-DD"),
+            endDate: moment(result.data.endDate).format("YYYY-MM-DD"),
+            employeeGuid: result.data.employeeGuid
+        };
+
+        $("#guidUpdate").val(previousData.guid);
+        $("#nameUpdate").val("");
+        $("#isDeleteUpdate").val(previousData.isDelete);
+        $("#startDateUpdate").val(previousData.startDate);
+        $("#endDateUpdate").val("");
+        $("#employeeGuidUpdate").val(previousData.employeeGuid);
+
+        $("#nameUpdate").attr("placeholder", previousData.name);
+        $("#endDateUpdate").attr("placeholder", previousData.endDate);
+
+        $("#editProjectModal").modal("show");
+    }).fail((error) => {
+        alert("Failed to fetch employee data. Please try again.");
+    });
+    console.log(url)
+}
+
+function UpdateProject() {
+    let name = $("#nameUpdate").val() || previousData.name; 
+    let endDate = $("#endDateUpdate").val() || previousData.endDate; 
+
+    let data = {
+        guid: $("#guidUpdate").val(),
+        name: name,
+        isDelete: $("#isDeleteUpdate").val(),
+        startDate: $("#startDateUpdate").val(),
+        endDate: endDate,
+        employeeGuid: $("#employeeGuidUpdate").val(),
+    };
+    $.ajax({
+        url: "https://localhost:7230/api/projects/",
+        type: "PUT",
+        contentType: "application/json",
+        data: JSON.stringify(data)
+    }).done((result) => {
+        Swal.fire(
+            'Data has been successfully updated!',
+            'success'
+        ).then(() => {
+            location.reload();
+        });
+    }).fail((error) => {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Failed to insert data! Please try again.'
+        })
+        console.log(error)
+        console.log(data)
+        console.log(projectGuid)
+    })
+}
 
