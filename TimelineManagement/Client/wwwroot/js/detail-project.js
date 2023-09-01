@@ -52,7 +52,9 @@ $.ajax({
             },
             async : false
         }).done((result2) =>{
-            let priorityValue = ""
+            let priorityValue = "";
+            let updateProject = "";
+            let deleteProject = "";
             $.each(result2.data, (key2, val2) => {
                 if (val2.taskSection == val.guid) {
                     if (val2.priority == 0) {
@@ -86,6 +88,16 @@ $.ajax({
                     });
                 }
             })
+            updateProject = ` <button type="button" class="btn1 btn btn-warning mb-2" data-toggle="modal" data-target="#editProjectModal" onclick="ShowUpdate('${result2.data[0].guid}')" style="width:fit-content">
+                                Edit
+                            </button>`;
+            deleteProject = `<button type="button" class="btn btn-danger mb-2" data-toggle="modal" data-target="" onclick="DeleteProject('${result2.data[0].guid}')" style="width:fit-content">
+                                Delete
+                            </button>`
+            
+            console.log(result2.data[0].guid);
+            $("#deleteProject").html(updateProject);
+            $("#updateProject").html(updateProject);
             $("#nameHeader").text(`${result2.data[0].name}`);
         });
         temp += `</div>`
@@ -121,6 +133,7 @@ function detailTask(taskGuid){
             let statusValue = "";
             let listComment ="";
             let insertComment = "";
+            let UpdateProject = "";
 
             name = ` <input type="text" id="Name" name="Name" class="form-control" value="${result.data.name}" disabled="true"/>`
             startDate = `<input type="text" id="StartDate" name="StartDate" class="form-control" value="${result.data.startDate.split('T')[0]}" disabled="true"/>`
@@ -177,7 +190,8 @@ function detailTask(taskGuid){
                   <button class="btn btn-primary" data-bs-target="#commentModal" data-bs-toggle="modal" data-bs-dismiss="modal">Back to comment</button>
                   <button class="btn btn-primary" onclick="InsertComment('${result.data.projectGuid}', '${result.data.guid}', '${guid}')" data-bs-toggle="modal" data-bs-dismiss="modal">Save</button>
             </div>
-            `
+            `;
+            
 
             $('#name').html(name);
             $('#startDate').html(startDate);
@@ -216,9 +230,6 @@ function detailTask(taskGuid){
         }
     });
 }
-
-
-
 
 
 function UpdateSection(projectGuid,taskGuid,employeeGuid) {
@@ -524,7 +535,6 @@ function ShowUpdate(projectGuid) {
         previousData = {
             guid: result.data.guid,
             name: result.data.name,
-            isDelete: result.data.isDelete,
             startDate: moment(result.data.startDate).format("YYYY-MM-DD"),
             endDate: moment(result.data.endDate).format("YYYY-MM-DD"),
             employeeGuid: result.data.employeeGuid
@@ -544,7 +554,6 @@ function ShowUpdate(projectGuid) {
     }).fail((error) => {
         alert("Failed to fetch employee data. Please try again.");
     });
-    console.log(url)
 }
 
 function UpdateProject() {
@@ -567,10 +576,10 @@ function UpdateProject() {
     }).done((result) => {
         Swal.fire(
             'Data has been successfully updated!',
-            'success'
+            'Success'
         ).then(() => {
             location.reload();
-        });
+        })
     }).fail((error) => {
         Swal.fire({
             icon: 'error',

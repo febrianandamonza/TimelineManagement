@@ -26,12 +26,9 @@
                     </div>
                     <div class="row" style="margin-right: 10px">
                         <div class="col">
-                            <button type="button" class="btn1 btn btn-warning mb-2" data-toggle="modal" data-target="#editProjectModal" onclick="openAddColabModal()" style="width:fit-content">
-                                Edit
-                            </button>
-                            <button type="button" class="btn btn-danger mb-2" data-toggle="modal" data-target="" onclick="openAddColabModal()" style="width:fit-content">
-                                Delete
-                            </button>
+                            <span id="updateProject"> </span>
+                            <span id=""></span>
+                            
                         </div>
                     </div>
                 }
@@ -342,12 +339,12 @@
         </div>
     </div>
 <!-- Edit Project Modal -->
-<div class="modal fade" id="editProjectModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
+<div class="modal fade" id="editProjectModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true" data-backdrop="false">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header d-flex flex-column ">
                 <h5 class="modal-title " id="updateModalLabel">Edit Project</h5>
-                <button type="button" class="btn-close mr-3" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="btn-close mr-3" data-bs-dismiss="modal" aria-label="Close">
                 </button>
             </div>
             <div class="modal-body">
@@ -359,10 +356,6 @@
                 <div class="mb-3">
                     <label for="name" class="form-label">Project Name</label>
                     <input type="text" class="form control" id="nameUpdate" placeholder="">
-                </div>
-                <div class="mb-3">
-                    <label for="isDelete" class="form-label">Is Deleted</label>
-                    <input type="text" class="form control" id="isDeleteUpdate" placeholder="" disabled>
                 </div>
                 <div class="mb-3">
                     <label for="startDate" class="form-label">Start Date</label>
@@ -378,11 +371,11 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="UpdateProject()" data-dismiss="modal">Save</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="UpdateProject()" data-bs-dismiss="modal">Save</button>
             </div>
         </div>
-        </div>
+    </div>
 </div>
 
 
