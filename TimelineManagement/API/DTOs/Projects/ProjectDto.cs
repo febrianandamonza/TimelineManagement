@@ -6,6 +6,7 @@ public class ProjectDto
 {
     public Guid Guid { get; set; }
     public string Name { get; set; }
+    public bool IsDeleted { get; set; }
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
     public Guid EmployeeGuid { get; set; }
@@ -17,6 +18,7 @@ public class ProjectDto
         {
             Guid = projectDto.Guid,
             Name = projectDto.Name,
+            IsDeleted = projectDto.IsDeleted,
             StartDate = projectDto.StartDate,
             EndDate = projectDto.EndDate,
             EmployeeGuid = projectDto.EmployeeGuid,
@@ -30,6 +32,7 @@ public class ProjectDto
         {
             Guid = project.Guid,
             Name = project.Name,
+            IsDeleted = project.IsDeleted,
             StartDate = project.StartDate,
             EndDate = project.EndDate,
             EmployeeGuid = project.EmployeeGuid

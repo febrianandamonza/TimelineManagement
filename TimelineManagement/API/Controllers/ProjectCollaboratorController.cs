@@ -18,7 +18,29 @@ public class ProjectCollaboratorController : ControllerBase
     {
         _projectCollaboratorService = projectCollaboratorService;
     }
-    
+
+    [HttpGet("all-by-project/{guid}")]
+    public IActionResult GetAllProjectCollaboratorByProject(Guid guid)
+    {
+        var result = _projectCollaboratorService.GetAllProjectCollaboratorByProject(guid);
+        if (!result.Any())
+        {
+            return NotFound(new ResponseHandler<ProjectCollaboratorByProjectDto>
+            {
+                Code = StatusCodes.Status404NotFound,
+                Status = HttpStatusCode.NotFound.ToString(),
+                Message = "Data is not found"
+            });
+        }
+        return Ok(new ResponseHandler<IEnumerable<ProjectCollaboratorByProjectDto>>
+        {
+            Code = StatusCodes.Status200OK,
+            Status = HttpStatusCode.OK.ToString(),
+            Message = "Success retrieve data",
+            Data = result
+        });
+    }
+
     [HttpGet("count-project-by-employee/{guid}")]
     public IActionResult GetAllEmployeeDetail(Guid guid)
     {

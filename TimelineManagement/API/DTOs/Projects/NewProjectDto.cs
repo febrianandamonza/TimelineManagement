@@ -16,6 +16,7 @@ public class NewProjectDto
         {
             Guid = new Guid(),
             Name = newProjectDto.Name,
+            IsDeleted = false,
             StartDate = newProjectDto.StartDate,
             EndDate = newProjectDto.EndDate,
             EmployeeGuid = newProjectDto.EmployeeGuid,

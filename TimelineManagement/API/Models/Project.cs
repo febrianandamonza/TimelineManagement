@@ -8,6 +8,9 @@ public class Project : BaseEntity
     [Column("name", TypeName =("nvarchar(50)"))]
     public string Name { get; set; }
     
+    [Column("is_deleted")]
+    public bool IsDeleted { get; set; }
+    
     [Column("start_date")]
     public DateTime StartDate { get; set; }
     

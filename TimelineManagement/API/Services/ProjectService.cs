@@ -26,6 +26,33 @@ public class ProjectService
         _sectionRepository = sectionRepository;
     }
     
+    public int ChangeStatusDeleted(ProjectChangeStatusDeletedDto changeStatusDeletedDto)
+    {
+        var getProject = _projectRepository.GetByGuid(changeStatusDeletedDto.Guid);
+        if (getProject is null)
+        {
+            return -1;
+        }
+
+        var project = new Project
+        {
+            Guid = getProject.Guid,
+            Name = getProject.Name,
+            StartDate = getProject.StartDate,
+            EndDate = getProject.EndDate,
+            IsDeleted = changeStatusDeletedDto.IsDeleted,
+            EmployeeGuid = getProject.EmployeeGuid
+        };
+
+        var isUpdate = _projectRepository.Update(project);
+        if (!isUpdate)
+        {
+            return 0;
+        }
+
+        return 1;
+    }
+    
     
     public IEnumerable<DetailProject>?  GetALlDetailProjectsByGuid(Guid guid)
     {
@@ -71,6 +98,7 @@ public class ProjectService
             {
                 Guid = new Guid(),
                 Name = newDefaultProjectDto.Name,
+                IsDeleted = false,
                 StartDate = newDefaultProjectDto.StartDate,
                 EndDate = newDefaultProjectDto.EndDate,
                 EmployeeGuid = newDefaultProjectDto.EmployeeGuid,

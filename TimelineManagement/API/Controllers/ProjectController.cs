@@ -21,6 +21,7 @@ public class ProjectController : ControllerBase
         _projectService = projectService;
     }
     
+    
     [AllowAnonymous]
     [Route("create-default")]
     [HttpPost]
@@ -89,6 +90,39 @@ public class ProjectController : ControllerBase
             Message = "Success retrieve data",
             Data = result
         });
+    }
+    
+    [HttpPut("change-status-deleted")]
+    public IActionResult ChangeStatusDeleted(ProjectChangeStatusDeletedDto projectChangeStatusDeleted)
+    {
+        var result = _projectService.ChangeStatusDeleted(projectChangeStatusDeleted);
+        if (result is -1)
+        {
+            return NotFound(new ResponseHandler<ProjectChangeStatusDeletedDto>
+            {
+                Code = StatusCodes.Status404NotFound,
+                Status = HttpStatusCode.NotFound.ToString(),
+                Message = "Guid is not found"
+            });
+        }
+
+        if (result is 0)
+        {
+            return StatusCode(500, new ResponseHandler<ProjectChangeStatusDeletedDto>
+            {
+                Code = StatusCodes.Status500InternalServerError,
+                Status = HttpStatusCode.InternalServerError.ToString(),
+                Message = "Error retrieve from database"
+            });
+        }
+
+        return Ok(new ResponseHandler<ProjectChangeStatusDeletedDto>
+        {
+            Code = StatusCodes.Status200OK,
+            Status = HttpStatusCode.OK.ToString(),
+            Message = "Change Status Task Success"
+        });
+
     }
 
     [HttpGet]
