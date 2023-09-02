@@ -55,6 +55,7 @@ $.ajax({
             let priorityValue = "";
             let updateProject = "";
             let deleteProject = "";
+            let viewCollaborator = "";
             $.each(result2.data, (key2, val2) => {
                 if (val2.taskSection == val.guid) {
                     if (val2.priority == 0) {
@@ -94,11 +95,15 @@ $.ajax({
             deleteProject = `<button type="button" class="btn btn-danger mb-2" data-toggle="modal" data-target="" onclick="DeleteProject('${result2.data[0].guid}')" style="width:fit-content">
                                 Delete
                             </button>`;
+            viewCollaborator = `<button type="button" class="btn btn-primary ml-4" data-bs-toggle="modal" data-bs-target="#viewListCollaborator" onclick="listCollaborator('${projectGuid}')">
+                    View Collaborator List
+                </button>`;
             
             console.log(result2.data[0].guid);
             $("#deleteProject").html(deleteProject);
             $("#updateProject").html(updateProject);
             $("#nameHeader").text(`${result2.data[0].name}`);
+            $('#viewCollaborator').html(viewCollaborator);
         });
         temp += `</div>`
 
@@ -133,7 +138,7 @@ function detailTask(taskGuid){
             let statusValue = "";
             let listComment ="";
             let insertComment = "";
-            let UpdateProject = "";
+           
 
             name = ` <input type="text" id="Name" name="Name" class="form-control" value="${result.data.name}" disabled="true"/>`
             startDate = `<input type="text" id="StartDate" name="StartDate" class="form-control" value="${result.data.startDate.split('T')[0]}" disabled="true"/>`
@@ -191,6 +196,7 @@ function detailTask(taskGuid){
                   <button class="btn btn-primary" onclick="InsertComment('${result.data.projectGuid}', '${result.data.guid}', '${guid}')" data-bs-toggle="modal" data-bs-dismiss="modal">Save</button>
             </div>
             `;
+
             
 
             $('#name').html(name);
@@ -208,6 +214,7 @@ function detailTask(taskGuid){
             $('#statusChange').html(changeStatus);
             $('#listComment').html(listComment);
             $('#insertComment').html(insertComment);
+            
 
             const taskGuid = $("#totalCommentTask").attr("data-taskid");
             console.log(taskGuid);
@@ -624,5 +631,33 @@ function DeleteProject() {
             console.log(error)
         });
         console.log(data)
+    });
+}
+
+function listCollaborator(projectGuid) {
+    $.ajax({
+        url: `https://localhost:7230/api/project-collaborators/all-by-project/` + projectGuid,
+        headers: {
+            'Authorization': 'Bearer ' + tokenJWT
+        },
+        success: function (result) {
+            let temp = `
+            <ol class="list-group list-group-numbered">
+        `;
+
+            $.each(result.data, (key, val) => {
+                temp += `
+                <li class="list-group-item"> Name : ${val.employeeName} 
+                    <div class="email">Email : ${val.employeeEmail}</div>
+                </li>
+            `;
+            });
+
+            temp += `
+            </ol>
+        `;
+
+            $('#listCollaborator').html(temp);
+        }
     });
 }
