@@ -138,13 +138,16 @@
 
                 <ul class="menu-inner py-1">
                     <!-- Dashboard -->
-                    <li class="menu-item active">
-                        <input type="hidden" id="employeeGuidProject" value="@User.FindFirst("Guid").Value">
-                        <a class="menu-link" asp-area="" asp-controller="Home" asp-action="Index">
-                            <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                            <div>Dashboard</div>
-                        </a>
-                    </li>
+                    @if (User.Identity.IsAuthenticated)
+                    {<li class="menu-item active">
+                            <input type="hidden" id="employeeGuidProject" value="@User.FindFirst("Guid").Value">
+                            <a class="menu-link" asp-area="" asp-controller="Home" asp-action="Index">
+                                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                                <div>Dashboard</div>
+                            </a>
+                        </li>
+                    }
+                   
                     @if (User.IsInRole("Staff"))
                     {
                         <li class="menu-item">
