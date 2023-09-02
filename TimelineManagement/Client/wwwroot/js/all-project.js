@@ -25,8 +25,10 @@ $.ajax({
     headers: {
         'Authorization': 'Bearer ' + tokenJWT
     },
+    async : false
 }).done((result) => {
     let temp = "";
+    let temp3 = "";
     $.each(result.data, (key, val) => {
         temp += `
         
@@ -35,7 +37,38 @@ $.ajax({
       <div class="card h-100" style="text-align: center; cursor: pointer" onmouseover="this.style.boxShadow='0 0 10px rgba(0,0,0,0.5)';" onmouseout="this.style.boxShadow='none';" >
         <img class="card-img-top" src="https://www.itworks.id/wp-content/uploads/2021/02/metrodata-logo.jpg" alt="Card image cap"/>
         <div class="card-body">
-          <h5 class="card-title">${val.projectName}</h5>
+          <h5 class="card-title">${val.projectName}
+        `;
+
+        const projectGuid = val.projectGuid;
+        $.ajax({
+            url: `https://localhost:7230/api/tasks/count-task-by-project/` + projectGuid ,
+            headers: {
+                'Authorization': 'Bearer ' + tokenJWT
+            },
+            async : false
+        }).done((result3) => {
+            let unfinished = result3.data.totalTaskUnFinished
+            let finished = result3.data.totalTaskFinished
+            let totaltask = unfinished + finished
+            let total = (unfinished / totaltask) * 100
+            let handle ="";
+            if (finished == 0){
+                total = 0
+            }else if (unfinished == 0){
+                total = 100
+            }
+            if (total >= 75){
+                handle = `<span class="badge badge-success ml-1">${total.toFixed(1) + "%"}</span>`
+            }else if (total >= 50){
+                handle = `<span class="badge badge-warning ml-1">${total.toFixed(1) + "%"}</span>`
+            }else{
+                handle = `<span class="badge badge-danger ml-1">${total.toFixed(1) + "%"}</span>`
+            }
+            console.log(unfinished)
+            console.log(finished)
+            temp += ` ${handle}</h5>
+           
           <ul class="list-group list-group-flush">
               <div class="list-group-item textP"><span style="color: red">Start Date : </span> ${val.projectStartDate.split('T')[0]}</div>
               <div class="list-group-item"><span style="color: red">End Date : </span>${val.projectStartDate.split('T')[0]}</div>
@@ -43,10 +76,13 @@ $.ajax({
         </div>
       </div>
       </a>
-    </div>
-        `;
+    </div> `;
+            
+        });
+        $("#totalProjectTask").html(temp3);
     })
     $("#projectCard2").html(temp);
+    
 });
 
 function InsertProject() {

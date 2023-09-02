@@ -28,6 +28,19 @@ public class TaskService
         _employeeRepository = employeeRepository;
         _projectCollaboratorRepository = projectCollaboratorRepository;
     }
+    public CountTaskByProjectDto CountTaskByProject(Guid guid)
+    {
+        var getTask = _taskRepository.GetAll().Count(t => t.ProjectGuid == guid && t.IsFinished == true);
+        var getTask2 = _taskRepository.GetAll().Count(t => t.ProjectGuid == guid && t.IsFinished == false);
+
+        var result = new CountTaskByProjectDto{
+            ProjectGuid = guid,
+            TotalTaskFinished = getTask,
+            TotalTaskUnFinished = getTask2
+        };
+        return result;
+
+    }
     
     public CountTaskDto CountTaskDto(Guid guid)
     {

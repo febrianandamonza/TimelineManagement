@@ -84,8 +84,6 @@ $.ajax({
                                 ${priorityValue}
                             </div>
                         </div>`;
-                        temp2 += `<span class="badge badge-danger">${result3.data.total}</span> `;
-                        $("#totalCommentTask").html(temp2);
                     });
                 }
             })

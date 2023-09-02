@@ -41,6 +41,28 @@ public class TaskController : ControllerBase
             Data = result
         });
     }
+    [HttpGet("count-task-by-project/{guid}")]
+    public IActionResult CountTaskByProject(Guid guid)
+    {
+        var result = _taskService.CountTaskByProject(guid);
+        if (result is null)
+        {
+            return NotFound(new ResponseHandler<CountTaskByProjectDto>
+            {
+                Code = StatusCodes.Status404NotFound,
+                Status = HttpStatusCode.NotFound.ToString(),
+                Message = "Data is not found"
+            });
+        }
+
+        return Ok(new ResponseHandler<CountTaskByProjectDto>
+        {
+            Code = StatusCodes.Status200OK,
+            Status = HttpStatusCode.OK.ToString(),
+            Message = "Success retrieve data",
+            Data = result
+        });
+    }
     
     [HttpGet("detail-task/{guid}")]
     public IActionResult GetDetailTaskByGuid(Guid guid)
