@@ -490,7 +490,7 @@
                                         label: 'Progress',
                                         formatter: function (w) {
                                             let total = taskFinished2 + taskUnFinished2
-                                            let progress = (total / taskUnFinished2) * 100;
+                                            let progress = (taskFinished2 / total) * 100;
                                             if(taskUnFinished2 == 0){
                                                 return 100 +'%'
                                             }else if (taskFinished2 == 0) {

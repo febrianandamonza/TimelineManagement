@@ -44,9 +44,17 @@ public class TaskService
     
     public CountTaskDto CountTaskDto(Guid guid)
     {
-        var getTask = _taskRepository.GetAll().Count(t => t.EmployeeGuid == guid && t.IsFinished == true);
-        var getTask2 = _taskRepository.GetAll().Count(t => t.EmployeeGuid == guid && t.IsFinished == false);
-
+        var getTask = (from task in _taskRepository.GetAll()
+            join project in _projectRepository.GetAll() on task.ProjectGuid equals project.Guid
+            where project.IsDeleted == false
+            select task).Count(t => t.EmployeeGuid == guid && t.IsFinished == true);
+        var getTask2 = (from task in _taskRepository.GetAll()
+            join project in _projectRepository.GetAll() on task.ProjectGuid equals project.Guid
+            where project.IsDeleted == false
+            select task).Count(t => t.EmployeeGuid == guid && t.IsFinished == false);
+        
+        
+        
         var result = new CountTaskDto{
             EmployeeGuid = guid,
             TotalTaskFinished = getTask,

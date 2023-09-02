@@ -27,8 +27,11 @@ public class ProjectCollaboratorService
 
     public CountProjectByEmployeeDto CountProjectByEmployee(Guid guid)
     {
-        var getProjectCollab = _projectCollaboratorRepository.GetAll().Count(pc => pc.EmployeeGuid == guid && pc.Status is StatusLevel.Accepted);
-
+        var getProjectCollab = (from projectCollab in _projectCollaboratorRepository.GetAll()
+            join project in _projectRepository.GetAll() on projectCollab.ProjectGuid equals project.Guid
+            where project.IsDeleted == false
+            select projectCollab).Count(pc => pc.EmployeeGuid == guid && pc.Status is StatusLevel.Accepted);
+        
         var result = new CountProjectByEmployeeDto{
             EmployeeGuid = guid,
             Total = getProjectCollab

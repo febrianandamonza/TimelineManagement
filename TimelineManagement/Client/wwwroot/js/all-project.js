@@ -51,7 +51,7 @@ $.ajax({
             let unfinished = result3.data.totalTaskUnFinished
             let finished = result3.data.totalTaskFinished
             let totaltask = unfinished + finished
-            let total = (unfinished / totaltask) * 100
+            let total = (finished / totaltask) * 100
             let handle ="";
             if (finished == 0){
                 total = 0
