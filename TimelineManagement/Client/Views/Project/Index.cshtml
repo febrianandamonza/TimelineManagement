@@ -15,7 +15,7 @@
                 @if (User.IsInRole("Project Manager"))
                 {
                     <div class="row" style="margin-left: 10px">
-                        <div class="col">
+                        <div class="col-6">
                             <button type="button" class="btn1 btn btn-success mb-2" data-toggle="modal" data-target="#addColabModal" onclick="openAddColabModal()" style="width:fit-content">
                                 Add Collaborator
                             </button>
@@ -23,12 +23,9 @@
                                 Add Task
                             </button>
                         </div>
-                    </div>
-                    <div class="row" style="margin-right: 10px">
-                        <div class="col">
+                        <div class="col-6">
                             <span id="updateProject"> </span>
-                            <span id=""></span>
-                            
+                            <span id="deleteProject"> </span>
                         </div>
                     </div>
                 }
@@ -349,26 +346,20 @@
             </div>
             <div class="modal-body">
                 <!-- Your form code here -->
-                <div class="mb-3">
-                    <label for="guid" class="form-label">Guid</label>
-                    <input type="text" class="form control" id="guidUpdate" placeholder="" disabled>
+                <input type="hidden" class="form control" id="guidUpdate" placeholder="" disabled>
+                <div class="form-group">
+                    <label for="name">Project Name</label>
+                    <input type="text" class="form-control" id="nameUpdate" placeholder=""/>
                 </div>
-                <div class="mb-3">
-                    <label for="name" class="form-label">Project Name</label>
-                    <input type="text" class="form control" id="nameUpdate" placeholder="">
+                <div class="form-group">
+                    <label for="startDate">Start Date</label>
+                    <input type="text" class="form-control" id="startDateUpdate" placeholder="" disabled />
                 </div>
-                <div class="mb-3">
-                    <label for="startDate" class="form-label">Start Date</label>
-                    <input type="text" class="form control" id="startDateUpdate" placeholder="" disabled>
+                <div class="form-group">
+                    <label for="endDate">End Date</label>
+                    <input type="date" class="form-control" id="endDateUpdate" placeholder="">
                 </div>
-                <div class="mb-3">
-                    <label for="endDate" class="form-label">End Date</label>
-                    <input type="datetime-local" class="form control" id="endDateUpdate" placeholder="">
-                </div>
-                <div class="mb-3">
-                    <label for="employeeGuid" class="form-label">Employee Guid</label>
-                    <input type="text" class="form control" id="employeeGuidUpdate" placeholder="" disabled>
-                </div>
+                <input type="hidden" class="form-control" id="employeeGuidUpdate" placeholder="" disabled>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -377,5 +368,6 @@
         </div>
     </div>
 </div>
+
 
 

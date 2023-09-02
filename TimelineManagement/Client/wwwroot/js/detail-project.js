@@ -93,10 +93,10 @@ $.ajax({
                             </button>`;
             deleteProject = `<button type="button" class="btn btn-danger mb-2" data-toggle="modal" data-target="" onclick="DeleteProject('${result2.data[0].guid}')" style="width:fit-content">
                                 Delete
-                            </button>`
+                            </button>`;
             
             console.log(result2.data[0].guid);
-            $("#deleteProject").html(updateProject);
+            $("#deleteProject").html(deleteProject);
             $("#updateProject").html(updateProject);
             $("#nameHeader").text(`${result2.data[0].name}`);
         });
@@ -592,3 +592,37 @@ function UpdateProject() {
     })
 }
 
+function DeleteProject() {
+    Swal.fire({
+        title: 'R u Sure?', 
+        showCancelButton: true,
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Delete Project'
+    }).then((result) => {
+        let data = {
+            guid: projectGuid,
+            isDelete: true,
+        };
+        $.ajax({
+            url: "https://localhost:7230/api/projects/change-status-deleted",
+            type: "PUT",
+            contentType: "application/json",
+            data: JSON.stringify(data)
+        }).done((result) => {
+            Swal.fire(
+                'Data has been successfully deleted!',
+                'Success'
+            ).then(() => {
+                location.reload();
+            })
+        }).fail((error) => {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Failed to delete data! Please try again.'
+            })
+            console.log(error)
+        });
+        console.log(data)
+    });
+}
