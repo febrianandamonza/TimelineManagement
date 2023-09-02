@@ -40,7 +40,7 @@ public class ProjectService
             Name = getProject.Name,
             StartDate = getProject.StartDate,
             EndDate = getProject.EndDate,
-            IsDeleted = changeStatusDeletedDto.IsDeleted,
+            IsDeleted = true,
             EmployeeGuid = getProject.EmployeeGuid
         };
 

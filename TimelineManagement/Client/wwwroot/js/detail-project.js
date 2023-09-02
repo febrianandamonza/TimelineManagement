@@ -98,8 +98,6 @@ $.ajax({
             viewCollaborator = `<button type="button" class="btn btn-primary ml-4" data-bs-toggle="modal" data-bs-target="#viewListCollaborator" onclick="listCollaborator('${projectGuid}')">
                     View Collaborator List
                 </button>`;
-            
-            console.log(result2.data[0].guid);
             $("#deleteProject").html(deleteProject);
             $("#updateProject").html(updateProject);
             $("#nameHeader").text(`${result2.data[0].name}`);
@@ -217,7 +215,6 @@ function detailTask(taskGuid){
             
 
             const taskGuid = $("#totalCommentTask").attr("data-taskid");
-            console.log(taskGuid);
             $.ajax({
                 url: `https://localhost:7230/api/task-comments/count-comment/` + taskGuid + `/` + projectGuid,
                 headers: {
@@ -226,7 +223,6 @@ function detailTask(taskGuid){
                 async : false
             }).done((result3) => {
                 let temp = "";
-                console.log(result3.data.total)
                 temp += `<span class="badge badge-danger">${result3.data.total}</span> `;
                 $("#totalCommentTask").html(temp);
             });
@@ -265,7 +261,6 @@ function UpdateSection(projectGuid,taskGuid,employeeGuid) {
             text: 'Failed to change section! Please try again.'
         })
         console.log(error)
-        console.log(data)
     })
 }
 
@@ -276,7 +271,6 @@ function UpdateStatus(projectGuid,taskGuid,employeeGuid) {
         guid : taskGuid,
         isFinished: valueOne
     };
-    console.log(valueOne);
     $.ajax({
         url: `https://localhost:7230/api/tasks/change-status/`,
         headers: {
@@ -286,7 +280,6 @@ function UpdateStatus(projectGuid,taskGuid,employeeGuid) {
         contentType: 'application/json',
         data: JSON.stringify(data)
     }).done((result) => {
-        console.log(data)
         InsertHistoryStatus(projectGuid,taskGuid,employeeGuid,valueTwo)
     }).fail((error) => {
         Swal.fire({
@@ -367,7 +360,6 @@ function InsertTask() {
         })
 
     })
-    console.log(obj);
 }
 
 function listComment(projectGuid, taskGuid) {
@@ -445,7 +437,6 @@ function InsertComment(projectGuid, taskGuid, employeeGuid) {
         })
 
     })
-    console.log(obj);
 }
 
 function InsertHistoryComment(projectGuid, taskGuid, employeeGuid) {
@@ -473,7 +464,6 @@ function InsertHistoryComment(projectGuid, taskGuid, employeeGuid) {
     }).fail((error) => {
 
     })
-    console.log(obj);
 }
 
 function InsertHistorySection(projectGuid, taskGuid, employeeGuid, sectionName) {
@@ -501,7 +491,6 @@ function InsertHistorySection(projectGuid, taskGuid, employeeGuid, sectionName) 
     }).fail((error) => {
 
     })
-    console.log(obj);
 }
 
 function InsertHistoryStatus(projectGuid, taskGuid, employeeGuid, statusName) {
@@ -530,7 +519,6 @@ function InsertHistoryStatus(projectGuid, taskGuid, employeeGuid, statusName) {
     }).fail((error) => {
 
     })
-    console.log(obj);
 }
 
 function ShowUpdate(projectGuid) {
@@ -594,43 +582,46 @@ function UpdateProject() {
             text: 'Failed to insert data! Please try again.'
         })
         console.log(error)
-        console.log(data)
-        console.log(projectGuid)
     })
 }
 
 function DeleteProject() {
     Swal.fire({
-        title: 'R u Sure?', 
+        title: "Do you want to delete this project?",
+        text: " You will not be able to undo after deletion",
+        icon: 'warning',
+        iconColor: "teal",
         showCancelButton: true,
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, Delete Project'
+        confirmButtonText: 'Yes',
     }).then((result) => {
-        let data = {
-            guid: projectGuid,
-            isDelete: true,
-        };
-        $.ajax({
-            url: "https://localhost:7230/api/projects/change-status-deleted",
-            type: "PUT",
-            contentType: "application/json",
-            data: JSON.stringify(data)
-        }).done((result) => {
-            Swal.fire(
-                'Data has been successfully deleted!',
-                'Success'
-            ).then(() => {
-                location.reload();
-            })
-        }).fail((error) => {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Failed to delete data! Please try again.'
-            })
-            console.log(error)
-        });
-        console.log(data)
+        if (result.value) {
+            let data = {
+                guid: projectGuid,
+                isDelete: true,
+            };
+            $.ajax({
+                url: "https://localhost:7230/api/projects/change-status-deleted",
+                type: "PUT",
+                contentType: "application/json",
+                data: JSON.stringify(data)
+            }).done((result) => {
+                Swal.fire(
+                    'Data has been successfully deleted!',
+                    'Success'
+                ).then(() => {
+                    location.href = "/Project/All"
+                })
+            }).fail((error) => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Failed to delete data! Please try again.'
+                })
+                console.log(error)
+            });
+        } else {
+            
+        }
     });
 }
 
@@ -641,23 +632,16 @@ function listCollaborator(projectGuid) {
             'Authorization': 'Bearer ' + tokenJWT
         },
         success: function (result) {
-            let temp = `
-            <ol class="list-group list-group-numbered">
-        `;
-
+            let temp = ``;
             $.each(result.data, (key, val) => {
-                temp += `
-                <li class="list-group-item"> Name : ${val.employeeName} 
-                    <div class="email">Email : ${val.employeeEmail}</div>
-                </li>
-            `;
+                
+                temp += `<tr>
+                      <th scope="row">${key+1} </th>
+                      <td>${val.employeeName}</td>
+                      <td>${val.employeeEmail}</td>
+                    </tr>`
             });
-
-            temp += `
-            </ol>
-        `;
-
-            $('#listCollaborator').html(temp);
+            $('#tbodyViewCollab').html(temp);
         }
     });
 }
