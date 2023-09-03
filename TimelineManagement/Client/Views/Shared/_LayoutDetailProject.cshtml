@@ -185,20 +185,7 @@
                             <div>Project</div>
                         </a>
                     </li>
-                    <li class="menu-item">
-                        <a href="" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                            <div>Project List</div>
-                        </a>
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            <input type="hidden" id="guidInput" value="@User.FindFirst("Guid").Value">
-                            <ul class="menu-sub" id="project-list">
-                            </ul>
-                        }
-                        
-                    </li>
-                    
+                    <input type="hidden" id="guidInput" value="@User.FindFirst("Guid").Value">
                 </ul>
             </aside>
 

@@ -1,25 +1,6 @@
 const guidLogin = document.getElementById("guidInput").value;
 const tokenJWTProfile = document.getElementById("jwtToken").value;
 
-$.ajax({
-    url: `https://localhost:7230/api/project-collaborators/all-by-employee/` + guidLogin,
-    headers: {
-        'Authorization': 'Bearer ' + tokenJWTProfile
-    },
-}).done((result) => {
-    let temp = "";
-    $.each(result.data, (key,val) => {
-        temp += `
-                <li class="menu-item">
-                    <a class="menu-link" href="/Project/Index/${val.projectGuid}">
-                    <div>${val.projectName}</div>
-                    </a>
-                </li>
-            `;
-    })
-    $("#project-list").html(temp);
-});
-
 $(document).ready(function () {
     $.ajax({
         url: `https://localhost:7230/api/employees/detail/` + guidLogin,

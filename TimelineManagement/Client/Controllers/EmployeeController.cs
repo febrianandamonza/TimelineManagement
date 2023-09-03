@@ -27,6 +27,7 @@ namespace Client.Controllers
             return View(ListEmployee);
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public IActionResult MyProfile()
         {

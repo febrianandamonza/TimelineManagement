@@ -1,24 +1,6 @@
 const guid = document.getElementById("guidInput").value;
 const tokenJWT = document.getElementById("jwtToken").value;
 
-$.ajax({
-    url: `https://localhost:7230/api/project-collaborators/all-by-employee/` + guid,
-    headers: {
-        'Authorization': 'Bearer ' + tokenJWT
-    },
-}).done((result) => {
-    let temp = "";
-    $.each(result.data, (key,val) => {
-        temp += `
-                <li class="menu-item">
-                    <a class="menu-link" href="/Project/Index/${val.projectGuid}">
-                    <div>${val.projectName}</div>
-                    </a>
-                </li>
-            `;
-    })
-    $("#project-list").html(temp);
-});
 const img = ``
 $.ajax({
     url: `https://localhost:7230/api/project-collaborators/all-by-employee/` + guid,
@@ -32,7 +14,7 @@ $.ajax({
     $.each(result.data, (key, val) => {
         temp += `
         
-        <div class="col-3 my-3" style="max-height: 400px;">
+        <div class="col col-3 my-3" style="max-height: 400px; min-width: 400px;">
         <a href="/Project/Index/${val.projectGuid}">
       <div class="card h-100" style="text-align: center; cursor: pointer" onmouseover="this.style.boxShadow='0 0 10px rgba(0,0,0,0.5)';" onmouseout="this.style.boxShadow='none';" >
         <img class="card-img-top" src="https://www.itworks.id/wp-content/uploads/2021/02/metrodata-logo.jpg" alt="Card image cap"/>
@@ -80,7 +62,7 @@ $.ajax({
             
         });
         $("#totalProjectTask").html(temp3);
-    })
+    })  
     $("#projectCard2").html(temp);
     
 });

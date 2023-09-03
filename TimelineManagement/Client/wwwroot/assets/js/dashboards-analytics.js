@@ -492,10 +492,11 @@
                                             let total = taskFinished2 + taskUnFinished2
                                             let progress = (taskFinished2 / total) * 100;
                                             if(taskUnFinished2 == 0){
-                                                return 100 +'%'
+                                                return 0 + '%';
                                             }else if (taskFinished2 == 0) {
                                                 return 0 + '%';
                                             }
+                                            
                                             return progress.toFixed(1)+'%'
                                         }
                                     }

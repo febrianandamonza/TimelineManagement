@@ -2,27 +2,7 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
-const guid = document.getElementById("guidInput").value;
-const tokenJWT2 = document.getElementById("jwtToken").value;
 
-$.ajax({
-    url: `https://localhost:7230/api/project-collaborators/all-by-employee/` + guid,
-    headers: {
-        'Authorization': 'Bearer ' + tokenJWT2
-    },
-}).done((result) => {
-    let temp = "";
-    $.each(result.data, (key,val) => {
-        temp += `
-                <li class="menu-item">
-                    <a class="menu-link" href="/Project/Index/${val.projectGuid}">
-                    <div>${val.projectName}</div>
-                    </a>
-                </li>
-            `;
-    })
-    $("#project-list").html(temp);
-});
 
 
 
