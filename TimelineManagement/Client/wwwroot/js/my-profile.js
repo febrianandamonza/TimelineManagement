@@ -13,9 +13,15 @@ $(document).ready(function () {
 
         const userNik = response.data.nik;
         const userFullName = response.data.fullName;
-        const userBirthDate = response.data.birthDate.split('T')[0];
+        const userBirthDate = (() => {
+            const parts = response.data.birthDate.split('T')[0].split('-');
+            return `${parts[2]}-${parts[1]}-${parts[0]}`;
+        })();
         const userGender = response.data.gender;
-        const userHiringDate = response.data.hiringDate.split('T')[0];
+        const userHiringDate = (() => {
+            const parts = response.data.hiringDate.split('T')[0].split('-');
+            return `${parts[2]}-${parts[1]}-${parts[0]}`;
+        })();
         const userEmail = response.data.email;
         const userPhoneNumber = response.data.phoneNumber;
         const userRole = response.data.role;

@@ -52,8 +52,22 @@ $.ajax({
             temp += ` ${handle}</h5>
            
           <ul class="list-group list-group-flush">
-              <div class="list-group-item textP"><span style="color: red">Start Date : </span> ${val.projectStartDate.split('T')[0]}</div>
-              <div class="list-group-item"><span style="color: red">End Date : </span>${val.projectStartDate.split('T')[0]}</div>
+              
+              <div class="list-group-item textP">
+              <span style="color: red">Start Date : </span>
+              ${(() => {
+                    const parts = val.projectStartDate.split('T')[0].split('-');
+                    return `${parts[2]}-${parts[1]}-${parts[0]}`;
+              })()}
+              </div>
+
+              <div class="list-group-item textP">
+              <span style="color: red">End Date : </span>
+              ${(() => {
+                    const parts = val.projectEndDate.split('T')[0].split('-');
+                    return `${parts[2]}-${parts[1]}-${parts[0]}`;
+               })()}
+              </div>
           </ul>     
         </div>
       </div>
