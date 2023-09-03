@@ -27,7 +27,13 @@ namespace Client.Controllers
             }
             else if (result.Code == 409)
             {
+                TempData["Failed"] = $"Email or Password is incorrect! - {result.Message}!";
                 ModelState.AddModelError(string.Empty, result.Message);
+                return View();
+            }
+            else if (result.Code == 404)
+            {
+                TempData["Failed"] = $"Email or Password is incorrect!";
                 return View();
             }
             else if (result.Code == 200)

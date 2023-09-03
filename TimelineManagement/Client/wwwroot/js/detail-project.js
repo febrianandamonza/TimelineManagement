@@ -5,6 +5,8 @@ const guid = document.getElementById("guidInput").value;
 const tokenJWT = document.getElementById("jwtToken").value;
 
 
+
+
 $.ajax({
     url: "https://localhost:7230/api/sections/",
     headers: {
