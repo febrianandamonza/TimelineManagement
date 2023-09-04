@@ -338,6 +338,29 @@ function InsertCollab() {
     })
     
 }
+
+$.ajax({
+    url: `https://localhost:7230/api/project-collaborators/all-by-project/` + projectGuid,
+    headers: {
+        'Authorization': 'Bearer ' + tokenJWT
+    },
+    success: function (result) {
+        let temp = ``;
+        $.each(result.data, (key, val) => {
+
+            temp += `<option value="${val.employeeEmail}">${val.employeeName}</option>`
+        });
+        $('#selectEmployeeTask').html(temp);
+    }
+});
+
+$(function() {
+    $('#selectEmployeeTask').select2({
+        dropdownParent: $('#addTaskModal'),
+        placeholder: 'Select Staff'
+    });
+});
+
 var getStartDate = "";
 var getEndDate = "";
 $(function() {
@@ -348,15 +371,16 @@ $(function() {
         getEndDate = end
     });
 });
+
 function InsertTask() {
     var obj = new Object();
     
     obj.name = $("#Name").val();
-    obj.startDate = getStartDate
-    obj.endDate = getEndDate
+    obj.startDate = getStartDate.format('YYYY-MM-DD')
+    obj.endDate = getEndDate.format('YYYY-MM-DD')
     obj.priority = parseInt($("#Priority").val());
     obj.projectGuid = $("#ProjectGuid").val();
-    obj.employeeEmail = $("#EmployeeEmail").val();
+    obj.employeeEmail = $("#selectEmployeeTask").val();
     
     $.ajax({
         url: "https://localhost:7230/api/tasks/create-default",
@@ -380,7 +404,6 @@ function InsertTask() {
             title: 'Oops',
             text: 'Failed to insert data, Please Try Again',
         })
-        console.log(obj)
         console.log(error)
 
     })

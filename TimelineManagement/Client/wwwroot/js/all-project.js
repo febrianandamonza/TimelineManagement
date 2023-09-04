@@ -47,8 +47,6 @@ $.ajax({
             }else{
                 handle = `<span class="badge badge-danger ml-1">${total.toFixed(1) + "%"}</span>`
             }
-            console.log(unfinished)
-            console.log(finished)
             temp += ` ${handle}</h5>
            
           <ul class="list-group list-group-flush">
@@ -92,7 +90,6 @@ $(function() {
     }, function(start, end, label) {
         getStartDateTask = start
         getEndDateTask = end
-        console.log(getStartDateTask + " " + getEndDateTask)
     });
 });
 $(function() {
@@ -101,19 +98,18 @@ $(function() {
     }, function(start, end, label) {
         getStartDateProject = start
         getEndDateProject = end
-        console.log(getStartDateProject + " " + getEndDateProject)
     });
 });
 function InsertProject() {
     var obj = new Object();
     obj.name = $("#NameProject").val();
-    obj.startDate = getStartDateProject
-    obj.endDate = getEndDateProject
+    obj.startDate = getStartDateProject.format('YYYY-MM-DD')
+    obj.endDate = getEndDateProject.format('YYYY-MM-DD')
     obj.employeeGuid = $("#EmployeeGuid").val();
     obj.taskName = $("#TaskName").val();
     obj.priority = parseInt($("#PriorityProject").val());
-    obj.startDateTask = getStartDateTask
-    obj.endDateTask = getEndDateTask
+    obj.startDateTask = getStartDateTask.format('YYYY-MM-DD')
+    obj.endDateTask = getEndDateTask.format('YYYY-MM-DD')
 
     $.ajax({
         url: "https://localhost:7230/api/projects/create-default",
@@ -137,7 +133,6 @@ function InsertProject() {
             title: 'Oops',
             text: 'Failed to insert data, Please Try Again',
         })
-        console.log(obj);
     })
 }
 
