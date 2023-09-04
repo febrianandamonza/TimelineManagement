@@ -11,8 +11,12 @@ $(document).ready(function () {
         },
         dom: 'Bfrtip',
         buttons: [
-            'colvis', 'copy', 'csv', 'excel', 'pdf', 'print'
-        ],
+            'colvis', 'copy', 'csv', 'excel', 'pdf', 'print'],
+        initComplete: function () {
+            var btns = $('.dt-button');
+            btns.addClass('btn btn-dark mb-4');
+            btns.removeClass('dt-button');
+        },
         columns: [
             {
                 data: null,

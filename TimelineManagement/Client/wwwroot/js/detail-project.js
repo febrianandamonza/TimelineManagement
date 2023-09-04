@@ -120,14 +120,8 @@ function detailTask(taskGuid){
            
 
             name = ` <input type="text" id="Name" name="Name" class="form-control" value="${result.data.name}" disabled="true"/>`
-            startDate = `<input type="text" id="StartDate" name="StartDate" class="form-control" value="${(() => {
-                const parts = result.data.startDate.split('T')[0].split('-');
-                return `${parts[2]}-${parts[1]}-${parts[0]}`;
-            })()}" disabled="true"/>`;
-            endDate = `<input type="text" id="endDate" name="endDate" class="form-control" value="${(() => {
-                const parts = result.data.endDate.split('T')[0].split('-');
-                return `${parts[2]}-${parts[1]}-${parts[0]}`;
-            })()}" disabled="true"/>`;
+            startDate = `<input type="text" id="StartDate" name="StartDate" class="form-control" value="${moment(result.data.startDate).format("DD-MM-YYYY")}" disabled="true"/>`;
+            endDate = `<input type="text" id="endDate" name="endDate" class="form-control" value="${moment(result.data.endDate).format("DD-MM-YYYY")}" disabled="true"/>`;
 
             if(result.data.isFinished == true){
                 statusValue = "Finished"
@@ -397,10 +391,9 @@ function listComment(projectGuid, taskGuid) {
           </div>
           <div class="d-flex justify-content-between">
                     <label class="control-label form-label">${val.employeeName}</label>
-                        <small >${(() => {
-                        const parts = val.createDateComment.split('T')[0].split('-');
-                        return `${parts[2]}-${parts[1]}-${parts[0]}`;
-                    })()}</small>
+                        
+                <small >${moment(val.createDateComment).format("DD-MM-YYYY")}</small>
+
                 </div>
                 <textarea class="form-control" id="Comment" rows="3" disabled="true" >${val.description}</textarea>
                 <br>
