@@ -115,3 +115,25 @@
         </p>
     </div>
 </div>
+
+@section Scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    @if (TempData["Success"] != null)
+    {
+        <script type="text/javascript">
+			toastr.success('@TempData["Success"]');
+		</script>
+    }
+    @if (TempData["Failed"] != null)
+        {
+            <script type="text/javascript">
+    			toastr.error('@TempData["Failed"]');
+    		</script>
+        }
+}
+@section CSS{
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+}

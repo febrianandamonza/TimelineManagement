@@ -62,7 +62,28 @@ namespace Client.Controllers
         public async Task<IActionResult> Register(RegisterDto register)
         {
             var result = await _accountRepository.Register(register);
-            if (result.Code == 200)
+            if (result is null)
+            {
+                TempData["Failed"] = $"Register failed - {result.Message}!";
+                return RedirectToAction("Error", "Home");
+            }
+            else if (result.Code == 409)
+            {
+                TempData["Failed"] = $"Register failed - {result.Message}!";
+                ModelState.AddModelError(string.Empty, result.Message);
+                return View();
+            }
+            else if (result.Code == 404)
+            {
+                TempData["Failed"] = $"Register failed - {result.Message}";
+                return View();
+            }
+            else if (result.Code == 400)
+            {
+                TempData["Failed"] = $"Register failed - {result.Message}!";
+                return View();
+            }
+            else if (result.Code == 200)
             {
 				TempData["Success"] = $"Register has been successfully! - {result.Message}!";
 				return Redirect("/Account/Login");
