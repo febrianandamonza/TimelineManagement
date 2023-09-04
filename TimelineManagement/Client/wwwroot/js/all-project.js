@@ -81,16 +81,39 @@ $.ajax({
     
 });
 
+var getStartDateTask = "";
+var getEndDateTask = "";
+var getStartDateProject = "";
+var getEndDateProject = "";
+$(function() {
+    $('input[name="DateTask"]').daterangepicker({
+        opens: 'left',
+        drops : 'up'
+    }, function(start, end, label) {
+        getStartDateTask = start
+        getEndDateTask = end
+        console.log(getStartDateTask + " " + getEndDateTask)
+    });
+});
+$(function() {
+    $('input[name="DateProject"]').daterangepicker({
+        opens: 'left'
+    }, function(start, end, label) {
+        getStartDateProject = start
+        getEndDateProject = end
+        console.log(getStartDateProject + " " + getEndDateProject)
+    });
+});
 function InsertProject() {
     var obj = new Object();
     obj.name = $("#NameProject").val();
-    obj.startDate = $("#StartDateProject").val();
-    obj.endDate = $("#EndDateProject").val();
+    obj.startDate = getStartDateProject
+    obj.endDate = getEndDateProject
     obj.employeeGuid = $("#EmployeeGuid").val();
     obj.taskName = $("#TaskName").val();
     obj.priority = parseInt($("#PriorityProject").val());
-    obj.startDateTask = $("#StartDateTask").val();
-    obj.endDateTask = $("#EndDateTask").val();
+    obj.startDateTask = getStartDateTask
+    obj.endDateTask = getEndDateTask
 
     $.ajax({
         url: "https://localhost:7230/api/projects/create-default",

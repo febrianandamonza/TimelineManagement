@@ -313,16 +313,26 @@ function InsertCollab() {
         })
     })
 }
-
+var getStartDate = "";
+var getEndDate = "";
+$(function() {
+    $('input[name="DateTask"]').daterangepicker({
+        opens: 'left'
+    }, function(start, end, label) {
+        getStartDate = start
+        getEndDate = end
+    });
+});
 function InsertTask() {
     var obj = new Object();
+    
     obj.name = $("#Name").val();
-    obj.startDate = $("#StartDate").val();
-    obj.endDate = $("#EndDate").val();
+    obj.startDate = getStartDate
+    obj.endDate = getEndDate
     obj.priority = parseInt($("#Priority").val());
     obj.projectGuid = $("#ProjectGuid").val();
     obj.employeeEmail = $("#EmployeeEmail").val();
-
+    
     $.ajax({
         url: "https://localhost:7230/api/tasks/create-default",
         type: "POST",
@@ -345,6 +355,8 @@ function InsertTask() {
             title: 'Oops',
             text: 'Failed to insert data, Please Try Again',
         })
+        console.log(obj)
+        console.log(error)
 
     })
 }

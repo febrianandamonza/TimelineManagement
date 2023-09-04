@@ -61,6 +61,7 @@
     <!-- Page CSS -->
     <!-- Helpers -->
     <script src="~/assets/vendor/js/helpers.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
@@ -71,6 +72,7 @@
     <link rel="stylesheet" href="/resources/demos/style.css">
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    
 
     <script>
     const token = '@Context.Session.GetString("JWToken")';
@@ -287,13 +289,9 @@
                             <input type="text" id="NameProject" name="Name" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <label for="StartDateTask">Start Date</label>
-                            <input type="date" id="StartDateProject" name="StartDateTask" class="form-control" />
-                            </div>
-                        <div class="form-group">
-                            <label for="EndDateTask">End Date</label>
-                            <input type="date" id="EndDateProject" name="EndDateTask" class="form-control" />
-                            </div>
+                            <label for="DateProject">Date Project</label>
+                            <input type="text" id="DateProject" name="DateProject" class="form-control" />
+                        </div>
                         <div class="form-group">
                             <input id="EmployeeGuid" type="hidden" value="@User.FindFirst("Guid").Value" />
                         </div>
@@ -310,14 +308,10 @@
                                 <option value="2">High</option>
                             </select>
                         </div>
-                            <div class="form-group">
-                                <label for="StartDateTask">Start Date</label>
-                                <input type="date" id="StartDateTask" name="StartDateTask" class="form-control" />
-                            </div>
-                            <div class="form-group">
-                                <label for="EndDateTask">End Date</label>
-                                <input type="date" id="EndDateTask" name="EndDateTask" class="form-control" />
-                            </div>
+                        <div class="form-group">
+                            <label for="DateTask">Date Task</label>
+                            <input type="text" id="DateTask" name="DateTask" class="form-control" />
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -344,10 +338,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 
     <!-- Main JS -->
-    <script src="~/assets/js/main.js"></script>
+    <script src="~/assets/js/main.js"></script> 
 <script src="~/js/all-project.js"></script>
 <script src="~/js/my-profile.js"></script>
-
+    
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
