@@ -283,12 +283,34 @@ function openAddColabModal() {
 
     document.getElementById("ProjectGuid").value = projectGuid;
 }
+    $.ajax({
+        url: `https://localhost:7230/api/employees/staff`,
+        headers: {
+            'Authorization': 'Bearer ' + tokenJWT
+        },
+        success: function (result) {
+            let temp = ``;
+            $.each(result.data, (key, val) => {
+                temp += `
+                     <option value="${val.email}">${val.fullName}</option>
+                `;
+            });
+            $('#selectCollab').html(temp);
+        }
+    });
 
+$(function() {
+    $('#selectCollab').select2({
+        dropdownParent: $('#addColabModal'),
+        maximumSelectionLength: 2,
+    });
+    $('.select2-selection__arrow').append('<i class="fa fa-angle-down"></i>');
+});
 function InsertCollab() {
     var obj = new Object();
-    obj.email = $("#Email").val();
+    obj.email = $("#selectCollab").val();
     obj.projectGuid = $("#ProjectGuid").val();
-
+    console.log(obj);
     $.ajax({
         url: "https://localhost:7230/api/project-collaborators/create-by-email",
         type: "POST",
@@ -311,6 +333,7 @@ function InsertCollab() {
             title: 'Oops',
             text: 'Failed send invite collaborator, Please Try Again',
         })
+        console.log(error);
     })
 }
 var getStartDate = "";

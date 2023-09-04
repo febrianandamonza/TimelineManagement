@@ -45,6 +45,7 @@ public class ProjectCollaboratorService
         var result = from pc in _projectCollaboratorRepository.GetAll() where pc.Status is StatusLevel.Waiting
             join employee in _employeeRepository.GetAll() on pc.EmployeeGuid equals employee.Guid where employee.Guid == guid
             join project in _projectRepository.GetAll() on pc.ProjectGuid equals project.Guid where project.IsDeleted == false
+            join employee2 in _employeeRepository.GetAll() on project.EmployeeGuid equals employee2.Guid
             select new ProjectCollaboratorWaitingDto
             {
                 Guid = pc.Guid,
@@ -52,7 +53,7 @@ public class ProjectCollaboratorService
                 ProjectGuid = pc.ProjectGuid,
                 ProjectName = project.Name,
                 EmployeeGuid = pc.EmployeeGuid,
-                EmployeeName = employee.FirstName + employee.LastName
+                EmployeeName = employee2.FirstName + " " + employee2.LastName
             };
         return result;
 
