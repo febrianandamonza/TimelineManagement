@@ -296,39 +296,47 @@ function openAddColabModal() {
 $(function() {
     $('#selectCollab').select2({
         dropdownParent: $('#addColabModal'),
-        maximumSelectionLength: 2,
+        placeholder: 'Select Staff'
     });
     $('.select2-selection__arrow').append('<i class="fa fa-angle-down"></i>');
+    
+    $('#selectCollab').on('select2:close', function (evt) {
+        var uldiv = $(this).siblings('span.select2').find('ul')
+        var count = uldiv.find('li').length -1
+    });
 });
+
 function InsertCollab() {
-    var obj = new Object();
-    obj.email = $("#selectCollab").val();
-    obj.projectGuid = $("#ProjectGuid").val();
-    console.log(obj);
-    $.ajax({
-        url: "https://localhost:7230/api/project-collaborators/create-by-email",
-        type: "POST",
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + tokenJWT
-        },
-        data: JSON.stringify(obj)
-    }).done((result) => {
-        Swal.fire
-        (
-            'Invitation Collaborator has been send',
-            'Success'
-        ).then(() => {
-            location.reload();
+    var tempData = $("#selectCollab").val();
+    tempData.forEach((data) =>{
+        var obj = new Object();
+        obj.email = data
+        obj.projectGuid = $("#ProjectGuid").val();
+        $.ajax({
+            url: "https://localhost:7230/api/project-collaborators/create-by-email",
+            type: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + tokenJWT
+            },
+            data: JSON.stringify(obj)
+        }).done((result) => {
+            Swal.fire
+            (
+                'Invitation Collaborator has been send',
+                'Success'
+            ).then(() => {
+                location.reload();
+            })
+        }).fail((error) => {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops',
+                text: 'Failed send invite collaborator, Please Try Again',
+            })
         })
-    }).fail((error) => {
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops',
-            text: 'Failed send invite collaborator, Please Try Again',
-        })
-        console.log(error);
     })
+    
 }
 var getStartDate = "";
 var getEndDate = "";
