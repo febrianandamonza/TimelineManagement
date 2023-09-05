@@ -59,9 +59,9 @@ function acceptCollaborator(guid) {
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, Accept'
     }).then((result) => {
-
-        UpdateStatus(guid, 2);
-
+        if (result.isConfirmed) {
+            UpdateStatus(guid, 2);
+        }
     });
 }
 
@@ -75,9 +75,9 @@ function rejectCollaborator(guid) {
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, Reject'
     }).then((result) => {
-
-        UpdateStatus(guid, 1);
-
+        if (result.isConfirmed) {
+            UpdateStatus(guid, 1);
+        }
     });
 }
 
