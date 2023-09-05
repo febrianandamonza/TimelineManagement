@@ -23,7 +23,7 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>Dashboard</title>
+    <title>Detail Project</title>
 
     <meta name="description" content="" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -144,7 +144,7 @@
 
                 <ul class="menu-inner py-1">
                     <!-- Dashboard -->
-                    <li class="menu-item active">
+                    <li class="menu-item">
                         <input type="hidden" id="employeeGuidProject" value="@User.FindFirst("Guid").Value">
                         <a class="menu-link" asp-area="" asp-controller="Home" asp-action="Index">
                             <i class="menu-icon tf-icons bx bx-home-circle"></i>
@@ -186,8 +186,8 @@
                         <span class="menu-header-text">Layout</span>
                     </li>
                     
-                    <li class="menu-item">
-                        <a class="menu-link" asp-area="" asp-controller="Project" asp-action="All">
+                    <li class="menu-item active">
+                        <a class="menu-link active" asp-area="" asp-controller="Project" asp-action="All">
                             <i class="menu-icon tf-icons bx bx-folder-open"></i>
                             <div>Project</div>
                         </a>

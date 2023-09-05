@@ -154,13 +154,13 @@ function detailTask(taskGuid){
             changeSection = `
             <div class="modal-footer">       
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button class="btn btn-danger mt-1" onclick="UpdateSection('${result.data.projectGuid}','${result.data.guid}','${result.data.employeeGuid}')" data-bs-toggle="modal" data-bs-target="#changeSection">Change</button>
+                  <button class="btn btn-danger mt-1" onclick="UpdateSection('${result.data.projectGuid}','${result.data.guid}','${guid}')" data-bs-toggle="modal" data-bs-target="#changeSection">Change</button>
             </div>
                             `
             changeStatus = `
             <div class="modal-footer">
                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                 <button type="button" class="btn btn-primary" onclick="UpdateStatus('${result.data.projectGuid}','${result.data.guid}','${result.data.employeeGuid}')" data-bs-dismiss="modal">Change</button>
+                 <button type="button" class="btn btn-primary" onclick="UpdateStatus('${result.data.projectGuid}','${result.data.guid}','${guid}')" data-bs-dismiss="modal">Change</button>
             </div>`
 
             listComment = `
@@ -725,7 +725,7 @@ $.ajax({
 $(function() {
     $('#selectChangeEmployee').select2({
         dropdownParent: $('#changeStaffModal'),
-        placeholder: 'Select Staff'
+        placeholder: 'Select Employee'
     });
 });
 
