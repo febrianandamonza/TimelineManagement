@@ -31,7 +31,7 @@ $(document).ready(function () {
                 data: 'birthDate',
                 render: function (data) {
                     const date = new Date(data);
-                    const formattedDate = date.toISOString().slice(0, 10);
+                    const formattedDate = moment(date).format("DD-MM-YYYY")
                     return formattedDate;
                 }
             },
@@ -45,7 +45,7 @@ $(document).ready(function () {
                 data: 'hiringDate',
                 render: function (data) {
                     const date = new Date(data);
-                    const formattedDate = date.toISOString().slice(0, 10);
+                    const formattedDate = moment(date).format("DD-MM-YYYY")
                     return formattedDate;
                 }
             },

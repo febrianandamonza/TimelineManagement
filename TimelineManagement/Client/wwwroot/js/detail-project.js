@@ -228,7 +228,6 @@ function UpdateSection(projectGuid,taskGuid,employeeGuid) {
     let data = {
         guid : taskGuid,
         sectionGuid: valueOne
-        
     };
     $.ajax({
         url: `https://localhost:7230/api/tasks/change-section/`,
@@ -239,6 +238,30 @@ function UpdateSection(projectGuid,taskGuid,employeeGuid) {
         contentType: 'application/json',
         data: JSON.stringify(data)
     }).done((result) => {
+        if (valueTwo == "Done"){
+            let data = {
+                guid : taskGuid,
+                isFinished: true
+            };
+            $.ajax({
+                url: `https://localhost:7230/api/tasks/change-status/`,
+                headers: {
+                    'Authorization': 'Bearer ' + tokenJWT
+                },
+                type: 'PUT',
+                contentType: 'application/json',
+                data: JSON.stringify(data)
+            }).done((result) => {
+                InsertHistoryStatus(projectGuid,taskGuid,employeeGuid,"Finished")
+            }).fail((error) => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Failed to change status! Please try again.'
+                })
+
+            })
+        }
         InsertHistorySection(projectGuid,taskGuid,employeeGuid,valueTwo)
         
     }).fail((error) => {
