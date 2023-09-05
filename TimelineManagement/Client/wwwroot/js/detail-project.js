@@ -117,6 +117,7 @@ function detailTask(taskGuid){
             let statusValue = "";
             let listComment ="";
             let insertComment = "";
+            let changeEmployee = "";
            
 
             name = ` <input type="text" id="Name" name="Name" class="form-control" value="${result.data.name}" disabled="true"/>`
@@ -175,8 +176,12 @@ function detailTask(taskGuid){
                   <button class="btn btn-primary" onclick="InsertComment('${result.data.projectGuid}', '${result.data.guid}', '${guid}')" data-bs-toggle="modal" data-bs-dismiss="modal">Save</button>
             </div>
             `;
-
             
+            changeEmployee = `
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="UpdateEmployee('${result.data.guid}')" data-bs-dismiss="modal">Change</button>
+                
+            `
 
             $('#name').html(name);
             $('#startDate').html(startDate);
@@ -193,6 +198,7 @@ function detailTask(taskGuid){
             $('#statusChange').html(changeStatus);
             $('#listComment').html(listComment);
             $('#insertComment').html(insertComment);
+            $('#employeeChange').html(changeEmployee);
             
 
             const taskGuid = $("#totalCommentTask").attr("data-taskid");
@@ -351,6 +357,7 @@ $.ajax({
             temp += `<option value="${val.employeeEmail}">${val.employeeName}</option>`
         });
         $('#selectEmployeeTask').html(temp);
+        
     }
 });
 
@@ -360,6 +367,7 @@ $(function() {
         placeholder: 'Select Staff'
     });
 });
+
 
 var getStartDate = "";
 var getEndDate = "";
@@ -696,4 +704,60 @@ function listCollaborator(projectGuid) {
             $('#tbodyViewCollab').html(temp);
         }
     });
+}
+
+$.ajax({
+    url: `https://localhost:7230/api/project-collaborators/all-by-project/` + projectGuid,
+    headers: {
+        'Authorization': 'Bearer ' + tokenJWT
+    },
+    success: function (result) {
+        let temp = ``;
+        $.each(result.data, (key, val) => {
+
+            temp += `<option value="${val.employeeEmail}">${val.employeeName}</option>`
+        });
+        $('#selectChangeEmployee').html(temp);
+
+    }
+});
+
+$(function() {
+    $('#selectChangeEmployee').select2({
+        dropdownParent: $('#changeStaffModal'),
+        placeholder: 'Select Staff'
+    });
+});
+
+function UpdateEmployee(taskGuid) {
+        var obj = new Object();
+        obj.employeeEmail = $("#selectChangeEmployee").val();
+        obj.guid = taskGuid
+    console.log(obj)
+        $.ajax({
+            url: "https://localhost:7230/api/tasks/change-employee",
+            type: "PUT",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + tokenJWT
+            },
+            data: JSON.stringify(obj)
+        }).done((result) => {
+            Swal.fire
+            (
+                'Employee has been change',
+                'Success'
+            ).then(() => {
+                location.reload();
+            })
+        }).fail((error) => {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops',
+                text: 'Failed to change employee, Please Try Again',
+            })
+            console.log(error)
+            console.log(obj)
+        })
+
 }

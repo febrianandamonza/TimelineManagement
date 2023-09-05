@@ -491,9 +491,7 @@
                                         formatter: function (w) {
                                             let total = taskFinished2 + taskUnFinished2
                                             let progress = (taskFinished2 / total) * 100;
-                                            if(taskUnFinished2 == 0){
-                                                return 0 + '%';
-                                            }else if (taskFinished2 == 0) {
+                                            if(taskFinished2 == 0){
                                                 return 0 + '%';
                                             }
                                             

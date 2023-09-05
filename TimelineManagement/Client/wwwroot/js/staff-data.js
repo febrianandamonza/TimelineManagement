@@ -38,7 +38,7 @@ $(document).ready(function () {
             {
                 data: 'gender',
                 render: function (data) {
-                    return data === 0 ? 'Male' : 'Female';
+                    return data === 0 ? 'Female' : 'Male';
                 }
             },
             {

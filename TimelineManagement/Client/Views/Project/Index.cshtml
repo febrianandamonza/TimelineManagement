@@ -165,11 +165,19 @@
                         <div class="form-group">
                             <label for="EmployeeEmail">Employee Email</label>
                             <div id="employeeMail"></div>
+                            @if (User.IsInRole("Project Manager"))
+                            {
+                                 <button class="btn btn-danger mt-1" data-bs-toggle="modal" data-bs-target="#changeStaffModal">Change</button>
+                            }
+                            
                         </div>
                         <div class="form-group">
                             <label for="isFinished">Status</label>
                             <div id="isFinished"></div>
-                            <button class="btn btn-danger mt-1" data-bs-toggle="modal" data-bs-target="#changeStatus">Change</button>
+                            @if (User.IsInRole("Project Manager"))
+                            {
+                                <button class="btn btn-danger mt-1" data-bs-toggle="modal" data-bs-target="#changeStatus">Change</button>
+                            }
                         </div>
                         <div class="form-group">
                             <label for="SectionName">Section Name</label>
@@ -362,16 +370,16 @@
             </div>
             <div class="modal-body">    
                 <table class="table">
-                  <thead>
+                    <thead>
                     <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">Full Name</th>
-                      <th scope="col">Email</th>
+                        <th scope="col">#</th>
+                        <th scope="col">Full Name</th>
+                        <th scope="col">Email</th>
                     </tr>
-                  </thead>
-                  <tbody id="tbodyViewCollab">
+                    </thead>
+                    <tbody id="tbodyViewCollab">
                     
-                  </tbody>
+                    </tbody>
                 </table>
                 
             </div>
@@ -381,6 +389,33 @@
         </div>
     </div>
 </div>
+
+<!-- Add Coolaborator Modal -->
+    <div class="modal fade" id="changeStaffModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header d-flex flex-column align-content-center">
+                    <h5 class="modal-title" id="changeStaffLabel">Change Staff</h5>
+                </div>
+                <div class="modal-body">
+                    <!-- Your form code here -->
+                    <form>
+                        <div class="form-group">
+                            <input type="hidden" id="ProjectGuidChangeEmployee" name="ProjectGuid" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <div class="mb-3" for="Email">Full Name</div>
+                            <select name="SelectEmployee" id="selectChangeEmployee" class="form-select" style=" width: 100%">
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <div id="employeeChange"></div>
+                    </div>
+            </div>
+        </div>
+    </div>
 
 
 
